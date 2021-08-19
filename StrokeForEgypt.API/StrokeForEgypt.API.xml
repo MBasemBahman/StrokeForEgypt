@@ -19,14 +19,39 @@
             Get: Get Genders
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCountries(StrokeForEgypt.Service.Paging,System.String,System.String)">
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCountries(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.String)">
             <summary>
             Get: Get Countries
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCities(StrokeForEgypt.Service.Paging,System.String,System.String)">
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCities(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.String,System.Int32)">
             <summary>
             Get: Get Cities
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.NewsController.GetNews(StrokeForEgypt.Service.Paging,System.String,System.Int32,System.Boolean)">
+            <summary>
+            Get: Get News
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetNotificationTypes(StrokeForEgypt.Service.Paging,System.String)">
+            <summary>
+            Get: Get Notification Types
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetOpenTypes(StrokeForEgypt.Service.Paging,System.String)">
+            <summary>
+            Get: Get Open Types
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsorTypes(StrokeForEgypt.Service.Paging,System.String,System.Int32,System.Boolean,System.Int32)">
+            <summary>
+            Get: Get Sponsor Types
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsors(StrokeForEgypt.Service.Paging,System.String,System.Int32,System.Int32)">
+            <summary>
+            Get: Get Sponsors
             </summary>
         </member>
     </members>
