@@ -1,4 +1,7 @@
 ﻿using StrokeForEgypt.Entity.CommonEntity;
+using StrokeForEgypt.Entity.NewsEntity;
+using StrokeForEgypt.Entity.NotificationEntity;
+using StrokeForEgypt.Entity.SponsorEntity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,5 +66,14 @@ namespace StrokeForEgypt.Entity.EventEntity
 
         [DisplayName("Event Galleries")]
         public ICollection<EventGallery> EventGalleries { get; set; }
+
+        [DisplayName("News")]
+        public ICollection<News> News { get; set; }
+
+        [DisplayName("Sponsors")]
+        public ICollection<Sponsor> Sponsors { get; set; }
+
+        [DisplayName("Notifications")]
+        public ICollection<Notification> Notifications { get; set; }
     }
 }

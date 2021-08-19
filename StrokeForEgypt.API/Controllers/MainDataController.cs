@@ -163,8 +163,8 @@ namespace StrokeForEgypt.API.Controllers
         [Authorize]
         public async Task<List<CountryModel>> GetCountries(
             [FromQuery] Paging paging,
-            [FromQuery] string Name,
             [FromQuery] Guid Token,
+            [FromQuery] string Name,
             [FromQuery] string Culture)
         {
             string ActionName = nameof(GetCountries);
@@ -211,9 +211,10 @@ namespace StrokeForEgypt.API.Controllers
         [Authorize]
         public async Task<List<CityModel>> GetCities(
             [FromQuery] Paging paging,
-            [FromQuery] string Name,
             [FromQuery] Guid Token,
-            [FromQuery] string Culture)
+            [FromQuery] string Name,
+            [FromQuery] string Culture,
+            [FromQuery] int Fk_Country = 0)
         {
             string ActionName = nameof(GetCities);
             List<CityModel> returnData = new();
@@ -222,7 +223,8 @@ namespace StrokeForEgypt.API.Controllers
             try
             {
                 List<City> Data = await _UnitOfWork.City.GetAll(a => a.IsActive &&
-                                                                    (string.IsNullOrEmpty(Name) || a.Name.ToLower().Trim() == Name.ToLower().Trim()));
+                                                                    (string.IsNullOrEmpty(Name) || a.Name.ToLower().Trim() == Name.ToLower().Trim()) &&
+                                                                    (Fk_Country == 0 || a.Fk_Country == Fk_Country));
 
                 Data = OrderBy<City>.OrderData(Data, paging.OrderBy);
 

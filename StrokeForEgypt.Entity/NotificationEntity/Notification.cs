@@ -1,4 +1,5 @@
 ﻿using StrokeForEgypt.Entity.CommonEntity;
+using StrokeForEgypt.Entity.EventEntity;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +9,13 @@ namespace StrokeForEgypt.Entity.NotificationEntity
 {
     public class Notification : ImageEntity
     {
+        [ForeignKey("Event")]
+        [DisplayName(nameof(Event))]
+        public int? Fk_Event { get; set; }
+
+        [DisplayName("Event")]
+        public Event Event { get; set; }
+
         [DisplayName("Heading")]
         [Required(ErrorMessage = "{0} is required")]
         public string Heading { get; set; }
