@@ -58,6 +58,9 @@ namespace StrokeForEgypt.Entity.EventEntity
         [DisplayName("Event Packages")]
         public ICollection<EventPackage> EventPackages { get; set; }
 
+        [DisplayName("Event Activities")]
+        public ICollection<EventActivity> EventActivities { get; set; }
+
         [DisplayName("Event Galleries")]
         public ICollection<EventGallery> EventGalleries { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using StrokeForEgypt.Common;
+using StrokeForEgypt.Entity.BookingEntity;
 using StrokeForEgypt.Entity.CommonEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
 using System;
@@ -45,5 +46,8 @@ namespace StrokeForEgypt.Entity.AccountEntity
 
         [DisplayName("Notification Accounts")]
         public ICollection<NotificationAccount> NotificationAccounts { get; set; }
+
+        [DisplayName("Bookings")]
+        public ICollection<Booking> Bookings { get; set; }
     }
 }

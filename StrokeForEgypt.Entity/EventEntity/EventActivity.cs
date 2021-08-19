@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Entity.EventEntity
 {
-    public class EventPackage : ImageEntity
+    public class EventActivity : ImageEntity
     {
         [ForeignKey("Event")]
         [DisplayName(nameof(Event))]
@@ -16,21 +16,11 @@ namespace StrokeForEgypt.Entity.EventEntity
         [DisplayName("Event")]
         public Event Event { get; set; }
 
-        [DisplayName("Title")]
+        [DisplayName("Name")]
         [Required(ErrorMessage = "{0} is required")]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
-        [DisplayName("Notes")]
-        [DataType(DataType.MultilineText)]
-        public string Notes { get; set; }
-
-        [DisplayName("Price")]
-        public double Price { get; set; }
-
-        [DisplayName("Extra Fees")]
-        public double ExtraFees { get; set; }
-
-        [DisplayName("Bookings")]
-        public ICollection<Booking> Bookings { get; set; }
+        [DisplayName("Booking Member Activities")]
+        public ICollection<BookingMemberActivity> BookingMemberActivities { get; set; }
     }
 }
