@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.MainDataEntity
 {
-    public class AppAbout : BaseEntityModel
+    public class AppAboutModel : BaseEntityModel
     {
         [DisplayName("Phone")]
         [DataType(DataType.PhoneNumber)]

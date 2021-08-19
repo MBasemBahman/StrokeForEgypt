@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using StrokeForEgypt.API.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;

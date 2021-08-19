@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.EventEntity
 {
-    public class Event : ImageEntityModel
+    public class EventModel : ImageEntityModel
     {
         [DisplayName("Title")]
         [Required(ErrorMessage = "{0} is required")]
@@ -52,15 +52,15 @@ namespace StrokeForEgypt.Service.EventEntity
         public string PackageNotes { get; set; }
 
         [DisplayName("Event Agendas")]
-        public ICollection<EventAgenda> EventAgendas { get; set; }
+        public ICollection<EventAgendaModel> EventAgendas { get; set; }
 
         [DisplayName("Event Packages")]
-        public ICollection<EventPackage> EventPackages { get; set; }
+        public ICollection<EventPackageModel> EventPackages { get; set; }
 
         [DisplayName("Event Activities")]
-        public ICollection<EventActivity> EventActivities { get; set; }
+        public ICollection<EventActivityModel> EventActivities { get; set; }
 
         [DisplayName("Event Galleries")]
-        public ICollection<EventGallery> EventGalleries { get; set; }
+        public ICollection<EventGalleryModel> EventGalleries { get; set; }
     }
 }

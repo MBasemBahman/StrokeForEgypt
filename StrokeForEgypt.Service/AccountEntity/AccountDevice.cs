@@ -5,14 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.AccountEntity
 {
-    public class AccountDevice : BaseEntityModel
+    public class AccountDeviceModel : BaseEntityModel
     {
         [ForeignKey("Account")]
         [DisplayName(nameof(Account))]
         public int Fk_Account { get; set; }
 
         [DisplayName("Account")]
-        public Account Account { get; set; }
+        public AccountModel Account { get; set; }
 
         [DisplayName("Notification Token")]
         [Required(ErrorMessage = "{0} is required")]

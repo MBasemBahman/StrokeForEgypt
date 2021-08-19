@@ -7,14 +7,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.EventEntity
 {
-    public class EventPackage : ImageEntityModel
+    public class EventPackageModel : ImageEntityModel
     {
         [ForeignKey("Event")]
         [DisplayName(nameof(Event))]
         public int Fk_Event { get; set; }
 
         [DisplayName("Event")]
-        public Event Event { get; set; }
+        public EventModel Event { get; set; }
 
         [DisplayName("Title")]
         [Required(ErrorMessage = "{0} is required")]
@@ -31,6 +31,6 @@ namespace StrokeForEgypt.Service.EventEntity
         public double ExtraFees { get; set; }
 
         [DisplayName("Bookings")]
-        public ICollection<Booking> Bookings { get; set; }
+        public ICollection<BookingModel> Bookings { get; set; }
     }
 }

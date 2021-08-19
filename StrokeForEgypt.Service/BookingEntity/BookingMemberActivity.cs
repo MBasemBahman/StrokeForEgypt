@@ -5,20 +5,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.BookingEntity
 {
-    public class BookingMemberActivity : BaseEntityModel
+    public class BookingMemberActivityModel : BaseEntityModel
     {
         [ForeignKey("BookingMember")]
         [DisplayName(nameof(BookingMember))]
         public int Fk_BookingMember { get; set; }
 
         [DisplayName("Booking Member")]
-        public BookingMember BookingMember { get; set; }
+        public BookingMemberModel BookingMember { get; set; }
 
         [ForeignKey("EventActivity")]
         [DisplayName(nameof(EventActivity))]
         public int Fk_EventActivity { get; set; }
 
         [DisplayName("Event Activity")]
-        public EventActivity EventActivity { get; set; }
+        public EventActivityModel EventActivity { get; set; }
     }
 }

@@ -7,14 +7,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.BookingEntity
 {
-    public class BookingMember : BaseEntityModel
+    public class BookingMemberModel : BaseEntityModel
     {
         [ForeignKey("Booking")]
         [DisplayName(nameof(Booking))]
         public int Fk_Booking { get; set; }
 
         [DisplayName("Booking")]
-        public Booking Booking { get; set; }
+        public BookingModel Booking { get; set; }
 
         [DisplayName("First Name")]
         [Required(ErrorMessage = "{0} is required")]
@@ -44,14 +44,14 @@ namespace StrokeForEgypt.Service.BookingEntity
         public int Fk_Gender { get; set; }
 
         [DisplayName("Gender")]
-        public Gender Gender { get; set; }
+        public GenderModel Gender { get; set; }
 
         [ForeignKey("City")]
         [DisplayName(nameof(City))]
         public int Fk_City { get; set; }
 
         [DisplayName("City")]
-        public City City { get; set; }
+        public CityModel City { get; set; }
 
         [DisplayName("Address")]
         [DataType(DataType.MultilineText)]
@@ -65,9 +65,9 @@ namespace StrokeForEgypt.Service.BookingEntity
         public string DateOfBirth { get; set; }
 
         [DisplayName("Member Attachments")]
-        public ICollection<BookingMemberAttachment> BookingMemberAttachments { get; set; }
+        public ICollection<BookingMemberAttachmentModel> BookingMemberAttachments { get; set; }
 
         [DisplayName("Booking Member Activities")]
-        public ICollection<BookingMemberActivity> BookingMemberActivities { get; set; }
+        public ICollection<BookingMemberActivityModel> BookingMemberActivities { get; set; }
     }
 }

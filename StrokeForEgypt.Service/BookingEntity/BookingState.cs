@@ -5,16 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.BookingEntity
 {
-    public class BookingState : BaseEntityModel
+    public class BookingStateModel : BaseEntityModel
     {
         [DisplayName("Name")]
         [Required(ErrorMessage = "{0} is required")]
         public string Name { get; set; }
 
         [DisplayName("Bookings")]
-        public ICollection<Booking> Bookings { get; set; }
+        public ICollection<BookingModel> Bookings { get; set; }
 
         [DisplayName("Booking State Histories")]
-        public ICollection<BookingStateHistory> BookingStateHistories { get; set; }
+        public ICollection<BookingStateHistoryModel> BookingStateHistories { get; set; }
     }
 }

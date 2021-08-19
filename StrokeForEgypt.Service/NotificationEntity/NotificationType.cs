@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.NotificationEntity
 {
-    public class NotificationType : BaseEntityModel
+    public class NotificationTypeModel : BaseEntityModel
     {
         [DisplayName("Name")]
         [Required(ErrorMessage = "{0} is required")]
         public string Name { get; set; }
 
         [DisplayName("Notifications")]
-        public ICollection<Notification> Notifications { get; set; }
+        public ICollection<NotificationModel> Notifications { get; set; }
     }
 }

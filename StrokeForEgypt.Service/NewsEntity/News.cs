@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.NewsEntity
 {
-    public class News : ImageEntityModel
+    public class NewsModel : ImageEntityModel
     {
         [DisplayName("Title")]
         [Required(ErrorMessage = "{0} is required")]
@@ -17,6 +17,6 @@ namespace StrokeForEgypt.Service.NewsEntity
         public string Description { get; set; }
 
         [DisplayName("News Galleries")]
-        public ICollection<NewsGallery> NewsGalleries { get; set; }
+        public ICollection<NewsGalleryModel> NewsGalleries { get; set; }
     }
 }

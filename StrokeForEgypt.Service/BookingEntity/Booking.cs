@@ -7,21 +7,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.BookingEntity
 {
-    public class Booking : BaseEntityModel
+    public class BookingModel : BaseEntityModel
     {
         [ForeignKey("Account")]
         [DisplayName(nameof(Account))]
         public int Fk_Account { get; set; }
 
         [DisplayName("Account")]
-        public Account Account { get; set; }
+        public AccountModel Account { get; set; }
 
         [ForeignKey("EventPackage")]
         [DisplayName(nameof(EventPackage))]
         public int Fk_EventPackage { get; set; }
 
         [DisplayName("Event Package")]
-        public EventPackage EventPackage { get; set; }
+        public EventPackageModel EventPackage { get; set; }
 
         [DisplayName("Person Count")]
         public int PersonCount { get; set; }
@@ -37,12 +37,12 @@ namespace StrokeForEgypt.Service.BookingEntity
         public int Fk_BookingState { get; set; }
 
         [DisplayName("Booking State")]
-        public BookingState BookingState { get; set; }
+        public BookingStateModel BookingState { get; set; }
 
         [DisplayName("Booking State Histories")]
-        public ICollection<BookingStateHistory> BookingStateHistories { get; set; }
+        public ICollection<BookingStateHistoryModel> BookingStateHistories { get; set; }
 
         [DisplayName("Booking Members")]
-        public ICollection<BookingMember> BookingMembers { get; set; }
+        public ICollection<BookingMemberModel> BookingMembers { get; set; }
     }
 }

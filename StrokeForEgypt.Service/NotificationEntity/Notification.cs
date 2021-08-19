@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.NotificationEntity
 {
-    public class Notification : ImageEntityModel
+    public class NotificationModel : ImageEntityModel
     {
         [DisplayName("Heading")]
         [Required(ErrorMessage = "{0} is required")]
@@ -25,16 +25,16 @@ namespace StrokeForEgypt.Service.NotificationEntity
         public int Fk_NotificationType { get; set; }
 
         [DisplayName("Notification Type")]
-        public NotificationType NotificationType { get; set; }
+        public NotificationTypeModel NotificationType { get; set; }
 
         [ForeignKey("OpenType")]
         [DisplayName(nameof(OpenType))]
         public int Fk_OpenType { get; set; }
 
         [DisplayName("Open Type")]
-        public OpenType OpenType { get; set; }
+        public OpenTypeModel OpenType { get; set; }
 
         [DisplayName("Notification Accounts")]
-        public ICollection<NotificationAccount> NotificationAccounts { get; set; }
+        public ICollection<NotificationAccountModel> NotificationAccounts { get; set; }
     }
 }

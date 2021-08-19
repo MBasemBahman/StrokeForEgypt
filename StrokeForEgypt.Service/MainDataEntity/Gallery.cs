@@ -2,7 +2,7 @@
 
 namespace StrokeForEgypt.Service.MainDataEntity
 {
-    public class Gallery : AttachmentEntityModel
+    public class GalleryModel : AttachmentEntityModel
     {
     }
 }

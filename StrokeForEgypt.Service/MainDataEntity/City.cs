@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.MainDataEntity
 {
-    public class City : BaseEntityModel
+    public class CityModel : BaseEntityModel
     {
         [DisplayName("Name")]
         [Required(ErrorMessage = "{0} is required")]
@@ -18,9 +18,9 @@ namespace StrokeForEgypt.Service.MainDataEntity
         public int Fk_Country { get; set; }
 
         [DisplayName("Country")]
-        public Country Country { get; set; }
+        public CountryModel Country { get; set; }
 
         [DisplayName("Booking Members")]
-        public ICollection<BookingMember> BookingMembers { get; set; }
+        public ICollection<BookingMemberModel> BookingMembers { get; set; }
     }
 }

@@ -114,10 +114,10 @@ namespace StrokeForEgypt.API
             JToken jAppSettings = JToken.Parse(
                                  File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
             string googleCredential = jAppSettings["GoogleCredential"].ToString();
-            FirebaseApp.Create(new AppOptions()
-            {
-                Credential = GoogleCredential.FromJson(googleCredential)
-            });
+            //FirebaseApp.Create(new AppOptions()
+            //{
+            //    Credential = GoogleCredential.FromJson(googleCredential)
+            //});
 
             #endregion
         }

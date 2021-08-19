@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.MainDataEntity
 {
-    public class Country : ImageEntityModel
+    public class CountryModel : ImageEntityModel
     {
         [DisplayName("Name")]
         [Required(ErrorMessage = "{0} is required")]
         public string Name { get; set; }
 
         [DisplayName("Cities")]
-        public ICollection<City> Cities { get; set; }
+        public ICollection<CityModel> Cities { get; set; }
     }
 }

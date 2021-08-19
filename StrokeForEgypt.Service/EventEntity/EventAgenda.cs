@@ -6,14 +6,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.EventEntity
 {
-    public class EventAgenda : BaseEntityModel
+    public class EventAgendaModel : BaseEntityModel
     {
         [ForeignKey("Event")]
         [DisplayName(nameof(Event))]
         public int Fk_Event { get; set; }
 
         [DisplayName("Event")]
-        public Event Event { get; set; }
+        public EventModel Event { get; set; }
 
         [DisplayName("Title")]
         [Required(ErrorMessage = "{0} is required")]
@@ -33,6 +33,6 @@ namespace StrokeForEgypt.Service.EventEntity
         public string Time { get; set; }
 
         [DisplayName("Event Agenda Galleries")]
-        public ICollection<EventAgendaGallery> EventAgendaGallerGalleries { get; set; }
+        public ICollection<EventAgendaGalleryModel> EventAgendaGallerGalleries { get; set; }
     }
 }

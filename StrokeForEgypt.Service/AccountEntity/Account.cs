@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.AccountEntity
 {
-    public class Account : ImageEntityModel
+    public class AccountModel : ImageEntityModel
     {
         [DisplayName("Full Name")]
         [Required(ErrorMessage = "{0} is required")]
@@ -41,12 +41,12 @@ namespace StrokeForEgypt.Service.AccountEntity
         public string LastActive { get; set; }
 
         [DisplayName("Account Devices")]
-        public ICollection<AccountDevice> AccountDevices { get; set; }
+        public ICollection<AccountDeviceModel> AccountDevices { get; set; }
 
         [DisplayName("Notification Accounts")]
-        public ICollection<NotificationAccount> NotificationAccounts { get; set; }
+        public ICollection<NotificationAccountModel> NotificationAccounts { get; set; }
 
         [DisplayName("Bookings")]
-        public ICollection<Booking> Bookings { get; set; }
+        public ICollection<BookingModel> Bookings { get; set; }
     }
 }

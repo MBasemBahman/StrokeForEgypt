@@ -6,13 +6,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.MainDataEntity
 {
-    public class Gender : BaseEntityModel
+    public class GenderModel : BaseEntityModel
     {
         [DisplayName("Name")]
         [Required(ErrorMessage = "{0} is required")]
         public string Name { get; set; }
 
         [DisplayName("Booking Members")]
-        public ICollection<BookingMember> BookingMembers { get; set; }
+        public ICollection<BookingMemberModel> BookingMembers { get; set; }
     }
 }

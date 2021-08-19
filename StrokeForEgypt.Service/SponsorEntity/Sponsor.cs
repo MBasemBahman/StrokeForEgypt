@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.SponsorEntity
 {
-    public class Sponsor : ImageEntityModel
+    public class SponsorModel : ImageEntityModel
     {
         [DisplayName("Name")]
         [Required(ErrorMessage = "{0} is required")]
@@ -21,6 +21,6 @@ namespace StrokeForEgypt.Service.SponsorEntity
         public int Fk_SponsorType { get; set; }
 
         [DisplayName("Sponsor Type")]
-        public SponsorType SponsorType { get; set; }
+        public SponsorTypeModel SponsorType { get; set; }
     }
 }
