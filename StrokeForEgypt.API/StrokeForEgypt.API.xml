@@ -4,5 +4,30 @@
         <name>StrokeForEgypt.API</name>
     </assembly>
     <members>
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetAppAbout(System.String)">
+            <summary>
+            Get: Get App About
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetGalleries(StrokeForEgypt.Service.Paging,System.String)">
+            <summary>
+            Get: Get Galleries
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetGenders(StrokeForEgypt.Service.Paging,System.Guid,System.String)">
+            <summary>
+            Get: Get Genders
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCountries(StrokeForEgypt.Service.Paging,System.String,System.String)">
+            <summary>
+            Get: Get Countries
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCities(StrokeForEgypt.Service.Paging,System.String,System.String)">
+            <summary>
+            Get: Get Cities
+            </summary>
+        </member>
     </members>
 </doc>

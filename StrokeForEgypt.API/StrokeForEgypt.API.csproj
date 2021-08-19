@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\StrokeForEgypt.Common\StrokeForEgypt.Common.csproj" />
     <ProjectReference Include="..\StrokeForEgypt.Repository\StrokeForEgypt.Repository.csproj" />
+    <ProjectReference Include="..\StrokeForEgypt.Service\StrokeForEgypt.Service.csproj" />
   </ItemGroup>
 
 </Project>

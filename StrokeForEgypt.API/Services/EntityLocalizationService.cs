@@ -1,10 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 using StrokeForEgypt.API.Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace StrokeForEgypt.API.Services
 {
