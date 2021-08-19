@@ -1,0 +1,66 @@
+﻿using StrokeForEgypt.Service.CommonEntity;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace StrokeForEgypt.Service.EventEntity
+{
+    public class Event : ImageEntityModel
+    {
+        [DisplayName("Title")]
+        [Required(ErrorMessage = "{0} is required")]
+        public string Title { get; set; }
+
+        [DisplayName("Short Description")]
+        [Required(ErrorMessage = "{0} is required")]
+        [DataType(DataType.MultilineText)]
+        public string ShortDescription { get; set; }
+
+        [DisplayName("Long Description")]
+        [Required(ErrorMessage = "{0} is required")]
+        [DataType(DataType.MultilineText)]
+        public string LongDescription { get; set; }
+
+        [DisplayName("From Date")]
+        [DataType(DataType.Date)]
+        public string FromDate { get; set; }
+
+        [DisplayName("To Date")]
+        [DataType(DataType.Date)]
+        public string ToDate { get; set; }
+
+        [DisplayName("Address")]
+        [DataType(DataType.MultilineText)]
+        public string Address { get; set; }
+
+        [DisplayName("Latitude")]
+        public double Latitude { get; set; }
+
+        [DisplayName("Longitude")]
+        public double Longitude { get; set; }
+
+        [DisplayName("Registration From")]
+        [DataType(DataType.Date)]
+        public string RegistrationFrom { get; set; }
+
+        [DisplayName("Registration To")]
+        [DataType(DataType.Date)]
+        public string RegistrationTo { get; set; }
+
+        [DisplayName("Package Notes")]
+        [DataType(DataType.MultilineText)]
+        public string PackageNotes { get; set; }
+
+        [DisplayName("Event Agendas")]
+        public ICollection<EventAgenda> EventAgendas { get; set; }
+
+        [DisplayName("Event Packages")]
+        public ICollection<EventPackage> EventPackages { get; set; }
+
+        [DisplayName("Event Activities")]
+        public ICollection<EventActivity> EventActivities { get; set; }
+
+        [DisplayName("Event Galleries")]
+        public ICollection<EventGallery> EventGalleries { get; set; }
+    }
+}

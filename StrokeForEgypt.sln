@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeForEgypt.Entity", "St
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeForEgypt.Repository", "StrokeForEgypt.Repository\StrokeForEgypt.Repository.csproj", "{EF116498-1AC2-4BF0-A7C2-F6C033C1A1B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeForEgypt.Service", "StrokeForEgypt.Service\StrokeForEgypt.Service.csproj", "{A768CB73-6155-47DD-938C-10B94529BB9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{EF116498-1AC2-4BF0-A7C2-F6C033C1A1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF116498-1AC2-4BF0-A7C2-F6C033C1A1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF116498-1AC2-4BF0-A7C2-F6C033C1A1B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A768CB73-6155-47DD-938C-10B94529BB9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A768CB73-6155-47DD-938C-10B94529BB9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A768CB73-6155-47DD-938C-10B94529BB9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A768CB73-6155-47DD-938C-10B94529BB9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{319D7F28-7248-4B11-BD3C-F827FE132D39} = {FAB00C59-A18F-42A4-AAC9-967F1D7777D5}
 		{B8E725DA-6174-4748-BDC0-061A36AEF9B8} = {FAB00C59-A18F-42A4-AAC9-967F1D7777D5}
 		{EF116498-1AC2-4BF0-A7C2-F6C033C1A1B3} = {FAB00C59-A18F-42A4-AAC9-967F1D7777D5}
+		{A768CB73-6155-47DD-938C-10B94529BB9C} = {FAB00C59-A18F-42A4-AAC9-967F1D7777D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F2E129D-0D64-42A5-9604-0B71C96E5AC8}
