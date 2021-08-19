@@ -41,11 +41,8 @@ namespace StrokeForEgypt.Common
         public enum AccessLevelEnum
         {
             ReadAccess = 1,
-            CreateAccess = 2,
-            UpdateAccess = 3,
-            DeleteAccess = 4,
-            CreateOrUpdateAccess = 5,
-            FullAccess = 6,
+            CreateOrUpdateAccess = 2,
+            FullAccess = 3,
         }
 
         public enum SystemUserEnum
@@ -64,6 +61,12 @@ namespace StrokeForEgypt.Common
         public enum SystemRoleEnum
         {
             Developer = 1
+        }
+
+        public enum GenderEnum
+        {
+            Male = 1,
+            Female = 2
         }
     }
 }
