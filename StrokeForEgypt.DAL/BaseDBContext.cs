@@ -95,8 +95,6 @@ namespace StrokeForEgypt.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<BaseEntity>()
                         .Property(x => x.CreatedAt)
                         .HasDefaultValueSql("getdate()");
