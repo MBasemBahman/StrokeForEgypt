@@ -9,7 +9,7 @@ using StrokeForEgypt.Entity.MainDataEntity;
 using StrokeForEgypt.Entity.NewsEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
 using StrokeForEgypt.Entity.SponsorEntity;
-using System;
+using System.Linq;
 using static StrokeForEgypt.Common.EnumData;
 
 namespace StrokeForEgypt.DAL
@@ -95,13 +95,140 @@ namespace StrokeForEgypt.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BaseEntity>()
-                        .Property(x => x.CreatedAt)
-                        .HasDefaultValueSql("getdate()");
+            #region Settings
 
-            modelBuilder.Entity<BaseEntity>()
-                        .Property(x => x.LastModifiedAt)
-                        .HasDefaultValueSql("getdate()");
+            foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes()
+                .Where(t => t.ClrType.IsSubclassOf(typeof(BaseEntity))))
+            {
+                modelBuilder.Entity(
+                    entityType.Name,
+                    x =>
+                    {
+                        x.Property("CreatedAt")
+                            .HasDefaultValueSql("getutcdate()");
+
+                        x.Property("LastModifiedAt")
+                            .HasDefaultValueSql("getutcdate()");
+
+                        x.Property("IsActive")
+                            .HasDefaultValue(true);
+
+                        x.Property("Order")
+                            .HasDefaultValue(0);
+                    });
+            }
+
+            #region AccountEntity
+
+            #region Account
+
+            modelBuilder.Entity<Account>()
+                        .HasIndex(u => u.Token)
+                        .IsUnique();
+
+            modelBuilder.Entity<Account>()
+                        .Property(u => u.Token)
+                        .HasDefaultValueSql("newid()");
+
+            modelBuilder.Entity<Account>()
+                        .Property(u => u.LastActive)
+                        .HasDefaultValueSql("getutcdate()");
+
+            #endregion
+
+            #region AccountDevice
+
+            modelBuilder.Entity<AccountDevice>()
+                       .HasIndex(u => u.NotificationToken)
+                       .IsUnique();
+
+            modelBuilder.Entity<AccountDevice>()
+                        .Property(u => u.LastActive)
+                        .HasDefaultValueSql("getutcdate()");
+
+            #endregion
+
+            #endregion
+
+            #region BookingEntity
+
+            #region BookingMemberActivity
+
+            modelBuilder.Entity<BookingMemberActivity>()
+                       .HasIndex(u => new { u.Fk_BookingMember, u.Fk_EventActivity })
+                       .IsUnique();
+
+            #endregion
+
+            #region BookingState
+
+            modelBuilder.Entity<BookingState>()
+                       .HasIndex(u => u.Name)
+                       .IsUnique();
+
+            #endregion
+
+            #endregion
+
+            #region EventEntity
+
+            #region EventActivity
+
+            modelBuilder.Entity<EventActivity>()
+                       .HasIndex(u => new { u.Fk_Event, u.Name })
+                       .IsUnique();
+
+            #endregion
+
+            #endregion
+
+            #region MainDataEntity
+
+            modelBuilder.Entity<AppView>()
+                       .HasIndex(u => u.Name)
+                       .IsUnique();
+
+            modelBuilder.Entity<Country>()
+                       .HasIndex(u => u.Name)
+                       .IsUnique();
+
+            modelBuilder.Entity<Gender>()
+                       .HasIndex(u => u.Name)
+                       .IsUnique();
+
+            modelBuilder.Entity<City>()
+                       .HasIndex(u => new { u.Fk_Country, u.Name })
+                       .IsUnique();
+
+            #endregion
+
+            #region NotificationEntity
+
+            modelBuilder.Entity<NotificationType>()
+                       .HasIndex(u => u.Name)
+                       .IsUnique();
+
+            modelBuilder.Entity<OpenType>()
+                       .HasIndex(u => u.Name)
+                       .IsUnique();
+
+            modelBuilder.Entity<NotificationAccount>()
+                       .HasIndex(u => new { u.Fk_Account, u.Fk_Notification })
+                       .IsUnique();
+
+            #endregion
+
+            #region SponsorEntity
+
+            modelBuilder.Entity<SponsorType>()
+                       .HasIndex(u => u.Name)
+                       .IsUnique();
+
+            #endregion
+
+            #endregion
+
+            #region SeedData
 
             #region AuthEntity
 
@@ -146,7 +273,7 @@ namespace StrokeForEgypt.DAL
                new SystemUser
                {
                    Id = (int)SystemUserEnum.Developer,
-                   Phone = "01069946657",
+                   Phone = "01000000000",
                    FullName = SystemUserEnum.Developer.ToString(),
                    JobTitle = SystemUserEnum.Developer.ToString(),
                    Email = "Developer@mail.com",
@@ -248,8 +375,10 @@ namespace StrokeForEgypt.DAL
             modelBuilder.Entity<AppAbout>()
            .HasData(
                new AppAbout
-               { Id = 1}
+               { Id = 1 }
            );
+
+            #endregion
 
             #endregion
 

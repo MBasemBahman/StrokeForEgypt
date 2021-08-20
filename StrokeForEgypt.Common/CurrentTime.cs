@@ -8,5 +8,10 @@ namespace StrokeForEgypt.Common
         {
             return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id, timeZone);
         }
+
+        public static DateTime UTC()
+        {
+            return DateTime.UtcNow;
+        }
     }
 }

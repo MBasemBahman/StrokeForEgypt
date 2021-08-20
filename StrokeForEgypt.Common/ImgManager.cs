@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace StrokeForEgypt.Common
 
         public async Task<string> UploudImage(string DomainName, string FileName, IFormFile ImgFile, string FolderURL)
         {
-            string now = CurrentTime.Egypt().ToString("ddMMyyyyhhmmssfffffffK");
+            string now = DateTime.UtcNow.ToString("ddMMyyyyhhmmssfffffffK");
 
             string extension = Path.GetExtension(ImgFile.FileName);
             FileName += now + extension;

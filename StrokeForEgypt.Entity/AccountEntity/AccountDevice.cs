@@ -1,5 +1,4 @@
-﻿using StrokeForEgypt.Common;
-using StrokeForEgypt.Entity.CommonEntity;
+﻿using StrokeForEgypt.Entity.CommonEntity;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -34,6 +33,7 @@ namespace StrokeForEgypt.Entity.AccountEntity
 
         [DisplayName("Last Active")]
         [DataType(DataType.DateTime)]
-        public DateTime LastActive { get; set; } = CurrentTime.Egypt();
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime LastActive { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using StrokeForEgypt.Common;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,11 +12,9 @@ namespace StrokeForEgypt.Entity.CommonEntity
         public int Id { get; set; }
 
         [DisplayName("IsActive")]
-        [DefaultValue(true)]
         public bool IsActive { get; set; } = true;
 
         [DisplayName("Order")]
-        [DefaultValue(0)]
         public int Order { get; set; } = 0;
 
         [DisplayName("Created At")]
