@@ -33,6 +33,6 @@ namespace StrokeForEgypt.Service.EventEntity
         public string Time { get; set; }
 
         [DisplayName("Event Agenda Galleries")]
-        public ICollection<EventAgendaGalleryModel> EventAgendaGallerGalleries { get; set; }
+        public ICollection<EventAgendaGalleryModel> EventAgendaGalleries { get; set; }
     }
 }

@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using StrokeForEgypt.BaseRepository;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.AccountEntity;
-using StrokeForEgypt.Entity.AuthEntity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using static StrokeForEgypt.Common.EnumData;
 using BC = BCrypt.Net.BCrypt;
 
 namespace StrokeForEgypt.Repository.AccountEntityRepository
@@ -27,7 +23,7 @@ namespace StrokeForEgypt.Repository.AccountEntityRepository
         {
             if (!string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password))
             {
-                var account = DBContext.Account
+                Account account = DBContext.Account
                                        .SingleOrDefault(a => !string.IsNullOrEmpty(Email) &&
                                                              !string.IsNullOrEmpty(Password) &&
                                                              a.Email.ToLower().Trim() == Email.ToLower().Trim());
@@ -40,15 +36,35 @@ namespace StrokeForEgypt.Repository.AccountEntityRepository
             return null;
         }
 
-        public bool Login(string LoginToken)
+        public Account Login(string LoginToken)
         {
             if (!string.IsNullOrEmpty(LoginToken))
             {
-                return DBContext.Account.Any(a => !string.IsNullOrEmpty(LoginToken) &&
-                                                  a.LoginToken.ToLower().Trim() == LoginToken.ToLower().Trim());
+                Account account = DBContext.Account
+                                        .SingleOrDefault(a => !string.IsNullOrEmpty(LoginToken) &&
+                                                              a.LoginToken.ToLower().Trim() == LoginToken.ToLower().Trim());
+                if (account != null)
+                {
+                    return account;
+                }
             }
 
-            return false;
+            return null;
+        }
+
+        public Account Login(Guid Token)
+        {
+            if (Token != Guid.Empty)
+            {
+                Account account = DBContext.Account
+                                        .SingleOrDefault(a => a.Token == Token);
+                if (account != null)
+                {
+                    return account;
+                }
+            }
+
+            return null;
         }
 
         public Account Register(Account account)

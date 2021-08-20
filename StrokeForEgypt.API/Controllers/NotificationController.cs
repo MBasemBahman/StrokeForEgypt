@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using StrokeForEgypt.API.Filters;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
-using StrokeForEgypt.Entity.NewsEntity;
+using StrokeForEgypt.Entity.AccountEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
 using StrokeForEgypt.Repository;
 using StrokeForEgypt.Service;
-using StrokeForEgypt.Service.NewsEntity;
 using StrokeForEgypt.Service.NotificationEntity;
 using System;
 using System.Collections.Generic;
@@ -105,6 +105,61 @@ namespace StrokeForEgypt.API.Controllers
                 _Mapper.Map(PagedData, returnData);
 
                 PaginationMetaData<OpenType> PaginationMetaData = new(PagedData)
+                {
+                    PrevoisPageLink = (PagedData.HasPrevious) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber - 1), paging.PageSize }) : null,
+                    NextPageLink = (PagedData.HasNext) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber + 1), paging.PageSize }) : null
+                };
+
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PaginationMetaData).Replace(@"\u0026", "&"));
+
+                Status = new Status(true);
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+            }
+
+            Status.ErrorMessage = EncodeManager.Base64Encode(Status.ErrorMessage);
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
+        /// Get: Get Notifications
+        /// </summary>
+        [HttpGet]
+        [Route(nameof(GetNotifications))]
+        [Authorize]
+        public async Task<List<NotificationModel>> GetNotifications(
+            [FromHeader] Paging paging,
+            [FromHeader] Guid Token,
+            [FromHeader] string Culture,
+            [FromQuery] int Fk_Event = 0,
+            [FromQuery] int Fk_NotificationType = 0,
+            [FromQuery] int Fk_OpenType = 0)
+        {
+            string ActionName = nameof(GetNotifications);
+            List<NotificationModel> returnData = new();
+            Status Status = new();
+
+            try
+            {
+                Account account = _UnitOfWork.Account.Login(Token);
+
+                List<Notification> Data = await _UnitOfWork.Notification.GetAll(a => a.IsActive &&
+                                                                                     (!a.NotificationAccounts.Any() || a.NotificationAccounts.Any(b => b.Fk_Account == account.Id)) &&
+                                                                                     (Fk_Event == 0 || (a.Fk_Event > 0 && a.Fk_Event == Fk_Event)) &&
+                                                                                     (Fk_NotificationType == 0 || a.Fk_NotificationType == Fk_NotificationType) &&
+                                                                                     (Fk_OpenType == 0 || a.Fk_OpenType == Fk_OpenType));
+
+                Data = OrderBy<Notification>.OrderData(Data, paging.OrderBy);
+
+                PagedList<Notification> PagedData = PagedList<Notification>.Create(Data, paging.PageNumber, paging.PageSize);
+
+                _Mapper.Map(PagedData, returnData);
+
+                PaginationMetaData<Notification> PaginationMetaData = new(PagedData)
                 {
                     PrevoisPageLink = (PagedData.HasPrevious) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber - 1), paging.PageSize }) : null,
                     NextPageLink = (PagedData.HasNext) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber + 1), paging.PageSize }) : null

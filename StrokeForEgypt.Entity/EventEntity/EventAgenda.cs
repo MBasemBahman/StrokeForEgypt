@@ -34,6 +34,6 @@ namespace StrokeForEgypt.Entity.EventEntity
         public TimeSpan Time { get; set; }
 
         [DisplayName("Event Agenda Galleries")]
-        public ICollection<EventAgendaGallery> EventAgendaGallerGalleries { get; set; }
+        public ICollection<EventAgendaGallery> EventAgendaGalleries { get; set; }
     }
 }
