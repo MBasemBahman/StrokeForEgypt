@@ -8,6 +8,7 @@ using StrokeForEgypt.Entity.MainDataEntity;
 using StrokeForEgypt.Entity.NewsEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
 using StrokeForEgypt.Entity.SponsorEntity;
+using StrokeForEgypt.Repository.AccountEntityRepository;
 using StrokeForEgypt.Repository.AuthEntityRepository;
 using System.Threading.Tasks;
 
@@ -31,7 +32,7 @@ namespace StrokeForEgypt.Repository
 
         #region AccountEntity
 
-        public BaseRepository<Account> Account => new(_DBContext);
+        public AccountRepository Account => new(_DBContext, _Mapper);
         public BaseRepository<AccountDevice> AccountDevice => new(_DBContext);
 
         #endregion
@@ -71,6 +72,7 @@ namespace StrokeForEgypt.Repository
         #region MainDataEntity
 
         public BaseRepository<AppAbout> AppAbout => new(_DBContext);
+        public BaseRepository<AppView> AppView => new(_DBContext);
         public BaseRepository<City> City => new(_DBContext);
         public BaseRepository<Country> Country => new(_DBContext);
         public BaseRepository<Gallery> Gallery => new(_DBContext);

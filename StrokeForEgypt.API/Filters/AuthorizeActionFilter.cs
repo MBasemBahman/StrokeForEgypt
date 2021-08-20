@@ -23,7 +23,7 @@ namespace StrokeForEgypt.API.Filters
         {
             HttpRequest Request = context.HttpContext.Request;
 
-            string token = Request.Query["Token"];
+            string token = Request.Headers["Token"];
             if (string.IsNullOrEmpty(token) || token != "2f97dc0d-f405-46c6-9219-d3bbb515a638")
             {
                 context.Result = new UnauthorizedResult();

@@ -43,8 +43,8 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetNotificationTypes))]
         public async Task<List<NotificationTypeModel>> GetNotificationTypes(
-            [FromQuery] Paging paging,
-            [FromQuery] string Culture)
+            [FromHeader] Paging paging,
+            [FromHeader] string Culture)
         {
             string ActionName = nameof(GetNotificationTypes);
             List<NotificationTypeModel> returnData = new();
@@ -87,8 +87,8 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetOpenTypes))]
         public async Task<List<OpenTypeModel>> GetOpenTypes(
-            [FromQuery] Paging paging,
-            [FromQuery] string Culture)
+            [FromHeader] Paging paging,
+            [FromHeader] string Culture)
         {
             string ActionName = nameof(GetOpenTypes);
             List<OpenTypeModel> returnData = new();

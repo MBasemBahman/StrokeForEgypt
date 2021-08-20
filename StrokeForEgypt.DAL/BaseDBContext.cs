@@ -64,6 +64,7 @@ namespace StrokeForEgypt.DAL
         public DbSet<Country> Country { get; set; }
         public DbSet<Gallery> Gallery { get; set; }
         public DbSet<Gender> Gender { get; set; }
+        public DbSet<AppView> AppView { get; set; }
 
         #endregion
 
@@ -244,7 +245,6 @@ namespace StrokeForEgypt.DAL
             #endregion
 
             #endregion
-
         }
     }
 }

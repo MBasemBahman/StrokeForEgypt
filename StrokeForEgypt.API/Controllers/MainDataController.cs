@@ -41,7 +41,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetAppAbout))]
         public async Task<AppAboutModel> GetAppAbout(
-            [FromQuery] string Culture)
+            [FromHeader] string Culture)
         {
             AppAboutModel returnData = new();
             Status Status = new();
@@ -71,8 +71,8 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetGalleries))]
         public async Task<List<GalleryModel>> GetGalleries(
-            [FromQuery] Paging paging,
-            [FromQuery] string Culture)
+            [FromHeader] Paging paging,
+            [FromHeader] string Culture)
         {
             string ActionName = nameof(GetGalleries);
             List<GalleryModel> returnData = new();
@@ -116,9 +116,9 @@ namespace StrokeForEgypt.API.Controllers
         [Route(nameof(GetGenders))]
         [Authorize]
         public async Task<List<GenderModel>> GetGenders(
-            [FromQuery] Paging paging,
-            [FromQuery] Guid Token,
-            [FromQuery] string Culture)
+            [FromHeader] Paging paging,
+            [FromHeader] Guid Token,
+            [FromHeader] string Culture)
         {
             string ActionName = nameof(GetGenders);
             List<GenderModel> returnData = new();
@@ -162,10 +162,10 @@ namespace StrokeForEgypt.API.Controllers
         [Route(nameof(GetCountries))]
         [Authorize]
         public async Task<List<CountryModel>> GetCountries(
-            [FromQuery] Paging paging,
-            [FromQuery] Guid Token,
-            [FromQuery] string Name,
-            [FromQuery] string Culture)
+            [FromHeader] Paging paging,
+            [FromHeader] Guid Token,
+            [FromHeader] string Culture,
+            [FromQuery] string Name)
         {
             string ActionName = nameof(GetCountries);
             List<CountryModel> returnData = new();
@@ -210,10 +210,10 @@ namespace StrokeForEgypt.API.Controllers
         [Route(nameof(GetCities))]
         [Authorize]
         public async Task<List<CityModel>> GetCities(
-            [FromQuery] Paging paging,
-            [FromQuery] Guid Token,
+            [FromHeader] Paging paging,
+            [FromHeader] Guid Token,
+            [FromHeader] string Culture,
             [FromQuery] string Name,
-            [FromQuery] string Culture,
             [FromQuery] int Fk_Country = 0)
         {
             string ActionName = nameof(GetCities);

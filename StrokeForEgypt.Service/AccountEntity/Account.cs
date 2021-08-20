@@ -49,4 +49,20 @@ namespace StrokeForEgypt.Service.AccountEntity
         [DisplayName("Bookings")]
         public ICollection<BookingModel> Bookings { get; set; }
     }
+
+    public class LoginModel
+    {
+        [DisplayName("Email")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [DisplayName("Password")]
+        [DataType(DataType.Password)]
+        [PasswordPropertyText]
+        public string Password { get; set; }
+
+        [DisplayName("Login Token")]
+        public string LoginToken { get; set; }
+    }
 }
