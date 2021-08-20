@@ -3,11 +3,13 @@ using StrokeForEgypt.Common;
 using StrokeForEgypt.Entity.AccountEntity;
 using StrokeForEgypt.Entity.AuthEntity;
 using StrokeForEgypt.Entity.BookingEntity;
+using StrokeForEgypt.Entity.CommonEntity;
 using StrokeForEgypt.Entity.EventEntity;
 using StrokeForEgypt.Entity.MainDataEntity;
 using StrokeForEgypt.Entity.NewsEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
 using StrokeForEgypt.Entity.SponsorEntity;
+using System;
 using static StrokeForEgypt.Common.EnumData;
 
 namespace StrokeForEgypt.DAL
@@ -93,6 +95,15 @@ namespace StrokeForEgypt.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<BaseEntity>()
+                        .Property(x => x.CreatedAt)
+                        .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<BaseEntity>()
+                        .Property(x => x.LastModifiedAt)
+                        .HasDefaultValueSql("getdate()");
 
             #region AuthEntity
 
@@ -239,7 +250,7 @@ namespace StrokeForEgypt.DAL
             modelBuilder.Entity<AppAbout>()
            .HasData(
                new AppAbout
-               { }
+               { Id = 1}
            );
 
             #endregion

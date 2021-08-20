@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Entity.AccountEntity
 {
@@ -32,6 +33,7 @@ namespace StrokeForEgypt.Entity.AccountEntity
         public string Password { get; set; }
 
         [DisplayName("Token")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Token { get; set; }
 
         [DisplayName("Login Token")]

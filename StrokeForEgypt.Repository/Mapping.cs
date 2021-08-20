@@ -40,6 +40,10 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
             #endregion
 
+            #region AccountEntity
+
+            #endregion
+
         }
     }
 

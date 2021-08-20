@@ -4,6 +4,31 @@
         <name>StrokeForEgypt.API</name>
     </assembly>
     <members>
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEvents(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Get: Get Events
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEvent(System.Guid,System.String,System.Int32)">
+            <summary>
+            Get: Get Event
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventPackages(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32)">
+            <summary>
+            Get: Get Event Packages
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventActivities(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32)">
+            <summary>
+            Get: Get Event Activities
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventAgendas(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32)">
+            <summary>
+            Get: Get Event Agendas
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetAppAbout(System.String)">
             <summary>
             Get: Get App About
@@ -29,7 +54,7 @@
             Get: Get Cities
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.NewsController.GetNews(StrokeForEgypt.Service.Paging,System.String,System.Int32,System.Boolean)">
+        <member name="M:StrokeForEgypt.API.Controllers.NewsController.GetNews(StrokeForEgypt.Service.Paging,System.String,System.Guid,System.Int32,System.Boolean)">
             <summary>
             Get: Get News
             </summary>
@@ -44,12 +69,17 @@
             Get: Get Open Types
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsorTypes(StrokeForEgypt.Service.Paging,System.String,System.Int32,System.Boolean,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetNotifications(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get: Get Notifications
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsorTypes(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32,System.Boolean,System.Int32)">
             <summary>
             Get: Get Sponsor Types
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsors(StrokeForEgypt.Service.Paging,System.String,System.Int32,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsors(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32,System.Int32)">
             <summary>
             Get: Get Sponsors
             </summary>

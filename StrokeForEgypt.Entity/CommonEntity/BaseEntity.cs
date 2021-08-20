@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Entity.CommonEntity
 {
@@ -12,21 +13,25 @@ namespace StrokeForEgypt.Entity.CommonEntity
         public int Id { get; set; }
 
         [DisplayName("IsActive")]
+        [DefaultValue(true)]
         public bool IsActive { get; set; } = true;
 
         [DisplayName("Order")]
+        [DefaultValue(0)]
         public int Order { get; set; } = 0;
 
         [DisplayName("Created At")]
         [DataType(DataType.DateTime)]
-        public DateTime CreatedAt { get; set; } = CurrentTime.Egypt();
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedAt { get; set; }
 
         [DisplayName("Created By")]
         public string CreatedBy { get; set; }
 
         [DisplayName("Last Modified At")]
         [DataType(DataType.DateTime)]
-        public DateTime LastModifiedAt { get; set; } = CurrentTime.Egypt();
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime LastModifiedAt { get; set; }
 
         [DisplayName("Last Modified By")]
         public string LastModifiedBy { get; set; }
