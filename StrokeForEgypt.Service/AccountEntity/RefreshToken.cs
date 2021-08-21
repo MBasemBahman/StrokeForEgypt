@@ -7,7 +7,6 @@ namespace StrokeForEgypt.Service.AccountEntity
     public class RefreshTokenModel : BaseEntityModel
     {
         [DisplayName("Token")]
-        [DataType(DataType.DateTime)]
         public string Token { get; set; }
 
         [DisplayName("Expires")]

@@ -34,6 +34,7 @@ namespace StrokeForEgypt.Repository
 
         public AccountRepository Account => new(_DBContext, _Mapper);
         public BaseRepository<AccountDevice> AccountDevice => new(_DBContext);
+        public BaseRepository<RefreshToken> RefreshToken => new(_DBContext);
 
         #endregion
 

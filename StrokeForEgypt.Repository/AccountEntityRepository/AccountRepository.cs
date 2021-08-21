@@ -28,7 +28,7 @@ namespace StrokeForEgypt.Repository.AccountEntityRepository
                                                              !string.IsNullOrEmpty(Password) &&
                                                              a.Email.ToLower().Trim() == Email.ToLower().Trim());
 
-                if (account != null && BC.Verify(Password, account.Password))
+                if (account != null && BC.Verify(Password, account.PasswordHash))
                 {
                     return account;
                 }
@@ -69,10 +69,10 @@ namespace StrokeForEgypt.Repository.AccountEntityRepository
 
         public Account Register(Account account)
         {
-            if (!string.IsNullOrEmpty(account.Password))
+            if (!string.IsNullOrEmpty(account.PasswordHash))
             {
                 // hash password
-                account.Password = BC.HashPassword(account.Password);
+                account.PasswordHash = BC.HashPassword(account.PasswordHash);
             }
 
             account.Token = NewToken();

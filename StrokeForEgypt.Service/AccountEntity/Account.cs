@@ -21,11 +21,11 @@ namespace StrokeForEgypt.Service.AccountEntity
         [EmailAddress]
         public string Email { get; set; }
 
-        [DisplayName("Password")]
+        [DisplayName("Password Hash")]
         [Required(ErrorMessage = "{0} is required")]
         [DataType(DataType.Password)]
         [PasswordPropertyText]
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
 
         [DisplayName("Token")]
         public Guid Token { get; set; }

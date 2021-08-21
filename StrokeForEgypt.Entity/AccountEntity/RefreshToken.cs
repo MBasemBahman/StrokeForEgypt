@@ -16,11 +16,11 @@ namespace StrokeForEgypt.Entity.AccountEntity
         public Account Account { get; set; }
 
         [DisplayName("Token")]
-        [DataType(DataType.DateTime)]
         public string Token { get; set; }
 
         [DisplayName("Expires")]
         [DataType(DataType.DateTime)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime Expires { get; set; }
 
         [DisplayName("Created By Ip")]
