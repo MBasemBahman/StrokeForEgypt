@@ -1,6 +1,5 @@
 ﻿using StrokeForEgypt.Service.BookingEntity;
 using StrokeForEgypt.Service.CommonEntity;
-using StrokeForEgypt.Service.NotificationEntity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

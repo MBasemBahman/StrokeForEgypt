@@ -1,6 +1,5 @@
 ﻿using StrokeForEgypt.Service.CommonEntity;
 using StrokeForEgypt.Service.EventEntity;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -41,8 +40,5 @@ namespace StrokeForEgypt.Service.NotificationEntity
 
         [DisplayName("Open Type")]
         public OpenTypeModel OpenType { get; set; }
-
-        [DisplayName("Notification Accounts")]
-        public ICollection<NotificationAccountModel> NotificationAccounts { get; set; }
     }
 }

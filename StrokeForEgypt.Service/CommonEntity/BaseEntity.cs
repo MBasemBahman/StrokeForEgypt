@@ -9,24 +9,12 @@ namespace StrokeForEgypt.Service.CommonEntity
         [DisplayName("Id")]
         public int Id { get; set; }
 
-        [DisplayName("IsActive")]
-        public bool IsActive { get; set; }
-
-        [DisplayName("Order")]
-        public int Order { get; set; }
-
         [DisplayName("Created At")]
         [DataType(DataType.DateTime)]
         public string CreatedAt { get; set; }
 
-        [DisplayName("Created By")]
-        public string CreatedBy { get; set; }
-
         [DisplayName("Last Modified At")]
         [DataType(DataType.DateTime)]
         public string LastModifiedAt { get; set; }
-
-        [DisplayName("Last Modified By")]
-        public string LastModifiedBy { get; set; }
     }
 }

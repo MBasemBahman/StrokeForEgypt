@@ -1,5 +1,13 @@
 ﻿using AutoMapper;
 using StrokeForEgypt.Entity.AuthEntity;
+using StrokeForEgypt.Entity.EventEntity;
+using StrokeForEgypt.Entity.MainDataEntity;
+using StrokeForEgypt.Entity.NewsEntity;
+using StrokeForEgypt.Entity.NotificationEntity;
+using StrokeForEgypt.Service.EventEntity;
+using StrokeForEgypt.Service.MainDataEntity;
+using StrokeForEgypt.Service.NewsEntity;
+using StrokeForEgypt.Service.NotificationEntity;
 using System;
 using System.Globalization;
 
@@ -40,7 +48,62 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
             #endregion
 
-            #region AccountEntity
+            #region EventEntity
+
+            CreateMap<Event, EventModel>()
+                .ForMember(dest => dest.EventAgendas, opt => opt.Ignore())
+                .ForMember(dest => dest.EventPackages, opt => opt.Ignore())
+                .ForMember(dest => dest.EventActivities, opt => opt.Ignore())
+                .ForMember(dest => dest.EventGalleries, opt => opt.Ignore());
+
+            CreateMap<EventActivity, EventActivityModel>();
+
+            CreateMap<EventAgenda, EventAgendaModel>()
+                .ForMember(dest => dest.EventAgendaGalleries, opt => opt.Ignore());
+
+            CreateMap<EventAgendaGallery, EventAgendaGalleryModel>();
+
+            CreateMap<EventGallery, EventGalleryModel>();
+
+            CreateMap<EventPackage, EventPackageModel>();
+
+
+            #endregion
+
+            #region MainDataEntity
+
+            CreateMap<AppAbout, AppAboutModel>();
+
+            CreateMap<City, CityModel>();
+
+            CreateMap<Country, CountryModel>();
+
+            CreateMap<Gallery, GalleryModel>();
+
+            CreateMap<Gender, GenderModel>();
+
+            #endregion
+
+            #region NewsEntity
+
+            CreateMap<News, NewsModel>()
+                .ForMember(dest => dest.Event, opt => opt.Ignore())
+                .ForMember(dest => dest.NewsGalleries, opt => opt.Ignore());
+
+            CreateMap<NewsGallery, NewsGalleryModel>();
+
+            #endregion
+
+            #region NotificationEntity
+
+            CreateMap<Notification, NotificationModel>()
+                .ForMember(dest => dest.Event, opt => opt.Ignore())
+                .ForMember(dest => dest.OpenType, opt => opt.Ignore())
+                .ForMember(dest => dest.NotificationType, opt => opt.Ignore());
+
+            CreateMap<NotificationType, NotificationTypeModel>();
+
+            CreateMap<OpenType, OpenTypeModel>();
 
             #endregion
 
