@@ -53,6 +53,6 @@ namespace StrokeForEgypt.Entity.AccountEntity
         public ICollection<Booking> Bookings { get; set; }
 
         [DisplayName("RefreshTokens")]
-        public ICollection<RefreshToken> RefreshTokens { get; set; }
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
 }

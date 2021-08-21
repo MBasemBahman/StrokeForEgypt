@@ -19,54 +19,6 @@ namespace StrokeForEgypt.Repository.AccountEntityRepository
             _Mapper = Mapper;
         }
 
-        public Account Login(string Email, string Password, string LoginToken)
-        {
-            if (!string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password))
-            {
-                Account account = DBContext.Account
-                                       .SingleOrDefault(a => !string.IsNullOrEmpty(Email) &&
-                                                             !string.IsNullOrEmpty(Password) &&
-                                                             a.Email.ToLower().Trim() == Email.ToLower().Trim());
-
-                if (account != null && BC.Verify(Password, account.PasswordHash))
-                {
-                    return account;
-                }
-            }
-            return null;
-        }
-
-        public Account Login(string LoginToken)
-        {
-            if (!string.IsNullOrEmpty(LoginToken))
-            {
-                Account account = DBContext.Account
-                                        .SingleOrDefault(a => !string.IsNullOrEmpty(LoginToken) &&
-                                                              a.LoginToken.ToLower().Trim() == LoginToken.ToLower().Trim());
-                if (account != null)
-                {
-                    return account;
-                }
-            }
-
-            return null;
-        }
-
-        public Account Login(Guid Token)
-        {
-            if (Token != Guid.Empty)
-            {
-                Account account = DBContext.Account
-                                        .SingleOrDefault(a => a.Token == Token);
-                if (account != null)
-                {
-                    return account;
-                }
-            }
-
-            return null;
-        }
-
         public Account Register(Account account)
         {
             if (!string.IsNullOrEmpty(account.PasswordHash))
@@ -78,6 +30,11 @@ namespace StrokeForEgypt.Repository.AccountEntityRepository
             account.Token = NewToken();
 
             return account;
+        }
+
+        public Account GetByToken(Guid Token)
+        {
+            return DBContext.Account.Single(a => a.Token == Token);
         }
 
         public Guid NewToken()

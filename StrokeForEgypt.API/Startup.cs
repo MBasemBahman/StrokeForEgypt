@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Linq;
+using StrokeForEgypt.API.Authorization;
+using StrokeForEgypt.API.Helpers;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
@@ -32,7 +34,6 @@ namespace StrokeForEgypt.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews()
                     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
@@ -44,17 +45,24 @@ namespace StrokeForEgypt.API
 
             AppMainData.DomainName = Configuration.GetValue<string>("DomainName");
 
+            // configure strongly typed settings object
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            // configure DI for application services
+            services.AddScoped<IJwtUtils, JwtUtils>();
+            services.AddScoped<IUserService, UserService>();
+
             #region Swagger
 
             services.AddSwaggerGen(c =>
             {
+                c.SwaggerDoc("Account", new OpenApiInfo { Title = "Account", Version = "v1" });
                 c.SwaggerDoc("MainData", new OpenApiInfo { Title = "Main Data", Version = "v1" });
                 c.SwaggerDoc("Sponsor", new OpenApiInfo { Title = "Sponsor", Version = "v1" });
                 c.SwaggerDoc("News", new OpenApiInfo { Title = "News", Version = "v1" });
                 c.SwaggerDoc("Notification", new OpenApiInfo { Title = "Notification", Version = "v1" });
                 c.SwaggerDoc("Event", new OpenApiInfo { Title = "Event", Version = "v1" });
                 c.SwaggerDoc("Booking", new OpenApiInfo { Title = "Booking", Version = "v1" });
-                c.SwaggerDoc("Account", new OpenApiInfo { Title = "Account", Version = "v1" });
 
                 string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -69,10 +77,11 @@ namespace StrokeForEgypt.API
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder.SetIsOriginAllowed(origin => true)
                            .AllowAnyMethod()
                            .WithExposedHeaders("X-Status", "X-Pagination")
-                           .AllowAnyHeader();
+                           .AllowAnyHeader()
+                           .AllowCredentials();
                 });
             });
 
@@ -137,13 +146,13 @@ namespace StrokeForEgypt.API
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
+                c.SwaggerEndpoint("/swagger/Account/swagger.json", "Account");
                 c.SwaggerEndpoint("/swagger/MainData/swagger.json", "Main Data");
                 c.SwaggerEndpoint("/swagger/Sponsor/swagger.json", "Sponsor");
                 c.SwaggerEndpoint("/swagger/News/swagger.json", "News");
                 c.SwaggerEndpoint("/swagger/Notification/swagger.json", "Notification");
                 c.SwaggerEndpoint("/swagger/Event/swagger.json", "Event");
                 c.SwaggerEndpoint("/swagger/Booking/swagger.json", "Booking");
-                c.SwaggerEndpoint("/swagger/Account/swagger.json", "Account");
 
             });
 
@@ -155,6 +164,12 @@ namespace StrokeForEgypt.API
             app.UseFileServer();
             app.UseCors();
             app.UseRequestLocalization(app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value);
+
+            // global error handler
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

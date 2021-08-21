@@ -4,6 +4,21 @@
         <name>StrokeForEgypt.API</name>
     </assembly>
     <members>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.Authenticate(StrokeForEgypt.API.Models.Accounts.AuthenticateRequest)">
+            <summary>
+            Post: Authenticate
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.RefreshToken">
+            <summary>
+            Post: RefreshToken
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.RevokeToken(StrokeForEgypt.API.Models.Accounts.RevokeTokenRequest)">
+            <summary>
+            Post: RevokeToken
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEvents(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
             <summary>
             Get: Get Events

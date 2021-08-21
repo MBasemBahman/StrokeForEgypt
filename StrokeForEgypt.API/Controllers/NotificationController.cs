@@ -143,7 +143,7 @@ namespace StrokeForEgypt.API.Controllers
 
             try
             {
-                Account account = _UnitOfWork.Account.Login(Token);
+                Account account = _UnitOfWork.Account.GetByToken(Token);
 
                 List<Notification> Data = await _UnitOfWork.Notification.GetAll(a => a.IsActive &&
                                                                                      (!a.NotificationAccounts.Any() || a.NotificationAccounts.Any(b => b.Fk_Account == account.Id)) &&
