@@ -22,20 +22,20 @@ namespace StrokeForEgypt.API.Controllers
         private readonly UnitOfWork _UnitOfWork;
         private readonly IMapper _Mapper;
         private readonly EntityLocalizationService _Localizer;
-        private readonly IUserService _UserService;
+        private readonly IAccountService _AccountService;
 
         public AccountController(
             BaseDBContext dataContext,
             UnitOfWork unitOfWork,
             IMapper mapper,
             EntityLocalizationService Localizer,
-            IUserService UserService)
+            IAccountService AccountService)
         {
             _DBContext = dataContext;
             _UnitOfWork = unitOfWork;
             _Mapper = mapper;
             _Localizer = Localizer;
-            _UserService = UserService;
+            _AccountService = AccountService;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace StrokeForEgypt.API.Controllers
         [Route(nameof(Authenticate))]
         public IActionResult Authenticate(AuthenticateRequest model)
         {
-            AuthenticateResponse response = _UserService.Authenticate(model, IpAddress());
+            AuthenticateResponse response = _AccountService.Authenticate(model, IpAddress());
             SetTokenCookie(response.RefreshToken);
             return Ok(response);
         }
@@ -60,7 +60,7 @@ namespace StrokeForEgypt.API.Controllers
         public IActionResult RefreshToken()
         {
             string refreshToken = Request.Cookies["refreshToken"];
-            AuthenticateResponse response = _UserService.RefreshToken(refreshToken, IpAddress());
+            AuthenticateResponse response = _AccountService.RefreshToken(refreshToken, IpAddress());
             SetTokenCookie(response.RefreshToken);
             return Ok(response);
         }
@@ -79,7 +79,7 @@ namespace StrokeForEgypt.API.Controllers
                 return BadRequest(new { message = "Token is required" });
             }
 
-            _UserService.RevokeToken(token, IpAddress());
+            _AccountService.RevokeToken(token, IpAddress());
             return Ok(new { message = "Token revoked" });
         }
 

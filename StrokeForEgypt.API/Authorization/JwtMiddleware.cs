@@ -18,14 +18,14 @@ namespace StrokeForEgypt.API.Authorization
             _appSettings = appSettings.Value;
         }
 
-        public async Task Invoke(HttpContext context, IUserService userService, IJwtUtils jwtUtils)
+        public async Task Invoke(HttpContext context, IAccountService accountService, IJwtUtils jwtUtils)
         {
             string token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            int? userId = jwtUtils.ValidateJwtToken(token);
-            if (userId != null)
+            int? accountId = jwtUtils.ValidateJwtToken(token);
+            if (accountId != null)
             {
-                // attach user to context on successful jwt validation
-                context.Items["User"] = userService.GetById(userId.Value);
+                // attach account to context on successful jwt validation
+                context.Items["Account"] = accountService.GetById(accountId.Value);
             }
 
             await _next(context);

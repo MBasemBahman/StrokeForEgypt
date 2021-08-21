@@ -11,7 +11,7 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace StrokeForEgypt.API.Services
 {
-    public interface IUserService
+    public interface IAccountService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress);
         AuthenticateResponse RefreshToken(string token, string ipAddress);
@@ -19,13 +19,13 @@ namespace StrokeForEgypt.API.Services
         Account GetById(int id);
     }
 
-    public class UserService : IUserService
+    public class AccountService : IAccountService
     {
         private readonly BaseDBContext _context;
         private readonly IJwtUtils _jwtUtils;
         private readonly AppSettings _appSettings;
 
-        public UserService(
+        public AccountService(
             BaseDBContext context,
             IJwtUtils jwtUtils,
             IOptions<AppSettings> appSettings)
@@ -42,7 +42,7 @@ namespace StrokeForEgypt.API.Services
             // validate
             if (account == null || !BC.Verify(model.Password, account.PasswordHash))
             {
-                throw new AppException("Username or password is incorrect");
+                throw new AppException("Email or password is incorrect");
             }
 
             // authentication successful so generate jwt and refresh tokens
@@ -50,7 +50,7 @@ namespace StrokeForEgypt.API.Services
             RefreshToken refreshToken = _jwtUtils.GenerateRefreshToken(ipAddress);
             account.RefreshTokens.Add(refreshToken);
 
-            // remove old refresh tokens from user
+            // remove old refresh tokens from account
             RemoveOldRefreshTokens(account);
 
             // save changes to db
@@ -62,14 +62,14 @@ namespace StrokeForEgypt.API.Services
 
         public AuthenticateResponse RefreshToken(string token, string ipAddress)
         {
-            Account user = GetUserByRefreshToken(token);
-            RefreshToken refreshToken = user.RefreshTokens.Single(x => x.Token == token);
+            Account account = GetAccountByRefreshToken(token);
+            RefreshToken refreshToken = account.RefreshTokens.Single(x => x.Token == token);
 
             if (refreshToken.IsRevoked)
             {
                 // revoke all descendant tokens in case this token has been compromised
-                RevokeDescendantRefreshTokens(refreshToken, user, ipAddress, $"Attempted reuse of revoked ancestor token: {token}");
-                _context.Update(user);
+                RevokeDescendantRefreshTokens(refreshToken, account, ipAddress, $"Attempted reuse of revoked ancestor token: {token}");
+                _context.Update(account);
                 _context.SaveChanges();
             }
 
@@ -80,25 +80,25 @@ namespace StrokeForEgypt.API.Services
 
             // replace old refresh token with a new one (rotate token)
             RefreshToken newRefreshToken = RotateRefreshToken(refreshToken, ipAddress);
-            user.RefreshTokens.Add(newRefreshToken);
+            account.RefreshTokens.Add(newRefreshToken);
 
-            // remove old refresh tokens from user
-            RemoveOldRefreshTokens(user);
+            // remove old refresh tokens from account
+            RemoveOldRefreshTokens(account);
 
             // save changes to db
-            _context.Update(user);
+            _context.Update(account);
             _context.SaveChanges();
 
             // generate new jwt
-            string jwtToken = _jwtUtils.GenerateJwtToken(user);
+            string jwtToken = _jwtUtils.GenerateJwtToken(account);
 
-            return new AuthenticateResponse(user, jwtToken, newRefreshToken.Token);
+            return new AuthenticateResponse(account, jwtToken, newRefreshToken.Token);
         }
 
         public void RevokeToken(string token, string ipAddress)
         {
-            Account user = GetUserByRefreshToken(token);
-            RefreshToken refreshToken = user.RefreshTokens.Single(x => x.Token == token);
+            Account account = GetAccountByRefreshToken(token);
+            RefreshToken refreshToken = account.RefreshTokens.Single(x => x.Token == token);
 
             if (!refreshToken.IsActive)
             {
@@ -107,7 +107,7 @@ namespace StrokeForEgypt.API.Services
 
             // revoke token and save
             RevokeRefreshToken(refreshToken, ipAddress, "Revoked without replacement");
-            _context.Update(user);
+            _context.Update(account);
             _context.SaveChanges();
         }
 
@@ -116,7 +116,7 @@ namespace StrokeForEgypt.API.Services
             Account account = _context.Account.Find(id);
             if (account == null)
             {
-                throw new KeyNotFoundException("User not found");
+                throw new KeyNotFoundException("Account not found");
             }
 
             return account;
@@ -124,7 +124,7 @@ namespace StrokeForEgypt.API.Services
 
         // helper methods
 
-        private Account GetUserByRefreshToken(string token)
+        private Account GetAccountByRefreshToken(string token)
         {
             Account account = _context.Account.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
 
@@ -145,7 +145,7 @@ namespace StrokeForEgypt.API.Services
 
         private void RemoveOldRefreshTokens(Account account)
         {
-            // remove old inactive refresh tokens from user based on TTL in app settings
+            // remove old inactive refresh tokens from account based on TTL in app settings
             account.RefreshTokens.RemoveAll(x =>
                 !x.IsActive &&
                 x.CreatedAt.AddDays(_appSettings.RefreshTokenTTL) <= DateTime.UtcNow);
