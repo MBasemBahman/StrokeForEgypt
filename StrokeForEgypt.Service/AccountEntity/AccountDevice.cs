@@ -7,13 +7,6 @@ namespace StrokeForEgypt.Service.AccountEntity
 {
     public class AccountDeviceModel : BaseEntityModel
     {
-        [ForeignKey("Account")]
-        [DisplayName(nameof(Account))]
-        public int Fk_Account { get; set; }
-
-        [DisplayName("Account")]
-        public AccountModel Account { get; set; }
-
         [DisplayName("Notification Token")]
         [Required(ErrorMessage = "{0} is required")]
         public string NotificationToken { get; set; }

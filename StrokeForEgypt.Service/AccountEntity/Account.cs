@@ -38,15 +38,6 @@ namespace StrokeForEgypt.Service.AccountEntity
         [DisplayName("Last Active")]
         [DataType(DataType.DateTime)]
         public string LastActive { get; set; }
-
-        [DisplayName("Account Devices")]
-        public ICollection<AccountDeviceModel> AccountDevices { get; set; }
-
-        [DisplayName("Notification Accounts")]
-        public ICollection<NotificationAccountModel> NotificationAccounts { get; set; }
-
-        [DisplayName("Bookings")]
-        public ICollection<BookingModel> Bookings { get; set; }
     }
 
     public class LoginModel

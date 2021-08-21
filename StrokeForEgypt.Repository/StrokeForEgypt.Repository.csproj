@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\StrokeForEgypt.BaseRepository\StrokeForEgypt.BaseRepository.csproj" />
     <ProjectReference Include="..\StrokeForEgypt.DAL\StrokeForEgypt.DAL.csproj" />
+    <ProjectReference Include="..\StrokeForEgypt.Service\StrokeForEgypt.Service.csproj" />
   </ItemGroup>
 
 </Project>
