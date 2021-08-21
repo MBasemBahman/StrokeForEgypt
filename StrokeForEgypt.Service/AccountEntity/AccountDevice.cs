@@ -1,7 +1,6 @@
 ﻿using StrokeForEgypt.Service.CommonEntity;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Service.AccountEntity
 {

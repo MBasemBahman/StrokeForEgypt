@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using StrokeForEgypt.API.Filters;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
@@ -41,7 +40,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetSponsorTypes))]
-        [Authorize]
         public async Task<List<SponsorTypeModel>> GetSponsorTypes(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,
@@ -116,7 +114,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetSponsors))]
-        [Authorize]
         public async Task<List<SponsorModel>> GetSponsors(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,

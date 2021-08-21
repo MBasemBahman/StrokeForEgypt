@@ -51,5 +51,8 @@ namespace StrokeForEgypt.Entity.AccountEntity
 
         [DisplayName("Bookings")]
         public ICollection<Booking> Bookings { get; set; }
+
+        [DisplayName("RefreshTokens")]
+        public ICollection<RefreshToken> RefreshTokens { get; set; }
     }
 }

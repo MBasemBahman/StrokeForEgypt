@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using StrokeForEgypt.API.Filters;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
@@ -42,7 +41,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetEvents))]
-        [Authorize]
         public async Task<List<EventModel>> GetEvents(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,
@@ -98,7 +96,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetEvent))]
-        [Authorize]
         public EventModel GetEvent(
             [FromHeader] Guid Token,
             [FromHeader] string Culture,
@@ -164,7 +161,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetEventPackages))]
-        [Authorize]
         public async Task<List<EventPackageModel>> GetEventPackages(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,
@@ -212,7 +208,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetEventActivities))]
-        [Authorize]
         public async Task<List<EventActivityModel>> GetEventActivities(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,
@@ -260,7 +255,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetEventAgendas))]
-        [Authorize]
         public List<EventAgendaModel> GetEventAgendas(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,

@@ -11,17 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{88E8F31F-354
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{FAB00C59-A18F-42A4-AAC9-967F1D7777D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeForEgypt.BaseRepository", "StrokeForEgypt.BaseRepository\StrokeForEgypt.BaseRepository.csproj", "{1DB2E098-F544-4931-ADB5-4CD3082C2D46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrokeForEgypt.BaseRepository", "StrokeForEgypt.BaseRepository\StrokeForEgypt.BaseRepository.csproj", "{1DB2E098-F544-4931-ADB5-4CD3082C2D46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeForEgypt.DAL", "StrokeForEgypt.DAL\StrokeForEgypt.DAL.csproj", "{DDC1056B-912E-4D44-B6C6-1C1E54603D0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrokeForEgypt.DAL", "StrokeForEgypt.DAL\StrokeForEgypt.DAL.csproj", "{DDC1056B-912E-4D44-B6C6-1C1E54603D0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeForEgypt.Common", "StrokeForEgypt.Common\StrokeForEgypt.Common.csproj", "{319D7F28-7248-4B11-BD3C-F827FE132D39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrokeForEgypt.Common", "StrokeForEgypt.Common\StrokeForEgypt.Common.csproj", "{319D7F28-7248-4B11-BD3C-F827FE132D39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeForEgypt.Entity", "StrokeForEgypt.Entity\StrokeForEgypt.Entity.csproj", "{B8E725DA-6174-4748-BDC0-061A36AEF9B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrokeForEgypt.Entity", "StrokeForEgypt.Entity\StrokeForEgypt.Entity.csproj", "{B8E725DA-6174-4748-BDC0-061A36AEF9B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeForEgypt.Repository", "StrokeForEgypt.Repository\StrokeForEgypt.Repository.csproj", "{EF116498-1AC2-4BF0-A7C2-F6C033C1A1B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrokeForEgypt.Repository", "StrokeForEgypt.Repository\StrokeForEgypt.Repository.csproj", "{EF116498-1AC2-4BF0-A7C2-F6C033C1A1B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeForEgypt.Service", "StrokeForEgypt.Service\StrokeForEgypt.Service.csproj", "{A768CB73-6155-47DD-938C-10B94529BB9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrokeForEgypt.Service", "StrokeForEgypt.Service\StrokeForEgypt.Service.csproj", "{A768CB73-6155-47DD-938C-10B94529BB9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using StrokeForEgypt.API.Filters;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
@@ -114,7 +113,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetGenders))]
-        [Authorize]
         public async Task<List<GenderModel>> GetGenders(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,
@@ -160,7 +158,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetCountries))]
-        [Authorize]
         public async Task<List<CountryModel>> GetCountries(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,
@@ -208,7 +205,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetCities))]
-        [Authorize]
         public async Task<List<CityModel>> GetCities(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using StrokeForEgypt.API.Filters;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
@@ -41,7 +40,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetNews))]
-        [Authorize]
         public async Task<List<NewsModel>> GetNews(
             [FromHeader] Paging paging,
             [FromHeader] string Culture,

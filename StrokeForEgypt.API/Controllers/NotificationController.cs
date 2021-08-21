@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using StrokeForEgypt.API.Filters;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
@@ -130,7 +129,6 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetNotifications))]
-        [Authorize]
         public async Task<List<NotificationModel>> GetNotifications(
             [FromHeader] Paging paging,
             [FromHeader] Guid Token,

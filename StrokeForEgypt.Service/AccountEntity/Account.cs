@@ -1,7 +1,5 @@
-﻿using StrokeForEgypt.Service.BookingEntity;
-using StrokeForEgypt.Service.CommonEntity;
+﻿using StrokeForEgypt.Service.CommonEntity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -38,21 +36,5 @@ namespace StrokeForEgypt.Service.AccountEntity
         [DisplayName("Last Active")]
         [DataType(DataType.DateTime)]
         public string LastActive { get; set; }
-    }
-
-    public class LoginModel
-    {
-        [DisplayName("Email")]
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [DisplayName("Password")]
-        [DataType(DataType.Password)]
-        [PasswordPropertyText]
-        public string Password { get; set; }
-
-        [DisplayName("Login Token")]
-        public string LoginToken { get; set; }
     }
 }
