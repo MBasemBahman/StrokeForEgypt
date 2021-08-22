@@ -19,9 +19,24 @@
             Post: Authenticate
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.AccountController.AddAccountDevice(StrokeForEgypt.Service.AccountEntity.AccountDeviceModel)">
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.Register(StrokeForEgypt.Service.AccountEntity.RegisterModel)">
             <summary>
-            Post: Add Account Device
+            Post: Create Account
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.EditProfile(StrokeForEgypt.Service.AccountEntity.EditProfileModel)">
+            <summary>
+            Post: Edit Profile
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.ChangePassword(StrokeForEgypt.Service.AccountEntity.ChangePasswordModel)">
+            <summary>
+            Post: Change Password
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.AddDevice(StrokeForEgypt.Service.AccountEntity.AccountDeviceModel)">
+            <summary>
+            Post: Add Device
             </summary>
         </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.RefreshToken">

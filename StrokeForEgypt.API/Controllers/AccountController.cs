@@ -13,6 +13,7 @@ using StrokeForEgypt.Service.AccountEntity;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using BC = BCrypt.Net.BCrypt;
 
 namespace StrokeForEgypt.API.Controllers
 {
@@ -151,6 +152,8 @@ namespace StrokeForEgypt.API.Controllers
             try
             {
                 returnData = _AccountService.Authenticate(model, IpAddress());
+
+                SetJwtTokenHeader(returnData.JwtToken);
                 SetTokenCookie(returnData.RefreshToken);
 
                 Status = new Status(true);
@@ -171,11 +174,164 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
-        /// Post: Add Account Device
+        /// Post: Create Account
         /// </summary>
         [HttpPost]
-        [Route(nameof(AddAccountDevice))]
-        public async void AddAccountDevice([FromBody] AccountDeviceModel model)
+        [AllowAnonymous]
+        [Route(nameof(Register))]
+        public async Task<AuthenticateResponse> Register([FromBody] RegisterModel model)
+        {
+            AuthenticateResponse returnData = new();
+
+            Status Status = new();
+
+            try
+            {
+                if (string.IsNullOrEmpty(model.LoginToken) && string.IsNullOrEmpty(model.LoginToken))
+                {
+                    Status.ErrorMessage = _Localizer.Get("Complete your profile!");
+                }
+                else if (!string.IsNullOrEmpty(model.Email) && _UnitOfWork.Account.Any(a => a.Email == model.Email))
+                {
+                    Status.ErrorMessage = _Localizer.Get("Email already registered!");
+                }
+                else if (!string.IsNullOrEmpty(model.LoginToken) && _UnitOfWork.Account.Any(a => a.LoginTokenHash == BC.HashPassword(model.LoginToken)))
+                {
+                    Status.ErrorMessage = _Localizer.Get("You already registered!");
+                }
+                else
+                {
+                    Account account = new();
+                    _Mapper.Map(model, account);
+
+                    account = _UnitOfWork.Account.Register(account);
+
+                    _UnitOfWork.Account.CreateEntity(account);
+                    await _UnitOfWork.Save();
+
+                    returnData = _AccountService.Authenticate(new AuthenticateRequest
+                    {
+                        Email = model.Email,
+                        Password = model.Password,
+                        LoginToken = model.LoginToken
+                    }, IpAddress());
+
+                    SetJwtTokenHeader(returnData.JwtToken);
+                    SetTokenCookie(returnData.RefreshToken);
+
+                    Status = new Status(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Status.ErrorMessage = _Localizer.Get(ex.Message);
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
+        /// Post: Edit Profile
+        /// </summary>
+        [HttpPost]
+        [Route(nameof(EditProfile))]
+        public async void EditProfile([FromBody] EditProfileModel model)
+        {
+            Status Status = new();
+
+            try
+            {
+                Account account = (Account)Request.HttpContext.Items["Account"];
+
+                if (!string.IsNullOrEmpty(model.Phone) && _UnitOfWork.Account.Any(a => a.Id != account.Id && a.Phone == model.Phone))
+                {
+                    Status.ErrorMessage = _Localizer.Get("Phone already registered!");
+                }
+                else if (!string.IsNullOrEmpty(model.Email) && _UnitOfWork.Account.Any(a => a.Id != account.Id && a.Email == model.Email))
+                {
+                    Status.ErrorMessage = _Localizer.Get("Email already registered!");
+                }
+                else
+                {
+                    Account data = await _UnitOfWork.Account.GetByID(account.Id);
+
+                    _Mapper.Map(model, data);
+
+                    data.LastModifiedAt = DateTime.UtcNow;
+
+                    _UnitOfWork.Account.UpdateEntity(data);
+                    await _UnitOfWork.Save();
+
+                    Status = new Status(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+        }
+
+        /// <summary>
+        /// Post: Change Password
+        /// </summary>
+        [HttpPost]
+        [Route(nameof(ChangePassword))]
+        public async void ChangePassword([FromBody] ChangePasswordModel model)
+        {
+            Status Status = new();
+
+            try
+            {
+                Account account = (Account)Request.HttpContext.Items["Account"];
+
+                if (!BC.Verify(model.OldPassword, account.PasswordHash))
+                {
+                    Status.ErrorMessage = _Localizer.Get("Old password is incorrect!");
+                }
+                else
+                {
+                    Account data = await _UnitOfWork.Account.GetByID(account.Id);
+
+                    data.PasswordHash = BC.HashPassword(account.PasswordHash);
+                    data.LastModifiedAt = DateTime.UtcNow;
+
+                    _UnitOfWork.Account.UpdateEntity(data);
+                    await _UnitOfWork.Save();
+
+                    Status = new Status(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+        }
+
+        /// <summary>
+        /// Post: Add Device
+        /// </summary>
+        [HttpPost]
+        [Route(nameof(AddDevice))]
+        public async void AddDevice([FromBody] AccountDeviceModel model)
         {
             Status Status = new();
 
@@ -299,6 +455,11 @@ namespace StrokeForEgypt.API.Controllers
                 Expires = DateTime.UtcNow.AddDays(7)
             };
             Response.Cookies.Append("refreshToken", token, cookieOptions);
+        }
+
+        private void SetJwtTokenHeader(string token)
+        {
+            Response.Headers.Add("Authorization", token);
         }
 
         private string IpAddress()

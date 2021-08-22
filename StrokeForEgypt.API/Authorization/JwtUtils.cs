@@ -78,14 +78,14 @@ namespace StrokeForEgypt.API.Authorization
 
         public RefreshToken GenerateRefreshToken(string ipAddress)
         {
-            // generate token that is valid for 7 days
+            // generate token that is valid for 14 days
             using RNGCryptoServiceProvider rngCryptoServiceProvider = new();
             byte[] randomBytes = new byte[64];
             rngCryptoServiceProvider.GetBytes(randomBytes);
             RefreshToken refreshToken = new()
             {
                 Token = Convert.ToBase64String(randomBytes),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddDays(14),
                 CreatedAt = DateTime.UtcNow,
                 CreatedByIp = ipAddress
             };

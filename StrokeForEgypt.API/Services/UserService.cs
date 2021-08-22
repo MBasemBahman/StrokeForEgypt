@@ -51,7 +51,7 @@ namespace StrokeForEgypt.API.Services
             }
             else if (!string.IsNullOrEmpty(model.LoginToken))
             {
-                string LoginToken = BC.HashPassword(account.LoginTokenHash);
+                string LoginToken = BC.HashPassword(model.LoginToken);
                 account = _context.Account.SingleOrDefault(x => x.LoginTokenHash == model.LoginToken);
 
                 // validate
