@@ -138,12 +138,12 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
-        /// Post: Authenticate
+        /// Post: Login
         /// </summary>
         [HttpPost]
         [AllowAnonymous]
-        [Route(nameof(Authenticate))]
-        public AuthenticateResponse Authenticate([FromBody] AuthenticateRequest model)
+        [Route(nameof(Login))]
+        public AuthenticateResponse Login([FromBody] AuthenticateRequest model)
         {
             AuthenticateResponse returnData = new();
 

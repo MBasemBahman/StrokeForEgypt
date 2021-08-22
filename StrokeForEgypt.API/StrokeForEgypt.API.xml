@@ -14,9 +14,9 @@
             Post: Forget Password
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.AccountController.Authenticate(StrokeForEgypt.API.Models.Accounts.AuthenticateRequest)">
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.Login(StrokeForEgypt.API.Models.Accounts.AuthenticateRequest)">
             <summary>
-            Post: Authenticate
+            Post: Login
             </summary>
         </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.Register(StrokeForEgypt.Service.AccountEntity.RegisterModel)">

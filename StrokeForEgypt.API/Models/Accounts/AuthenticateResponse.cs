@@ -7,6 +7,8 @@ namespace StrokeForEgypt.API.Models.Accounts
     {
         public string FullName { get; set; }
 
+        public string ImageURL { get; set; }
+
         [JsonIgnore] // refresh token is returned in http only cookie
         public string JwtToken { get; set; }
 
@@ -21,6 +23,7 @@ namespace StrokeForEgypt.API.Models.Accounts
         public AuthenticateResponse(Account account, string jwtToken, string refreshToken)
         {
             FullName = account.FullName;
+            ImageURL = account.ImageURL;
             JwtToken = jwtToken;
             RefreshToken = refreshToken;
         }

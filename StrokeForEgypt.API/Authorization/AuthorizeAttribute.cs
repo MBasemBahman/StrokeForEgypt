@@ -20,14 +20,20 @@ namespace StrokeForEgypt.API.Authorization
             if (allowAnonymous)
             {
                 string secret = context.HttpContext.Request.Cookies["Secret"];
+                string AppSecret = context.HttpContext.Request.Cookies["App-Secret"];
+                string UserAgent = context.HttpContext.Request.Headers["User-Agent"];
 
                 IServiceProvider services = context.HttpContext.RequestServices;
 
                 AppSettings _appSettings = services.GetService<IOptions<AppSettings>>().Value;
 
-                if (secret != _appSettings.Secret)
+                if ((secret != _appSettings.Secret) ||
+                    (string.IsNullOrEmpty(UserAgent)) ||
+                    !(UserAgent == "Android" && AppSecret == _appSettings.AndroidSecret) ||
+                    !(UserAgent == "IOS" && AppSecret == _appSettings.IOSSecret) ||
+                    !(UserAgent == "Web" && AppSecret == _appSettings.WebSecret))
                 {
-                    context.Result = new JsonResult(new { message = "NotFound" }) { StatusCode = StatusCodes.Status404NotFound };
+                    context.Result = new JsonResult(new { message = "BadRequest" }) { StatusCode = StatusCodes.Status400BadRequest };
                 }
 
                 return;
