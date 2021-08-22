@@ -22,6 +22,7 @@ namespace StrokeForEgypt.Repository
             MapperConfiguration configuration = new(cfg =>
             {
                 cfg.CreateMap<DateTime, string>().ConvertUsing(new DateTimeTypeConverter());
+                cfg.CreateMap<DateTime, string>().ConvertUsing(new DateTimeTypeConverter());
 
                 cfg.AllowNullCollections = true;
             });
