@@ -14,6 +14,9 @@ namespace StrokeForEgypt.Service.EventEntity
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
+        [DisplayName("OriginalPrice")]
+        public double OriginalPrice { get; set; }
+
         [DisplayName("Price")]
         public double Price { get; set; }
 
