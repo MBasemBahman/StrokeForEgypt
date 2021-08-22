@@ -154,6 +154,7 @@ namespace StrokeForEgypt.API
                 c.SwaggerEndpoint("/swagger/Event/swagger.json", "Event");
                 c.SwaggerEndpoint("/swagger/Booking/swagger.json", "Booking");
 
+                c.RoutePrefix = "docs";
             });
 
             AppMainData.WebRootPath = env.ContentRootPath;
