@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using StrokeForEgypt.API.Authorization;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace StrokeForEgypt.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Produces("application/json")]
     [ApiExplorerSettings(GroupName = "News")]

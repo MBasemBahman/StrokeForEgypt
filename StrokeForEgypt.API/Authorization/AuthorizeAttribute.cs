@@ -15,54 +15,57 @@ namespace StrokeForEgypt.API.Authorization
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+            string secret = context.HttpContext.Request.Cookies["Secret"];
+            string ApiKey = context.HttpContext.Request.Cookies["Api-Key"];
+            string UserAgent = context.HttpContext.Request.Headers["User-Agent"];
+
+            IServiceProvider services = context.HttpContext.RequestServices;
+
+            AppSettings _appSettings = services.GetService<IOptions<AppSettings>>().Value;
+
+            if (string.IsNullOrEmpty(secret) ||
+                string.IsNullOrEmpty(ApiKey) ||
+                string.IsNullOrEmpty(UserAgent))
+            {
+                context.Result = new JsonResult(new { message = "BadRequest" }) { StatusCode = StatusCodes.Status400BadRequest };
+            }
+            else if (secret != _appSettings.Secret)
+            {
+                context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+            }
+            else
+            {
+                if (UserAgent == "Android")
+                {
+                    if (ApiKey != _appSettings.AndroidAPIKEY)
+                    {
+                        context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                    }
+                }
+                else if (UserAgent == "IOS")
+                {
+                    if (ApiKey != _appSettings.IOSAPIKEY)
+                    {
+                        context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                    }
+                }
+                else if (UserAgent == "Web")
+                {
+                    if (ApiKey != _appSettings.WebAPIKEY)
+                    {
+                        context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                    }
+                }
+                else
+                {
+                    context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                }
+            }
+
             // skip authorization if action is decorated with [AllowAnonymous] attribute
             bool allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
             if (allowAnonymous)
             {
-                string secret = context.HttpContext.Request.Cookies["Secret"];
-                string ApiKey = context.HttpContext.Request.Cookies["Api-Key"];
-                string UserAgent = context.HttpContext.Request.Headers["User-Agent"];
-
-                IServiceProvider services = context.HttpContext.RequestServices;
-
-                AppSettings _appSettings = services.GetService<IOptions<AppSettings>>().Value;
-
-                if (string.IsNullOrEmpty(secret) ||
-                    string.IsNullOrEmpty(ApiKey) ||
-                    string.IsNullOrEmpty(UserAgent))
-                {
-                    context.Result = new JsonResult(new { message = "BadRequest" }) { StatusCode = StatusCodes.Status400BadRequest };
-                }
-
-                if (secret != _appSettings.Secret)
-                {
-                    context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
-                }
-                else
-                {
-                    if (UserAgent == "Android")
-                    {
-                        if (ApiKey != _appSettings.AndroidAPIKEY)
-                        {
-                            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
-                        }
-                    }
-                    else if (UserAgent == "IOS")
-                    {
-                        if (ApiKey != _appSettings.IOSAPIKEY)
-                        {
-                            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
-                        }
-                    }
-                    else if (UserAgent == "Web")
-                    {
-                        if (ApiKey != _appSettings.WebAPIKEY)
-                        {
-                            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
-                        }
-                    }
-                }
-
                 return;
             }
 

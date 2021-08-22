@@ -18,8 +18,8 @@ namespace StrokeForEgypt.Common
         {
             try
             {
-                string _email = "support@mail.com";
-                string _epass = "Password123";
+                string _email = "verificationcode@strokeforegypt.com";
+                string _epass = "&1^rOz#gpFgl";
                 string _dispName = "Stroke For Egypt";
 
                 MailMessage myMessage = new()
@@ -36,8 +36,8 @@ namespace StrokeForEgypt.Common
                 using SmtpClient smtp = new()
                 {
                     EnableSsl = true,
-                    Host = "smtp.gmail.com",
-                    Port = 587,
+                    Host = "mail.strokeforegypt.com",
+                    Port = 465,
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential(_email, _epass),
                     DeliveryMethod = SmtpDeliveryMethod.Network
