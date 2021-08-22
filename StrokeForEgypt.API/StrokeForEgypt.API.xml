@@ -4,6 +4,16 @@
         <name>StrokeForEgypt.API</name>
     </assembly>
     <members>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.SendVerificationCode(StrokeForEgypt.Service.AccountEntity.EmailCode)">
+            <summary>
+            Post: Send Verification Code
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.ForgetPassword(StrokeForEgypt.Service.AccountEntity.EmailCode)">
+            <summary>
+            Post: Forget Password
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.Authenticate(StrokeForEgypt.API.Models.Accounts.AuthenticateRequest)">
             <summary>
             Post: Authenticate

@@ -20,4 +20,13 @@ namespace StrokeForEgypt.Service.AccountEntity
         [EmailAddress]
         public string Email { get; set; }
     }
+
+    public class EmailCode
+    {
+        [Required(ErrorMessage = "{0} is required")]
+        [DisplayName("Email")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
 }

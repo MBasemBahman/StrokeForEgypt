@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StrokeForEgypt.API.Authorization;
 using StrokeForEgypt.API.Models.Accounts;
 using StrokeForEgypt.API.Services;
+using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.AccountEntity;
 using StrokeForEgypt.Repository;
@@ -11,6 +12,7 @@ using StrokeForEgypt.Service;
 using StrokeForEgypt.Service.AccountEntity;
 using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace StrokeForEgypt.API.Controllers
 {
@@ -40,6 +42,98 @@ namespace StrokeForEgypt.API.Controllers
             _Mapper = mapper;
             _Localizer = Localizer;
             _AccountService = AccountService;
+        }
+
+        /// <summary>
+        /// Post: Send Verification Code
+        /// </summary>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route(nameof(SendVerificationCode))]
+        public async Task<string> SendVerificationCode([FromBody] EmailCode model)
+        {
+            string returnData = "";
+
+            Status Status = new();
+
+            try
+            {
+                if (!_UnitOfWork.Account.Any(a => a.Email == model.Email))
+                {
+                    returnData = RandomGenerator.RandomString(3, true) + RandomGenerator.RandomNumber(100, 999);
+
+                    // Send Email
+                    string Title = "'Stroke For Egypt' password code";
+                    string Message = "Your verification code is: " + returnData;
+
+                    await EmailManager.SendMail(model.Email, Title, Message);
+
+                    Status = new Status(true);
+                }
+                else
+                {
+                    Status.ErrorMessage = _Localizer.Get("Email already registered!");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
+        /// Post: Forget Password
+        /// </summary>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route(nameof(ForgetPassword))]
+        public async Task<string> ForgetPassword([FromBody] EmailCode model)
+        {
+            string returnData = "";
+
+            Status Status = new();
+
+            try
+            {
+                if (_UnitOfWork.Account.Any(a => a.Email == model.Email))
+                {
+                    returnData = RandomGenerator.RandomString(3, true) + RandomGenerator.RandomNumber(100, 999);
+
+                    // Send Email
+                    string Title = "'Stroke For Egypt' password code";
+                    string Message = "Your verification code is: " + returnData;
+
+                    await EmailManager.SendMail(model.Email, Title, Message);
+
+                    Status = new Status(true);
+                }
+                else
+                {
+                    Status.ErrorMessage = _Localizer.Get("Email not registered register now!");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
         }
 
         /// <summary>
@@ -136,7 +230,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
                 else
                 {
-                    Status.ErrorMessage = _Localizer.Get("Token is required");
+                    Status.ErrorMessage = _Localizer.Get("Token is required!");
                 }
 
             }
@@ -177,7 +271,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
                 else
                 {
-                    Status.ErrorMessage = _Localizer.Get("Token is required");
+                    Status.ErrorMessage = _Localizer.Get("Token is required!");
                 }
 
             }
