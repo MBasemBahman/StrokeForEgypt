@@ -408,7 +408,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route(nameof(RefreshToken))]
-        public AuthenticateResponse RefreshToken()
+        public AuthenticateResponse RefreshToken([FromBody] RefreshTokenRequest model)
         {
             AuthenticateResponse returnData = new();
 
@@ -416,10 +416,10 @@ namespace StrokeForEgypt.API.Controllers
 
             try
             {
-                string refreshToken = Request.Cookies["refreshToken"];
-                if (!string.IsNullOrEmpty(refreshToken))
+                string token = model.Token ?? Request.Cookies["refreshToken"];
+                if (!string.IsNullOrEmpty(token))
                 {
-                    AuthenticateResponse response = _AccountService.RefreshToken(refreshToken, IpAddress());
+                    AuthenticateResponse response = _AccountService.RefreshToken(token, IpAddress());
                     SetTokenCookie(response.RefreshToken);
 
                     Status = new Status(true);

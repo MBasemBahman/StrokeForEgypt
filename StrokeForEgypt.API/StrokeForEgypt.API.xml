@@ -44,7 +44,7 @@
             Post: Add Device
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.AccountController.RefreshToken">
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.RefreshToken(StrokeForEgypt.API.Models.Accounts.RefreshTokenRequest)">
             <summary>
             Post: RefreshToken
             </summary>
