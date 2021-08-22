@@ -42,8 +42,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetNotificationTypes))]
         public async Task<List<NotificationTypeModel>> GetNotificationTypes(
-            [FromHeader] Paging paging,
-            [FromHeader] string Culture)
+            [FromQuery] Paging paging)
         {
             string ActionName = nameof(GetNotificationTypes);
             List<NotificationTypeModel> returnData = new();
@@ -86,8 +85,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetOpenTypes))]
         public async Task<List<OpenTypeModel>> GetOpenTypes(
-            [FromHeader] Paging paging,
-            [FromHeader] string Culture)
+            [FromQuery] Paging paging)
         {
             string ActionName = nameof(GetOpenTypes);
             List<OpenTypeModel> returnData = new();
@@ -130,9 +128,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetNotifications))]
         public async Task<List<NotificationModel>> GetNotifications(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
+            [FromQuery] Paging paging,
             [FromQuery] int Fk_Event = 0,
             [FromQuery] int Fk_NotificationType = 0,
             [FromQuery] int Fk_OpenType = 0)
@@ -143,7 +139,7 @@ namespace StrokeForEgypt.API.Controllers
 
             try
             {
-                Account account = _UnitOfWork.Account.GetByToken(Token);
+                Account account = (Account)Request.HttpContext.Items["Account"];
 
                 List<Notification> Data = await _UnitOfWork.Notification.GetAll(a => a.IsActive &&
                                                                                      (!a.NotificationAccounts.Any() || a.NotificationAccounts.Any(b => b.Fk_Account == account.Id)) &&

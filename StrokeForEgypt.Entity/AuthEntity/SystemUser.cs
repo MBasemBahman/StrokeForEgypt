@@ -30,6 +30,7 @@ namespace StrokeForEgypt.Entity.AuthEntity
         [Required(ErrorMessage = "{0} is required")]
         [DataType(DataType.Password)]
         [PasswordPropertyText]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Password { get; set; }
 
         [ForeignKey("SystemRole")]

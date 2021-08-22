@@ -1,11 +1,9 @@
 ﻿using StrokeForEgypt.Entity.BookingEntity;
 using StrokeForEgypt.Entity.CommonEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Entity.AccountEntity
 {
@@ -31,17 +29,8 @@ namespace StrokeForEgypt.Entity.AccountEntity
         [PasswordPropertyText]
         public string PasswordHash { get; set; }
 
-        [DisplayName("Token")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Token { get; set; }
-
-        [DisplayName("Login Token")]
-        public string LoginToken { get; set; }
-
-        [DisplayName("Last Active")]
-        [DataType(DataType.DateTime)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime LastActive { get; set; }
+        [DisplayName("Login Token Hash")]
+        public string LoginTokenHash { get; set; }
 
         [DisplayName("Account Devices")]
         public ICollection<AccountDevice> AccountDevices { get; set; }

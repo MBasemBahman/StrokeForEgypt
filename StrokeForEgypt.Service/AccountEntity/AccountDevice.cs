@@ -1,10 +1,9 @@
-﻿using StrokeForEgypt.Service.CommonEntity;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.AccountEntity
 {
-    public class AccountDeviceModel : BaseEntityModel
+    public class AccountDeviceModel
     {
         [DisplayName("Notification Token")]
         [Required(ErrorMessage = "{0} is required")]
@@ -21,9 +20,5 @@ namespace StrokeForEgypt.Service.AccountEntity
 
         [DisplayName("Device Model")]
         public string DeviceModel { get; set; }
-
-        [DisplayName("Last Active")]
-        [DataType(DataType.DateTime)]
-        public string LastActive { get; set; }
     }
 }

@@ -39,8 +39,7 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpGet]
         [Route(nameof(GetAppAbout))]
-        public async Task<AppAboutModel> GetAppAbout(
-            [FromHeader] string Culture)
+        public async Task<AppAboutModel> GetAppAbout()
         {
             AppAboutModel returnData = new();
             Status Status = new();
@@ -70,8 +69,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetGalleries))]
         public async Task<List<GalleryModel>> GetGalleries(
-            [FromHeader] Paging paging,
-            [FromHeader] string Culture)
+            [FromQuery] Paging paging)
         {
             string ActionName = nameof(GetGalleries);
             List<GalleryModel> returnData = new();
@@ -114,9 +112,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetGenders))]
         public async Task<List<GenderModel>> GetGenders(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture)
+            [FromQuery] Paging paging)
         {
             string ActionName = nameof(GetGenders);
             List<GenderModel> returnData = new();
@@ -159,9 +155,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetCountries))]
         public async Task<List<CountryModel>> GetCountries(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
+            [FromQuery] Paging paging,
             [FromQuery] string Name)
         {
             string ActionName = nameof(GetCountries);
@@ -206,9 +200,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetCities))]
         public async Task<List<CityModel>> GetCities(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
+            [FromQuery] Paging paging,
             [FromQuery] string Name,
             [FromQuery] int Fk_Country = 0)
         {

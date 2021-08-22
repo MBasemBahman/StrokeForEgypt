@@ -119,38 +119,6 @@ namespace StrokeForEgypt.DAL
                     });
             }
 
-            #region AccountEntity
-
-            #region Account
-
-            modelBuilder.Entity<Account>()
-                        .HasIndex(u => u.Token)
-                        .IsUnique();
-
-            modelBuilder.Entity<Account>()
-                        .Property(u => u.Token)
-                        .HasDefaultValueSql("newid()");
-
-            modelBuilder.Entity<Account>()
-                        .Property(u => u.LastActive)
-                        .HasDefaultValueSql("getutcdate()");
-
-            #endregion
-
-            #region AccountDevice
-
-            modelBuilder.Entity<AccountDevice>()
-                       .HasIndex(u => u.NotificationToken)
-                       .IsUnique();
-
-            modelBuilder.Entity<AccountDevice>()
-                        .Property(u => u.LastActive)
-                        .HasDefaultValueSql("getutcdate()");
-
-            #endregion
-
-            #endregion
-
             #region BookingEntity
 
             #region BookingMemberActivity

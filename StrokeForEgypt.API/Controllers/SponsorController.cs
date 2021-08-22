@@ -41,9 +41,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetSponsorTypes))]
         public async Task<List<SponsorTypeModel>> GetSponsorTypes(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
+            [FromQuery] Paging paging,
             [FromQuery] int Id = 0,
             [FromQuery] bool IncludeSponsor = false,
             [FromQuery] int Fk_Event = 0)
@@ -115,9 +113,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetSponsors))]
         public async Task<List<SponsorModel>> GetSponsors(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
+            [FromQuery] Paging paging,
             [FromQuery] int Fk_Event = 0,
             [FromQuery] int Fk_SponsorType = 0)
         {

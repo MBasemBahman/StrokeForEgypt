@@ -37,12 +37,28 @@ namespace StrokeForEgypt.API.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
-            Account account = _context.Account.SingleOrDefault(x => x.Email == model.Email);
+            Account account = null;
 
-            // validate
-            if (account == null || !BC.Verify(model.Password, account.PasswordHash))
+            if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Password))
             {
-                throw new AppException("Email or password is incorrect");
+                account = _context.Account.SingleOrDefault(x => x.Email == model.Email);
+
+                // validate
+                if (account == null || !BC.Verify(model.Password, account.PasswordHash))
+                {
+                    throw new AppException("Email or password is incorrect");
+                }
+            }
+            else if (!string.IsNullOrEmpty(model.LoginToken))
+            {
+                string LoginToken = BC.HashPassword(account.LoginTokenHash);
+                account = _context.Account.SingleOrDefault(x => x.LoginTokenHash == model.LoginToken);
+
+                // validate
+                if (account == null)
+                {
+                    throw new AppException("Login is incorrect");
+                }
             }
 
             // authentication successful so generate jwt and refresh tokens

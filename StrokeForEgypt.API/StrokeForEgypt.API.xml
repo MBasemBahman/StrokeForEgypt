@@ -9,6 +9,11 @@
             Post: Authenticate
             </summary>
         </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.AddAccountDevice(StrokeForEgypt.Service.AccountEntity.AccountDeviceModel)">
+            <summary>
+            Post: Add Account Device
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.RefreshToken">
             <summary>
             Post: RefreshToken
@@ -16,85 +21,85 @@
         </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.RevokeToken(StrokeForEgypt.API.Models.Accounts.RevokeTokenRequest)">
             <summary>
-            Post: RevokeToken
+            Post: Revoke Token
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEvents(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEvents(StrokeForEgypt.Service.Paging,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
             <summary>
             Get: Get Events
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEvent(System.Guid,System.String,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEvent(System.Int32)">
             <summary>
             Get: Get Event
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventPackages(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventPackages(StrokeForEgypt.Service.Paging,System.Int32)">
             <summary>
             Get: Get Event Packages
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventActivities(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventActivities(StrokeForEgypt.Service.Paging,System.Int32)">
             <summary>
             Get: Get Event Activities
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventAgendas(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventAgendas(StrokeForEgypt.Service.Paging,System.Int32)">
             <summary>
             Get: Get Event Agendas
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetAppAbout(System.String)">
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetAppAbout">
             <summary>
             Get: Get App About
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetGalleries(StrokeForEgypt.Service.Paging,System.String)">
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetGalleries(StrokeForEgypt.Service.Paging)">
             <summary>
             Get: Get Galleries
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetGenders(StrokeForEgypt.Service.Paging,System.Guid,System.String)">
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetGenders(StrokeForEgypt.Service.Paging)">
             <summary>
             Get: Get Genders
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCountries(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.String)">
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCountries(StrokeForEgypt.Service.Paging,System.String)">
             <summary>
             Get: Get Countries
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCities(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.String,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetCities(StrokeForEgypt.Service.Paging,System.String,System.Int32)">
             <summary>
             Get: Get Cities
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.NewsController.GetNews(StrokeForEgypt.Service.Paging,System.String,System.Guid,System.Int32,System.Boolean)">
+        <member name="M:StrokeForEgypt.API.Controllers.NewsController.GetNews(StrokeForEgypt.Service.Paging,System.Int32,System.Boolean)">
             <summary>
             Get: Get News
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetNotificationTypes(StrokeForEgypt.Service.Paging,System.String)">
+        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetNotificationTypes(StrokeForEgypt.Service.Paging)">
             <summary>
             Get: Get Notification Types
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetOpenTypes(StrokeForEgypt.Service.Paging,System.String)">
+        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetOpenTypes(StrokeForEgypt.Service.Paging)">
             <summary>
             Get: Get Open Types
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetNotifications(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32,System.Int32,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetNotifications(StrokeForEgypt.Service.Paging,System.Int32,System.Int32,System.Int32)">
             <summary>
             Get: Get Notifications
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsorTypes(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32,System.Boolean,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsorTypes(StrokeForEgypt.Service.Paging,System.Int32,System.Boolean,System.Int32)">
             <summary>
             Get: Get Sponsor Types
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsors(StrokeForEgypt.Service.Paging,System.Guid,System.String,System.Int32,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsors(StrokeForEgypt.Service.Paging,System.Int32,System.Int32)">
             <summary>
             Get: Get Sponsors
             </summary>

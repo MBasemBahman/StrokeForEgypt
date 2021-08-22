@@ -5,7 +5,6 @@ namespace StrokeForEgypt.API.Models.Accounts
 {
     public class AuthenticateRequest
     {
-        [Required(ErrorMessage = "{0} is required")]
         [DisplayName("Email")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
@@ -13,9 +12,11 @@ namespace StrokeForEgypt.API.Models.Accounts
 
 
         [DisplayName("Password Hash")]
-        [Required(ErrorMessage = "{0} is required")]
         [DataType(DataType.Password)]
         [PasswordPropertyText]
         public string Password { get; set; }
+
+        [DisplayName("Login Token")]
+        public string LoginToken { get; set; }
     }
 }

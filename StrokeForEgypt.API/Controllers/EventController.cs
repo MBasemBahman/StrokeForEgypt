@@ -44,9 +44,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetEvents))]
         public async Task<List<EventModel>> GetEvents(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
+            [FromQuery] Paging paging,
             [FromQuery] string Title,
             [FromQuery] DateTime? FromDate,
             [FromQuery] DateTime? ToDate,
@@ -99,8 +97,6 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetEvent))]
         public EventModel GetEvent(
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
             [FromQuery] int Id)
         {
             EventModel returnData = new();
@@ -164,9 +160,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetEventPackages))]
         public async Task<List<EventPackageModel>> GetEventPackages(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
+            [FromQuery] Paging paging,
             [FromQuery] int Id)
         {
             string ActionName = nameof(GetEventPackages);
@@ -211,9 +205,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetEventActivities))]
         public async Task<List<EventActivityModel>> GetEventActivities(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
+            [FromQuery] Paging paging,
             [FromQuery] int Id)
         {
             string ActionName = nameof(GetEventActivities);
@@ -258,9 +250,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetEventAgendas))]
         public List<EventAgendaModel> GetEventAgendas(
-            [FromHeader] Paging paging,
-            [FromHeader] Guid Token,
-            [FromHeader] string Culture,
+            [FromQuery] Paging paging,
             [FromQuery] int Id)
         {
             string ActionName = nameof(GetEventAgendas);

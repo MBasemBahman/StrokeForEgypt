@@ -41,9 +41,7 @@ namespace StrokeForEgypt.API.Controllers
         [HttpGet]
         [Route(nameof(GetNews))]
         public async Task<List<NewsModel>> GetNews(
-            [FromHeader] Paging paging,
-            [FromHeader] string Culture,
-            [FromHeader] Guid Token,
+            [FromQuery] Paging paging,
             [FromQuery] int Fk_Event = 0,
             [FromQuery] bool IncludeGallery = false)
         {

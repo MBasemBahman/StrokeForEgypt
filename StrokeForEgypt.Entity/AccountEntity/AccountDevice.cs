@@ -1,5 +1,4 @@
 ﻿using StrokeForEgypt.Entity.CommonEntity;
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,10 +29,5 @@ namespace StrokeForEgypt.Entity.AccountEntity
 
         [DisplayName("Device Model")]
         public string DeviceModel { get; set; }
-
-        [DisplayName("Last Active")]
-        [DataType(DataType.DateTime)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime LastActive { get; set; }
     }
 }

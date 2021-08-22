@@ -2,8 +2,6 @@
 using StrokeForEgypt.BaseRepository;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.AccountEntity;
-using System;
-using System.Linq;
 using BC = BCrypt.Net.BCrypt;
 
 namespace StrokeForEgypt.Repository.AccountEntityRepository
@@ -27,26 +25,13 @@ namespace StrokeForEgypt.Repository.AccountEntityRepository
                 account.PasswordHash = BC.HashPassword(account.PasswordHash);
             }
 
-            account.Token = NewToken();
+            if (!string.IsNullOrEmpty(account.LoginTokenHash))
+            {
+                // hash LoginToken
+                account.LoginTokenHash = BC.HashPassword(account.LoginTokenHash);
+            }
 
             return account;
         }
-
-        public Account GetByToken(Guid Token)
-        {
-            return DBContext.Account.Single(a => a.Token == Token);
-        }
-
-        public Guid NewToken()
-        {
-            Guid token = Guid.NewGuid();
-            while (Any(a => a.Token == token))
-            {
-                token = Guid.NewGuid();
-            }
-
-            return token;
-        }
-
     }
 }

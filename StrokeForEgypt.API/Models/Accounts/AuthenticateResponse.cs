@@ -12,6 +12,11 @@ namespace StrokeForEgypt.API.Models.Accounts
         [JsonIgnore] // refresh token is returned in http only cookie
         public string RefreshToken { get; set; }
 
+        public AuthenticateResponse()
+        {
+
+        }
+
         public AuthenticateResponse(Account account, string jwtToken, string refreshToken)
         {
             Id = account.Id;
