@@ -11,6 +11,23 @@ namespace StrokeForEgypt.Service.AccountEntity
         public string FullName { get; set; }
     }
 
+    public class AccountFullModel : ImageEntityModel
+    {
+        [DisplayName("Full Name")]
+        [Required(ErrorMessage = "{0} is required")]
+        public string FullName { get; set; }
+
+        [DisplayName("Phone")]
+        [DataType(DataType.PhoneNumber)]
+        [Phone]
+        public string Phone { get; set; }
+
+        [DisplayName("Email")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+
     public class EmailCode
     {
         [Required(ErrorMessage = "{0} is required")]

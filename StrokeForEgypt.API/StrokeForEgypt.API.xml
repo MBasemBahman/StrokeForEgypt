@@ -24,6 +24,11 @@
             Post: Create Account
             </summary>
         </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.GetProfile">
+            <summary>
+            Get: Get Profile
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.EditProfile(StrokeForEgypt.Service.AccountEntity.EditProfileModel)">
             <summary>
             Post: Edit Profile

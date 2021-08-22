@@ -112,7 +112,7 @@ namespace StrokeForEgypt.API
                     new CultureInfo("en"),
                     new CultureInfo("ar")
                 };
-                options.DefaultRequestCulture = new RequestCulture(culture: "ar", uiCulture: "ar");
+                options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });

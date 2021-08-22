@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using StrokeForEgypt.API.Authorization;
 using StrokeForEgypt.API.Helpers;
 using StrokeForEgypt.API.Models.Accounts;
@@ -41,7 +42,9 @@ namespace StrokeForEgypt.API.Services
 
             if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Password))
             {
-                account = _context.Account.SingleOrDefault(x => x.Email == model.Email);
+                account = _context.Account
+                                  .Include(a => a.RefreshTokens)
+                                  .SingleOrDefault(x => x.Email == model.Email);
 
                 // validate
                 if (account == null || !BC.Verify(model.Password, account.PasswordHash))

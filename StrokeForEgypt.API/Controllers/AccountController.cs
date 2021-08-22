@@ -187,7 +187,7 @@ namespace StrokeForEgypt.API.Controllers
 
             try
             {
-                if (string.IsNullOrEmpty(model.LoginToken) && string.IsNullOrEmpty(model.LoginToken))
+                if (string.IsNullOrEmpty(model.LoginToken) && string.IsNullOrEmpty(model.Email))
                 {
                     Status.ErrorMessage = _Localizer.Get("Complete your profile!");
                 }
@@ -207,6 +207,7 @@ namespace StrokeForEgypt.API.Controllers
                     account = _UnitOfWork.Account.Register(account);
 
                     _UnitOfWork.Account.CreateEntity(account);
+
                     await _UnitOfWork.Save();
 
                     returnData = _AccountService.Authenticate(new AuthenticateRequest
@@ -238,12 +239,47 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
+        /// Get: Get Profile
+        /// </summary>
+        [HttpGet]
+        [Route(nameof(GetProfile))]
+        public AccountFullModel GetProfile()
+        {
+            AccountFullModel returnData = new();
+
+            Status Status = new();
+
+            try
+            {
+                Account account = (Account)Request.HttpContext.Items["Account"];
+
+                _Mapper.Map(account, returnData);
+
+                Status = new Status(true);
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
         /// Post: Edit Profile
         /// </summary>
         [HttpPost]
         [Route(nameof(EditProfile))]
-        public async void EditProfile([FromBody] EditProfileModel model)
+        public async Task<AccountFullModel> EditProfile([FromBody] EditProfileModel model)
         {
+            AccountFullModel returnData = new();
+
             Status Status = new();
 
             try
@@ -269,6 +305,8 @@ namespace StrokeForEgypt.API.Controllers
                     _UnitOfWork.Account.UpdateEntity(data);
                     await _UnitOfWork.Save();
 
+                    _Mapper.Map(data, returnData);
+
                     Status = new Status(true);
                 }
             }
@@ -282,6 +320,8 @@ namespace StrokeForEgypt.API.Controllers
             }
 
             Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
         }
 
         /// <summary>

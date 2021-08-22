@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using StrokeForEgypt.Entity.AccountEntity;
 using StrokeForEgypt.Entity.AuthEntity;
 using StrokeForEgypt.Entity.EventEntity;
 using StrokeForEgypt.Entity.MainDataEntity;
 using StrokeForEgypt.Entity.NewsEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
+using StrokeForEgypt.Service.AccountEntity;
 using StrokeForEgypt.Service.EventEntity;
 using StrokeForEgypt.Service.MainDataEntity;
 using StrokeForEgypt.Service.NewsEntity;
@@ -104,6 +106,20 @@ namespace StrokeForEgypt.Repository
             CreateMap<NotificationType, NotificationTypeModel>();
 
             CreateMap<OpenType, OpenTypeModel>();
+
+            #endregion
+
+            #region AccountEntity
+
+            CreateMap<RegisterModel, Account>()
+                .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(a => a.Password))
+                .ForMember(dest => dest.LoginTokenHash, opt => opt.MapFrom(a => a.LoginToken));
+
+            CreateMap<Account, AccountFullModel>();
+
+            CreateMap<EditProfileModel, Account>();
+
+            CreateMap<AccountDeviceModel, AccountDevice>();
 
             #endregion
 

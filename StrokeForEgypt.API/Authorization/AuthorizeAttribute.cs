@@ -27,13 +27,40 @@ namespace StrokeForEgypt.API.Authorization
 
                 AppSettings _appSettings = services.GetService<IOptions<AppSettings>>().Value;
 
-                if ((secret != _appSettings.Secret) ||
-                    (string.IsNullOrEmpty(UserAgent)) ||
-                    !(UserAgent == "Android" && AppSecret == _appSettings.AndroidSecret) ||
-                    !(UserAgent == "IOS" && AppSecret == _appSettings.IOSSecret) ||
-                    !(UserAgent == "Web" && AppSecret == _appSettings.WebSecret))
+                if (string.IsNullOrEmpty(secret) ||
+                    string.IsNullOrEmpty(AppSecret) ||
+                    string.IsNullOrEmpty(UserAgent))
                 {
                     context.Result = new JsonResult(new { message = "BadRequest" }) { StatusCode = StatusCodes.Status400BadRequest };
+                }
+
+                if (secret != _appSettings.Secret)
+                {
+                    context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                }
+                else
+                {
+                    if (UserAgent == "Android")
+                    {
+                        if (AppSecret != _appSettings.AndroidSecret)
+                        {
+                            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                        }
+                    }
+                    else if (UserAgent == "IOS")
+                    {
+                        if (AppSecret != _appSettings.IOSSecret)
+                        {
+                            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                        }
+                    }
+                    else if (UserAgent == "Web")
+                    {
+                        if (AppSecret != _appSettings.WebSecret)
+                        {
+                            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                        }
+                    }
                 }
 
                 return;
