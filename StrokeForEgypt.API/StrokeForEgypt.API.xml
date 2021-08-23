@@ -59,6 +59,26 @@
             Post: Create
             </summary>
         </member>
+        <member name="M:StrokeForEgypt.API.Controllers.BookingController.AddMember(StrokeForEgypt.Service.BookingEntity.BookingMemberCreateModel)">
+            <summary>
+            Post: Add Member
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.BookingController.GetBookings(StrokeForEgypt.Service.Paging)">
+            <summary>
+            Get: Get Bookings
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.BookingController.GetBookingProfile(System.Int32)">
+            <summary>
+            Get: Get Booking Profile
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.BookingController.GetBookingMembers(StrokeForEgypt.Service.Paging,System.Int32)">
+            <summary>
+            Get: Get Booking Members
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEvents(StrokeForEgypt.Service.Paging,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
             <summary>
             Get: Get Events

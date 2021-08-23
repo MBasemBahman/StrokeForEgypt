@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Uploud\Account\" />
+    <Folder Include="wwwroot\Uploud\BookingMemberAttachment\" />
   </ItemGroup>
 
   <ItemGroup>
