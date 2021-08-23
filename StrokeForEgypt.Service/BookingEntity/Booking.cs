@@ -9,13 +9,6 @@ namespace StrokeForEgypt.Service.BookingEntity
 {
     public class BookingModel : BaseEntityModel
     {
-        [ForeignKey("Account")]
-        [DisplayName(nameof(Account))]
-        public int Fk_Account { get; set; }
-
-        [DisplayName("Account")]
-        public AccountModel Account { get; set; }
-
         [ForeignKey("EventPackage")]
         [DisplayName(nameof(EventPackage))]
         public int Fk_EventPackage { get; set; }
@@ -38,11 +31,20 @@ namespace StrokeForEgypt.Service.BookingEntity
 
         [DisplayName("Booking State")]
         public BookingStateModel BookingState { get; set; }
+    }
 
-        [DisplayName("Booking State Histories")]
-        public ICollection<BookingStateHistoryModel> BookingStateHistories { get; set; }
+    public class BookingCreateModel
+    {
+        [DisplayName("Event Package")]
+        public int Fk_EventPackage { get; set; }
 
-        [DisplayName("Booking Members")]
-        public ICollection<BookingMemberModel> BookingMembers { get; set; }
+        [DisplayName("Person Count")]
+        public int PersonCount { get; set; }
+
+        [DisplayName("Days Count")]
+        public int DaysCount { get; set; }
+
+        [DisplayName("Total Price")]
+        public double TotalPrice { get; set; }
     }
 }

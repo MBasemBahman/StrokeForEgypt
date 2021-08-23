@@ -13,8 +13,5 @@ namespace StrokeForEgypt.Service.BookingEntity
 
         [DisplayName("Bookings")]
         public ICollection<BookingModel> Bookings { get; set; }
-
-        [DisplayName("Booking State Histories")]
-        public ICollection<BookingStateHistoryModel> BookingStateHistories { get; set; }
     }
 }

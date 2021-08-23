@@ -199,6 +199,43 @@ namespace StrokeForEgypt.DAL
 
             #region SeedData
 
+            #region BookingEntity
+
+            #region BookingState
+
+           modelBuilder.Entity<BookingState>()
+          .HasData(
+              new BookingState
+              {
+                  Id = (int)BookingStateEnum.PendingOnPayment,
+                  Name = BookingStateEnum.PendingOnPayment.ToString()
+              },
+              new BookingState
+              {
+                  Id = (int)BookingStateEnum.PendingOnMembersData,
+                  Name = BookingStateEnum.PendingOnMembersData.ToString()
+              },
+              new BookingState
+              {
+                  Id = (int)BookingStateEnum.Success,
+                  Name = BookingStateEnum.Success.ToString()
+              },
+              new BookingState
+              {
+                  Id = (int)BookingStateEnum.PaymentFailed,
+                  Name = BookingStateEnum.PaymentFailed.ToString()
+              },
+              new BookingState
+              {
+                  Id = (int)BookingStateEnum.Refunded,
+                  Name = BookingStateEnum.Refunded.ToString()
+              }
+          );
+
+            #endregion
+
+            #endregion
+
             #region AuthEntity
 
             #region AccessLevel

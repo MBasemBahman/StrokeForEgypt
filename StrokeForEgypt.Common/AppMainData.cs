@@ -69,8 +69,13 @@ namespace StrokeForEgypt.Common
             Female = 2
         }
 
-        public enum AppViewEnum
+        public enum BookingStateEnum
         {
+            PendingOnPayment = 1,
+            PendingOnMembersData = 2,
+            Success = 3,
+            PaymentFailed = 4,
+            Refunded = 5
         }
     }
 }
