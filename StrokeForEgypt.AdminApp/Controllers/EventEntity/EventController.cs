@@ -8,7 +8,6 @@ using StrokeForEgypt.AdminApp.ViewModel;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.Entity.EventEntity;
 using StrokeForEgypt.Repository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

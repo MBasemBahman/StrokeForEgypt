@@ -4,13 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StrokeForEgypt.AdminApp.Filters;
 using StrokeForEgypt.AdminApp.Services;
-using StrokeForEgypt.AdminApp.ViewModel;
-using StrokeForEgypt.Common;
 using StrokeForEgypt.Entity.MainDataEntity;
 using StrokeForEgypt.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using static StrokeForEgypt.Common.EnumData;
 
@@ -98,7 +93,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.MainDataEntity
                         await _UnitOfWork.AppAbout.Save();
 
                     }
-                 
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

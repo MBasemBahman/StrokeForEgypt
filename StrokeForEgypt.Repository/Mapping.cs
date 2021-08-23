@@ -81,7 +81,7 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.Sponsors, opt => opt.Ignore())
                 .ForMember(dest => dest.Notifications, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedAt ,opt => opt.Ignore());
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
 
 
             CreateMap<EventActivity, EventActivity>()
