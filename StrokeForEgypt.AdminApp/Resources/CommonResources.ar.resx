@@ -156,6 +156,9 @@
   <data name="Edit Account" xml:space="preserve">
     <value>تعديل بيانات الحساب</value>
   </data>
+  <data name="Email Duplicated" xml:space="preserve">
+    <value>البريد الالكتروني مسجل من قبل</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>الرئيسيه</value>
   </data>

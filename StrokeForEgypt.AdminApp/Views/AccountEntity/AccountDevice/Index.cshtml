@@ -1,0 +1,127 @@
+﻿@model AccountDeviceFilter
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    ViewData["Title"] = EntityLocalizer.Get("Account Devices");
+
+    var AccountDevice = new AccountDevice();
+
+    var Fk_AccessLevel = int.Parse(HttpContextAccessor.HttpContext.Request.Cookies[(this.ViewContext.RouteData.Values["controller"].ToString())]);
+
+    if (ViewData["ProfileLayOut"] != null && (bool)ViewData["ProfileLayOut"] == true)
+    {
+        Layout = "_AssetsLayout";
+    }
+
+}
+
+@section Styles{
+    @{await Html.RenderPartialAsync("PartialView/_FormStylesPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_TableStylesPartial");}
+}
+<div class="row">
+    <div class="col">
+        <section class="card">
+            <header class="card-header">
+                <h2 class="card-title">@ViewData["Title"]</h2>
+            </header>
+            <div class="card-body">
+
+               
+                <table class="table table-bordered table-striped mb-0" id="custom-tabletools">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => AccountDevice.Id)</th>
+                            <th>@Html.DisplayNameFor(model => AccountDevice.AppVersion)</th>
+                            <th>@Html.DisplayNameFor(model => AccountDevice.DeviceType)</th>
+                            <th>@Html.DisplayNameFor(model => AccountDevice.DeviceModel)</th>
+                            <th>@Html.DisplayNameFor(model => AccountDevice.DeviceVersion)</th>
+                            <th>@Html.DisplayNameFor(model => AccountDevice.IsActive)</th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="DisplayModal" tabindex="-1" role="dialog" aria-labelledby="DetailsTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">@ViewData["Title"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="Display">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_TableScriptsPartial");}
+
+<script>
+        $(document).ready(function () {
+            var $table = $('#custom-tabletools').DataTable({
+                // Ajax Filter
+                ajax: {
+                    url: '@Url.Action("LoadTable")',
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (data) {
+                        data.Id = @Model.Id;
+                        data.Fk_Account = @Model.Fk_Account;
+                        return JSON.stringify(data);
+                    }
+                },
+                // Columns Setups
+                columns: [
+                    { data: "id" },
+                    { data: "appVersion" },
+                    { data: "deviceType" },
+                    { data: "deviceModel" },
+                    { data: "deviceVersion" },
+
+                    {
+                        data: "isActive",
+                        render: function (data, type, row) {
+                            if (data == true) {
+                                return '<input type="checkbox" class="form-control" checked disabled>';
+                            }
+                            else {
+                                return '<input type="checkbox" class="form-control" disabled >';
+                            }
+                        }
+                    },
+
+                    {
+                        data: "id",
+                        render: function (data, type, row) {
+                            return '<a href="/AccountDevice/Details/' + data + '" class="btn btn-outline-success a-btn-slide-text Displaybtn mr-1"><i class="fas fa-eye"></i></a>';
+                        }
+                    }
+                ]
+            });
+
+            $('#custom-tabletools_wrapper').find('.btn-secondary').removeClass('btn-secondary').addClass('btn-default');
+
+            $('body').on('submit', '.filter', function () {
+                event.preventDefault();
+                $(".modal").fadeOut();
+                $(".modal-backdrop").fadeOut();
+                $table.draw();
+            });
+    });
+</script>
+}
