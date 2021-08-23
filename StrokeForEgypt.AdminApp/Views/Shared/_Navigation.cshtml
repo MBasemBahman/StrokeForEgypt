@@ -5,6 +5,7 @@
     var SystemUser = HttpContextAccessor.HttpContext.Request.Cookies["SystemUser"];
     var SystemRole = HttpContextAccessor.HttpContext.Request.Cookies["SystemRole"];
     var SystemView = HttpContextAccessor.HttpContext.Request.Cookies["SystemView"];
+    var Event = HttpContextAccessor.HttpContext.Request.Cookies["Event"];
 
 
 }
@@ -32,7 +33,17 @@
                             <span>@CommonLocalizer.Get("Home")</span>
                         </a>
                     </li>
-              
+
+                    @if (Event != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Index" asp-controller="Event">
+                                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("Events")</span>
+                            </a>
+                        </li>
+
+                    }
                     @if (SystemUser != null || SystemView != null || SystemRole != null)
                     {
                         <li class="nav-parent">

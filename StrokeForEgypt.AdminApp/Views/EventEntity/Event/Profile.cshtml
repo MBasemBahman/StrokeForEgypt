@@ -1,0 +1,147 @@
+﻿@model Event
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    ViewData["Title"] = EntityLocalizer.Get("Event Profile");
+
+    var Fk_AccessLevel = int.Parse(HttpContextAccessor.HttpContext.Request.Cookies[(this.ViewContext.RouteData.Values["controller"].ToString())]);
+
+    int returnItem = (int)ViewData["returnItem"];
+
+    var EventActivity = HttpContextAccessor.HttpContext.Request.Cookies["EventActivity"];
+    var EventAgenda = HttpContextAccessor.HttpContext.Request.Cookies["EventAgenda"];
+    var EventGallery = HttpContextAccessor.HttpContext.Request.Cookies["EventGallery"];
+    var EventPackage = HttpContextAccessor.HttpContext.Request.Cookies["EventPackage"];
+
+}
+
+@section Styles{
+    @{await Html.RenderPartialAsync("PartialView/_FormStylesPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_TableStylesPartial");}
+
+    <style>
+        .active {
+            background-color: #006ea6 !important;
+            border-color: #006ea6 !important;
+            color: white !important;
+        }
+
+        .nav-item :hover {
+            cursor: pointer;
+            background-color: #006ea6 !important;
+            border-color: #006ea6 !important;
+            color: white !important;
+        }
+    </style>
+}
+@if (Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess)
+{
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <a asp-action="CreateOrEdit" asp-route-id="@Model.Id" asp-route-IsProfile="true" class="btn btn-success btn-block"><i class="far fa-edit"></i><span>&nbsp;</span>@($"{CommonLocalizer.Get("Edit")}")</a>
+        </div>
+    </div>
+
+}
+
+
+@{await Html.RenderPartialAsync("../EventEntity/Event/Details", Model, ViewData);}
+
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <section class="card">
+            <ul class="nav nav-tabs nav-fill">
+                @if (EventActivity != null)
+                {
+                    <li class="nav-item">
+                        <a id="EventActivity" class="nav-link @(returnItem == (int)EventProfileItems.EventActivity?"active":"")">
+                            @Html.DisplayNameFor(model => model.EventActivities)
+                        </a>
+                    </li>
+                }
+                @if (EventAgenda != null)
+                {
+                    <li class="nav-item">
+                        <a id="EventAgenda" class="nav-link @(returnItem == (int)EventProfileItems.EventAgenda?"active":"")">
+                            @Html.DisplayNameFor(model => model.EventAgendas)
+                        </a>
+                    </li>
+                }
+                @if (EventGallery != null)
+                {
+                    <li class="nav-item">
+                        <a id="EventGallery" class="nav-link @(returnItem == (int)EventProfileItems.EventGallery?"active":"")">
+                            @Html.DisplayNameFor(model => model.EventGalleries)
+                        </a>
+                    </li>
+                }
+                @if (EventPackage != null)
+                {
+                    <li class="nav-item">
+                        <a id="EventPackage" class="nav-link @(returnItem == (int)EventProfileItems.EventPackage?"active":"")">
+                            @Html.DisplayNameFor(model => model.EventPackages)
+                        </a>
+                    </li>
+                }
+            
+            </ul>
+        </section>
+    </div>
+</div>
+<br />
+<br />
+
+<div id="d1"></div>
+@section Scripts {
+    <script>
+     $(document).ready(function () {
+
+         if ('@EventActivity' != null && @returnItem == @((int)EventProfileItems.EventActivity)) {
+             $("#d1").load("/EventActivity/Index/?Fk_Event=@Model.Id&ProfileLayOut=true");
+         }
+         else if ('@EventAgenda' != null && @returnItem == @((int)EventProfileItems.EventAgenda)) {
+             $("#d1").load("/EventAgenda/Index/?Fk_Event=@Model.Id&ProfileLayOut=true");
+         }
+         else if ('@EventGallery' != null && @returnItem == @((int)EventProfileItems.EventGallery)) {
+             $("#d1").load("/EventGallery/Index/?Fk_Event=@Model.Id&ProfileLayOut=true");
+         }
+         else if ('@EventPackage' != null && @returnItem == @((int)EventProfileItems.EventPackage)) {
+             $("#d1").load("/EventPackage/Index/?Fk_Event=@Model.Id&ProfileLayOut=true");
+         }
+
+
+         $("#EventActivity").on('click', function () {
+             $(".active").each(function () {
+                 $(this).removeClass("active");
+             });
+             $(this).addClass("active");
+             $("#d1").load("/EventActivity/Index/?Fk_Event=@Model.Id&ProfileLayOut=true");
+         });
+
+         $("#EventAgenda").on('click', function () {
+             $(".active").each(function () {
+                 $(this).removeClass("active");
+             });
+             $(this).addClass("active");
+             $("#d1").load("/EventAgenda/Index/?Fk_Event=@Model.Id&ProfileLayOut=true");
+         });
+         $("#EventGallery").on('click', function () {
+             $(".active").each(function () {
+                 $(this).removeClass("active");
+             });
+             $(this).addClass("active");
+             $("#d1").load("/EventGallery/Index/?Fk_Event=@Model.Id&ProfileLayOut=true");
+         });
+         $("#EventPackage").on('click', function () {
+             $(".active").each(function () {
+                 $(this).removeClass("active");
+             });
+             $(this).addClass("active");
+             $("#d1").load("/EventPackage/Index/?Fk_Event=@Model.Id&ProfileLayOut=true");
+         });
+       
+     });
+    </script>
+}

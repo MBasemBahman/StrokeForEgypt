@@ -19,7 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Uploud\" />
+    <Folder Include="wwwroot\Uploud\Event\" />
+    <Folder Include="wwwroot\Uploud\EventGallery\" />
+    <Folder Include="wwwroot\Uploud\EventAgendaGallery\" />
+    <Folder Include="wwwroot\Uploud\Account\" />
+    <Folder Include="wwwroot\Uploud\Country\" />
+    <Folder Include="wwwroot\Uploud\Gallery\" />
   </ItemGroup>
 
 </Project>

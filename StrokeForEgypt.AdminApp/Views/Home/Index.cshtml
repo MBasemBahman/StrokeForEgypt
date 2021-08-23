@@ -1,8 +1,25 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = CommonLocalizer.Get("Home");
+    var IsDarkMode = bool.Parse(HttpContextAccessor.HttpContext.Request.Cookies["IsDarkMode"]);
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col">
+        <section class="card">
+            <header class="card-header">
+                <h2 class="card-title">@ViewData["Title"]</h2>
+            </header>
+            <div class="card-body">
+                @if (IsDarkMode)
+                {
+                    <img src="~/Layer 1.png" class="img-fluid" style="display: block; margin: auto;max-width:30%" />
+                }
+                else
+                {
+                    <img src="~/Layer 2.png" class="img-fluid" style="display: block; margin: auto;max-width:30%" />
+                }
+            </div>
+        </section>
+    </div>
 </div>
+
