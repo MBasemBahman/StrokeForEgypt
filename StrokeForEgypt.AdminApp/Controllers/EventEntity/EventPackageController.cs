@@ -148,6 +148,28 @@ namespace StrokeForEgypt.AdminApp.Controllers.EventEntity
 
                         _UnitOfWork.EventPackage.UpdateEntity(Data);
                         await _UnitOfWork.EventPackage.Save();
+
+                        EventPackage = Data;
+                    }
+
+                    IFormFile ImageFile = HttpContext.Request.Form.Files["ImageFile"];
+
+                    if (ImageFile != null)
+                    {
+                        ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
+
+                        string FileURL = await ImgManager.UploudImage(AppMainData.DomainName, EventPackage.Id.ToString(), ImageFile, "Uploud/EventPackage");
+
+                        if (!string.IsNullOrEmpty(FileURL))
+                        {
+                            if (!string.IsNullOrEmpty(EventPackage.ImageURL))
+                            {
+                                ImgManager.DeleteImage(EventPackage.ImageURL, AppMainData.DomainName);
+                            }
+                            EventPackage.ImageURL = FileURL;
+                            _UnitOfWork.EventPackage.UpdateEntity(EventPackage);
+                            await _UnitOfWork.EventPackage.Save();
+                        }
                     }
                 }
 
@@ -194,6 +216,11 @@ namespace StrokeForEgypt.AdminApp.Controllers.EventEntity
             EventPackage EventPackage = await _UnitOfWork.EventPackage.GetByID(id);
             if (!_UnitOfWork.Booking.Any(a => a.Fk_EventPackage == id))
             {
+                if (!string.IsNullOrEmpty(EventPackage.ImageURL))
+                {
+                    ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
+                    ImgManager.DeleteImage(EventPackage.ImageURL, AppMainData.DomainName);
+                }
 
                 _UnitOfWork.EventPackage.DeleteEntity(EventPackage);
                 await _UnitOfWork.EventPackage.Save();

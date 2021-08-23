@@ -145,6 +145,28 @@ namespace StrokeForEgypt.AdminApp.Controllers.EventEntity
 
                         _UnitOfWork.EventActivity.UpdateEntity(Data);
                         await _UnitOfWork.EventActivity.Save();
+
+                        EventActivity = Data;
+                    }
+
+                    IFormFile ImageFile = HttpContext.Request.Form.Files["ImageFile"];
+
+                    if (ImageFile != null)
+                    {
+                        ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
+
+                        string FileURL = await ImgManager.UploudImage(AppMainData.DomainName, EventActivity.Id.ToString(), ImageFile, "Uploud/EventActivity");
+
+                        if (!string.IsNullOrEmpty(FileURL))
+                        {
+                            if (!string.IsNullOrEmpty(EventActivity.ImageURL))
+                            {
+                                ImgManager.DeleteImage(EventActivity.ImageURL, AppMainData.DomainName);
+                            }
+                            EventActivity.ImageURL = FileURL;
+                            _UnitOfWork.EventActivity.UpdateEntity(EventActivity);
+                            await _UnitOfWork.EventActivity.Save();
+                        }
                     }
                 }
 
@@ -159,6 +181,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.EventEntity
                         throw;
                     }
                 }
+
                 return RedirectToAction("Profile", "Event", new { id = EventActivity.Fk_Event, returnItem = (int)EventProfileItems.EventActivity });
             }
 
@@ -191,6 +214,11 @@ namespace StrokeForEgypt.AdminApp.Controllers.EventEntity
             EventActivity EventActivity = await _UnitOfWork.EventActivity.GetByID(id);
             if (!_UnitOfWork.BookingMemberActivity.Any(a => a.Fk_EventActivity == id))
             {
+                if (!string.IsNullOrEmpty(EventActivity.ImageURL))
+                {
+                    ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
+                    ImgManager.DeleteImage(EventActivity.ImageURL, AppMainData.DomainName);
+                }
 
                 _UnitOfWork.EventActivity.DeleteEntity(EventActivity);
                 await _UnitOfWork.EventActivity.Save();
