@@ -1,7 +1,5 @@
-﻿using StrokeForEgypt.Service.AccountEntity;
-using StrokeForEgypt.Service.CommonEntity;
+﻿using StrokeForEgypt.Service.CommonEntity;
 using StrokeForEgypt.Service.EventEntity;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 

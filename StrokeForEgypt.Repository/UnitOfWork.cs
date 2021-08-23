@@ -10,6 +10,7 @@ using StrokeForEgypt.Entity.NotificationEntity;
 using StrokeForEgypt.Entity.SponsorEntity;
 using StrokeForEgypt.Repository.AccountEntityRepository;
 using StrokeForEgypt.Repository.AuthEntityRepository;
+using StrokeForEgypt.Repository.BookingEntityRepository;
 using System.Threading.Tasks;
 
 namespace StrokeForEgypt.Repository
@@ -53,7 +54,7 @@ namespace StrokeForEgypt.Repository
         public BaseRepository<Booking> Booking => new(_DBContext);
         public BaseRepository<BookingMember> BookingMember => new(_DBContext);
         public BaseRepository<BookingMemberActivity> BookingMemberActivity => new(_DBContext);
-        public BaseRepository<BookingMemberAttachment> BookingMemberAttachment => new(_DBContext);
+        public BookingMemberAttachmentRepository BookingMemberAttachment => new(_DBContext, _Mapper);
         public BaseRepository<BookingState> BookingState => new(_DBContext);
         public BaseRepository<BookingStateHistory> BookingStateHistory => new(_DBContext);
 

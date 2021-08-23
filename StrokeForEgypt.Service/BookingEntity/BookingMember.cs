@@ -68,6 +68,9 @@ namespace StrokeForEgypt.Service.BookingEntity
 
     public class BookingMemberCreateModel
     {
+        [DisplayName("Booking")]
+        public int Fk_Booking { get; set; }
+
         [DisplayName("First Name")]
         [Required(ErrorMessage = "{0} is required")]
         public string FirstName { get; set; }

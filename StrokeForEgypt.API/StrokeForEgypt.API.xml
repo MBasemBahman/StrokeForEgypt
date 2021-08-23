@@ -54,6 +54,11 @@
             Post: Revoke Token
             </summary>
         </member>
+        <member name="M:StrokeForEgypt.API.Controllers.BookingController.Create(StrokeForEgypt.Service.BookingEntity.BookingCreateModel)">
+            <summary>
+            Post: Create
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEvents(StrokeForEgypt.Service.Paging,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
             <summary>
             Get: Get Events
