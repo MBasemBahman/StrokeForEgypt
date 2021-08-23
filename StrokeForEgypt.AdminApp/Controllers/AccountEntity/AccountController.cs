@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static StrokeForEgypt.Common.EnumData;
-
+using BC = BCrypt.Net.BCrypt;
 
 namespace StrokeForEgypt.AdminApp.Controllers.AccountEntity
 {
@@ -145,6 +145,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.AccountEntity
                     if (id == 0)
                     {
                         Account.CreatedBy = Request.Cookies["FullName"];
+                        Account.PasswordHash = BC.HashPassword(Account.PasswordHash);
 
                         _UnitOfWork.Account.CreateEntity(Account);
                         await _UnitOfWork.Account.Save();
@@ -156,6 +157,11 @@ namespace StrokeForEgypt.AdminApp.Controllers.AccountEntity
                         Account.LastModifiedBy = Request.Cookies["FullName"];
 
                         _Mapper.Map(Account, Data);
+
+                        if (Account.PasswordHash != Data.PasswordHash)
+                        {
+                            Data.PasswordHash = BC.HashPassword(Account.PasswordHash);
+                        }
 
                         _UnitOfWork.Account.UpdateEntity(Data);
 

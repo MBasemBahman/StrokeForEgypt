@@ -83,7 +83,6 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
 
-
             CreateMap<EventActivity, EventActivity>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageURL, opt => opt.Ignore())
@@ -174,6 +173,14 @@ namespace StrokeForEgypt.Repository
             #endregion
 
             #region AccountEntity
+
+            CreateMap<Account, Account>()
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForMember(dest => dest.LoginTokenHash, opt => opt.Ignore())
+                .ForMember(dest => dest.AccountDevices, opt => opt.Ignore())
+                .ForMember(dest => dest.NotificationAccounts, opt => opt.Ignore())
+                .ForMember(dest => dest.Bookings, opt => opt.Ignore())
+                .ForMember(dest => dest.RefreshTokens, opt => opt.Ignore());
 
             CreateMap<RegisterModel, Account>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(a => a.Password))
