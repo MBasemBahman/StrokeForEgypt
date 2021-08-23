@@ -118,43 +118,43 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Account" xml:space="preserve">
-    <value>Account</value>
+    <value>الحساب</value>
   </data>
   <data name="Account Devices" xml:space="preserve">
-    <value>Account Devices</value>
+    <value>اجهزة الحساب</value>
   </data>
   <data name="Account Profile" xml:space="preserve">
-    <value>Account Profile</value>
+    <value>بروفايل الحساب</value>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Accounts</value>
+    <value>الحسابات</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Address</value>
+    <value>العنوان</value>
   </data>
   <data name="Android Min Version" xml:space="preserve">
-    <value>Android Min Version</value>
+    <value>اقل اصدار اندرويد</value>
   </data>
   <data name="App Version" xml:space="preserve">
-    <value>App Version</value>
+    <value>اصدار التطبيق</value>
   </data>
   <data name="AppAbout" xml:space="preserve">
-    <value>App About</value>
+    <value>بيانات التطبيق</value>
   </data>
   <data name="Bookings" xml:space="preserve">
-    <value>Bookings</value>
+    <value>الحجوزات</value>
   </data>
   <data name="Cities" xml:space="preserve">
-    <value>Cities</value>
+    <value>المدن</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>City</value>
+    <value>مدينه</value>
   </data>
   <data name="Countries" xml:space="preserve">
-    <value>Countries</value>
+    <value>الدول</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>Country</value>
+    <value>دوله</value>
   </data>
   <data name="Created At" xml:space="preserve">
     <value>أنشئت في</value>
@@ -163,97 +163,97 @@
     <value>انشأ من قبل</value>
   </data>
   <data name="Created By Ip" xml:space="preserve">
-    <value>Created By Ip</value>
+    <value>تم انشاءه بواسطة</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>تاريخ</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>وصف</value>
   </data>
   <data name="Device Model" xml:space="preserve">
-    <value>Device Model</value>
+    <value>طراز الجهاز</value>
   </data>
   <data name="Device Type" xml:space="preserve">
-    <value>Device Type</value>
+    <value>نوع الجهاز</value>
   </data>
   <data name="Device Version" xml:space="preserve">
-    <value>Device Version</value>
+    <value>إصدار الجهاز</value>
   </data>
   <data name="Down Message" xml:space="preserve">
-    <value>Down Message</value>
+    <value>رسالة فى حالة مشكله</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>البريد الالكتروني</value>
   </data>
   <data name="Event" xml:space="preserve">
-    <value>Event</value>
+    <value>الفاعليه</value>
   </data>
   <data name="Event Activities" xml:space="preserve">
-    <value>Event Activities</value>
+    <value>أنشطة الفاعليه</value>
   </data>
   <data name="Event Agenda Galleries" xml:space="preserve">
-    <value>Event Agenda Galleries</value>
+    <value>صور أجندة الفاعليه</value>
   </data>
   <data name="Event Agendas" xml:space="preserve">
-    <value>Event Agendas</value>
+    <value>أجندات الفاعليه</value>
   </data>
   <data name="Event Galleries" xml:space="preserve">
-    <value>Event Galleries</value>
+    <value>صور الفاعليه</value>
   </data>
   <data name="Event Packages" xml:space="preserve">
-    <value>Event Packages</value>
+    <value>باقات الفاعليه</value>
   </data>
   <data name="Event Profile" xml:space="preserve">
-    <value>Event Profile</value>
+    <value>بورفايل الفاعليه</value>
   </data>
   <data name="EventActivity" xml:space="preserve">
-    <value>Event Activity</value>
+    <value>نشطا الفاعليه</value>
   </data>
   <data name="EventAgenda" xml:space="preserve">
-    <value>Event Agenda</value>
+    <value>أجندة الفاعليه</value>
   </data>
   <data name="EventAgendaGallery" xml:space="preserve">
-    <value>EventAgendaGallery</value>
+    <value>صور أجندة الفاعليه</value>
   </data>
   <data name="EventGallery" xml:space="preserve">
-    <value>Event Gallery</value>
+    <value>صور الفاعليه</value>
   </data>
   <data name="EventPackage" xml:space="preserve">
-    <value>Event Package</value>
+    <value>باقة الفاعليه</value>
   </data>
   <data name="Events" xml:space="preserve">
-    <value>Events</value>
+    <value>الفاعليات</value>
   </data>
   <data name="Expires" xml:space="preserve">
-    <value>Expires</value>
+    <value>تنتهي في</value>
   </data>
   <data name="Extra Fees" xml:space="preserve">
-    <value>Extra Fees</value>
+    <value>رسوم إضافية</value>
   </data>
   <data name="Facebook Url" xml:space="preserve">
-    <value>Facebook Url</value>
+    <value>رابط الفيسبوك</value>
   </data>
   <data name="File Name" xml:space="preserve">
-    <value>File Name</value>
+    <value>اسم الملف</value>
   </data>
   <data name="File Size" xml:space="preserve">
-    <value>File Size</value>
+    <value>حجم الملف</value>
   </data>
   <data name="File Type" xml:space="preserve">
-    <value>File Type</value>
+    <value>نوع الملف</value>
   </data>
   <data name="File URL" xml:space="preserve">
-    <value>File URL</value>
+    <value>رابط الملف</value>
   </data>
   <data name="From Date" xml:space="preserve">
-    <value>From Date</value>
+    <value>من تاريخ</value>
   </data>
   <data name="Full Name" xml:space="preserve">
     <value>الاسم بالكامل</value>
   </data>
   <data name="Gallery" xml:space="preserve">
-    <value>Gallery</value>
+    <value>معرض الصور</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>#</value>
@@ -262,25 +262,25 @@
     <value>الصوره</value>
   </data>
   <data name="Instagram Url" xml:space="preserve">
-    <value>Instagram Url</value>
+    <value>رابط الانستجرام</value>
   </data>
   <data name="IOS Min Version" xml:space="preserve">
-    <value>IOS Min Version</value>
+    <value>اقل اصدار للايفون</value>
   </data>
   <data name="Is Andriod Down?" xml:space="preserve">
-    <value>Is Andriod Down?</value>
+    <value>وقف الاندرويد</value>
   </data>
   <data name="Is IOS Down?" xml:space="preserve">
-    <value>Is IOS Down?</value>
+    <value>وقف الايفون</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>نشط؟</value>
   </data>
   <data name="IsExpired" xml:space="preserve">
-    <value>Is Expired?</value>
+    <value>منتهي الصلاحية؟</value>
   </data>
   <data name="IsRevoked" xml:space="preserve">
-    <value>Is Revoked?</value>
+    <value>تم إبطال؟</value>
   </data>
   <data name="Job Title" xml:space="preserve">
     <value>المسمى الوظيفي</value>
@@ -292,85 +292,88 @@
     <value>التعديل الأخير من قبل</value>
   </data>
   <data name="Latitude" xml:space="preserve">
-    <value>Latitude</value>
+    <value>خط العرض</value>
   </data>
   <data name="Login Token Hash" xml:space="preserve">
-    <value>Login Token Hash</value>
+    <value>رمز تسجيل الدخول</value>
   </data>
   <data name="Long Description" xml:space="preserve">
-    <value>Long Description</value>
+    <value>وصف طويل</value>
   </data>
   <data name="Longitude" xml:space="preserve">
-    <value>Longitude</value>
+    <value>خط الطول</value>
+  </data>
+  <data name="Main Data" xml:space="preserve">
+    <value>البيانات الرئيسيه</value>
   </data>
   <data name="MainData" xml:space="preserve">
-    <value>Main Data</value>
+    <value>البيانات الرئيسيه</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
   </data>
   <data name="News" xml:space="preserve">
-    <value>News</value>
+    <value>الاخبار</value>
   </data>
   <data name="Notes" xml:space="preserve">
-    <value>Notes</value>
+    <value>ملحوظات</value>
   </data>
   <data name="Notification Accounts" xml:space="preserve">
-    <value>Notification Accounts</value>
+    <value>حسابات الاشعار</value>
   </data>
   <data name="Notification Token" xml:space="preserve">
-    <value>Notification Token</value>
+    <value>رمز الاشعار</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
+    <value>الاشعارات</value>
   </data>
   <data name="Order" xml:space="preserve">
     <value>الترتيب</value>
   </data>
   <data name="OriginalPrice" xml:space="preserve">
-    <value>Original Price</value>
+    <value>السعر الأصلي</value>
   </data>
   <data name="Package Notes" xml:space="preserve">
-    <value>Package Notes</value>
+    <value>ملاحظات الباقه</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>كلمة المرور</value>
   </data>
   <data name="Password Hash" xml:space="preserve">
-    <value>Password Hash</value>
+    <value>الرقم السري</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>رقم الهاتف</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>Price</value>
+    <value>السعر</value>
   </data>
   <data name="Reason Revoked" xml:space="preserve">
-    <value>Reason Revoked</value>
+    <value>سبب الإبطال</value>
   </data>
   <data name="RefreshTokens" xml:space="preserve">
-    <value>RefreshTokens</value>
+    <value>تحديث الرموز</value>
   </data>
   <data name="Registration From" xml:space="preserve">
-    <value>Registration From</value>
+    <value>التسجيل من</value>
   </data>
   <data name="Registration To" xml:space="preserve">
-    <value>Registration To</value>
+    <value>التسجيل إلي</value>
   </data>
   <data name="Replaced By Token" xml:space="preserve">
-    <value>Replaced By Token</value>
+    <value>تم استبداله برمز</value>
   </data>
   <data name="Revoked" xml:space="preserve">
-    <value>Revoked</value>
+    <value>تم إبطاله</value>
   </data>
   <data name="Revoked By Ip" xml:space="preserve">
-    <value>Revoked By Ip</value>
+    <value>تم ابطاله بواسطة</value>
   </data>
   <data name="Short Description" xml:space="preserve">
-    <value>Short Description</value>
+    <value>وصف قصير</value>
   </data>
   <data name="Sponsors" xml:space="preserve">
-    <value>Sponsors</value>
+    <value>الرعاة</value>
   </data>
   <data name="System Admin" xml:space="preserve">
     <value>مسؤول النظام</value>
@@ -406,21 +409,21 @@
     <value>حقل {0} مطلوب</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Time</value>
+    <value>الوقت</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Title</value>
+    <value>العنوان</value>
   </data>
   <data name="To Date" xml:space="preserve">
-    <value>To Date</value>
+    <value>إلي تاريخ</value>
   </data>
   <data name="Token" xml:space="preserve">
-    <value>Token</value>
+    <value>الرمز</value>
   </data>
   <data name="Website Url" xml:space="preserve">
-    <value>Website Url</value>
+    <value>رابط الموقع الألكتروني</value>
   </data>
   <data name="WhatsApp" xml:space="preserve">
-    <value>Whats App</value>
+    <value>الواتس أب</value>
   </data>
 </root>
