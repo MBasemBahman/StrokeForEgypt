@@ -1,0 +1,28 @@
+﻿@model City
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    Layout = null;
+
+    var CanDelete = true;
+    if (ViewBag.CanDelete != null)
+    {
+        CanDelete = (bool)ViewBag.CanDelete;
+    }
+}
+@if (!CanDelete)
+{
+    <h5 style="color:red">@CommonLocalizer.Get("Not Delete Message")</h5>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">@CommonLocalizer.Get("Ok")</button>
+}
+else
+{
+    <h3>@CommonLocalizer.Get("Delete Message")</h3>
+    <div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="@CommonLocalizer.Get("Remove")" class="btn btn-danger" />
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">@CommonLocalizer.Get("Cancel")</button>
+        </form>
+    </div>
+}

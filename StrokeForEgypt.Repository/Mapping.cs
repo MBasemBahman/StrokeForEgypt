@@ -70,6 +70,47 @@ namespace StrokeForEgypt.Repository
 
             CreateMap<EventPackage, EventPackageModel>();
 
+            CreateMap<Event, Event>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageURL, opt => opt.Ignore())
+                .ForMember(dest => dest.EventAgendas, opt => opt.Ignore())
+                .ForMember(dest => dest.EventActivities, opt => opt.Ignore())
+                .ForMember(dest => dest.EventPackages, opt => opt.Ignore())
+                .ForMember(dest => dest.EventGalleries, opt => opt.Ignore())
+                .ForMember(dest => dest.News, opt => opt.Ignore())
+                .ForMember(dest => dest.Sponsors, opt => opt.Ignore())
+                .ForMember(dest => dest.Notifications, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt ,opt => opt.Ignore());
+
+
+            CreateMap<EventActivity, EventActivity>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageURL, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingMemberActivities, opt => opt.Ignore())
+                .ForMember(dest => dest.Event, opt => opt.Ignore())
+                .ForMember(dest => dest.Fk_Event, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
+            CreateMap<EventAgenda, EventAgenda>()
+               .ForMember(dest => dest.Id, opt => opt.Ignore())
+               .ForMember(dest => dest.EventAgendaGalleries, opt => opt.Ignore())
+               .ForMember(dest => dest.Event, opt => opt.Ignore())
+               .ForMember(dest => dest.Fk_Event, opt => opt.Ignore())
+               .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+               .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
+
+            CreateMap<EventPackage, EventPackage>()
+               .ForMember(dest => dest.Id, opt => opt.Ignore())
+               .ForMember(dest => dest.ImageURL, opt => opt.Ignore())
+               .ForMember(dest => dest.Bookings, opt => opt.Ignore())
+               .ForMember(dest => dest.Event, opt => opt.Ignore())
+               .ForMember(dest => dest.Fk_Event, opt => opt.Ignore())
+               .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+               .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
 
             #endregion
 
@@ -84,6 +125,28 @@ namespace StrokeForEgypt.Repository
             CreateMap<Gallery, GalleryModel>();
 
             CreateMap<Gender, GenderModel>();
+
+
+            CreateMap<AppAbout, AppAbout>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
+            CreateMap<City, City>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Country, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingMembers, opt => opt.Ignore())
+                .ForMember(dest => dest.IsActive, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
+            CreateMap<Country, Country>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Cities, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageURL, opt => opt.Ignore())
+                .ForMember(dest => dest.IsActive, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
 
             #endregion
 

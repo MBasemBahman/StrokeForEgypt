@@ -1,0 +1,122 @@
+﻿@model RefreshToken
+@inject UnitOfWork _UnitOfWork
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    Layout = "_AssetsLayout";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <form asp-action="" class="form-horizontal">
+            <section class="card">
+                <div class="card-body">
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group row">
+                        <label asp-for="Account" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="@_UnitOfWork.Account.GetByID(Model.Fk_Account).Result.FullName" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="Token" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="Token" class="form-control" disabled />
+                        </div>
+
+                        <label asp-for="ReplacedByToken" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="ReplacedByToken" class="form-control" disabled />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label asp-for="CreatedByIp" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="CreatedByIp" class="form-control" disabled />
+                        </div>
+
+                        <label asp-for="Expires" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input id="_Expires" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.Expires)" class=" form-control " disabled>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label asp-for="RevokedByIp" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="RevokedByIp" class="form-control" disabled />
+                        </div>
+
+                        <label asp-for="Revoked" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            @if (Model.Revoked != null)
+                            {
+                                <input id="_Revoked" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.Revoked)" class=" form-control " disabled>
+
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" disabled />
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="ReasonRevoked" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-10">
+                            <textarea rows="5" asp-for="ReasonRevoked" class="form-control" disabled></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="IsExpired" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="IsExpired" class="form-control" disabled>
+                        </div>
+                        <label asp-for="IsRevoked" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="IsRevoked" class="form-control" disabled>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label asp-for="IsActive" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="IsActive" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label asp-for="LastModifiedAt" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input id="LastModifiedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.LastModifiedAt)" class=" form-control " disabled>
+                        </div>
+                        <label asp-for="LastModifiedBy" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="LastModifiedBy" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CreatedAt" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input id="CreatedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.CreatedAt)" class=" form-control " disabled>
+                        </div>
+                        <label asp-for="CreatedBy" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="CreatedBy" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("PartialView/_DetailsPagePartial");}
+}

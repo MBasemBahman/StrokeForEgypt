@@ -5,6 +5,12 @@
     var SystemUser = HttpContextAccessor.HttpContext.Request.Cookies["SystemUser"];
     var SystemRole = HttpContextAccessor.HttpContext.Request.Cookies["SystemRole"];
     var SystemView = HttpContextAccessor.HttpContext.Request.Cookies["SystemView"];
+    var Event = HttpContextAccessor.HttpContext.Request.Cookies["Event"];
+    var AppAbout = HttpContextAccessor.HttpContext.Request.Cookies["AppAbout"];
+    var Account = HttpContextAccessor.HttpContext.Request.Cookies["Account"];
+    var City = HttpContextAccessor.HttpContext.Request.Cookies["City"];
+    var Country = HttpContextAccessor.HttpContext.Request.Cookies["Country"];
+   var Gallery = HttpContextAccessor.HttpContext.Request.Cookies["Gallery"];
 
 
 }
@@ -32,7 +38,76 @@
                             <span>@CommonLocalizer.Get("Home")</span>
                         </a>
                     </li>
-              
+
+                    @if (Event != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Index" asp-controller="Event">
+                                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("Events")</span>
+                            </a>
+                        </li>
+
+                    }
+                    @if (Account != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Index" asp-controller="Account">
+                                <i class="fas fa-users" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("Accounts")</span>
+                            </a>
+                        </li>
+
+                    }
+                    @if (AppAbout != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Details" asp-controller="AppAbout">
+                                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("AppAbout")</span>
+                            </a>
+                        </li>
+                    }
+                    @if (City != null || Country != null|| Gallery!=null)
+                    {
+                <li class="nav-parent">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-mail-bulk" aria-hidden="true"></i>
+                        <span> @EntityLocalizer.Get("Main Data")</span>
+                    </a>
+                    @if (City != null)
+                    {
+                        <ul class="nav nav-children">
+                            <li>
+                                <a asp-action="Index" asp-controller="City">
+                                    <span class="fas fa-city"></span> @EntityLocalizer.Get("Cities")
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    @if (Country != null)
+                    {
+                        <ul class="nav nav-children">
+                            <li>
+                                <a asp-action="Index" asp-controller="Country">
+                                    <span class="fas fa-city"></span> @EntityLocalizer.Get("Countries")
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    @if (Gallery != null)
+                    {
+                        <ul class="nav nav-children">
+                            <li>
+                                <a asp-action="Index" asp-controller="Gallery">
+                                    <span class="fas fa-images"></span> @EntityLocalizer.Get("Gallery")
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                </li>
+                    }
+
                     @if (SystemUser != null || SystemView != null || SystemRole != null)
                     {
                         <li class="nav-parent">

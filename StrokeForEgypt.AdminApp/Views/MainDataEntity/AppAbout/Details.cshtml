@@ -1,0 +1,136 @@
+﻿@model AppAbout
+@inject UnitOfWork _UnitOfWork
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    var Fk_AccessLevel = int.Parse(HttpContextAccessor.HttpContext.Request.Cookies[(this.ViewContext.RouteData.Values["controller"].ToString())]);
+    ViewData["Title"] = $"{EntityLocalizer.Get("AppAbout")}";
+
+}
+@if (Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess)
+{
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <a asp-action="CreateOrEdit" asp-route-id="@Model.Id" class="btn btn-success btn-block"><i class="far fa-edit"></i><span>&nbsp;</span>@($"{CommonLocalizer.Get("Edit")}")</a>
+        </div>
+    </div>
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <form asp-action="" class="form-horizontal">
+            <section class="card">
+                <div class="card-body">
+
+                    <input type="hidden" asp-for="Id" />
+
+
+
+
+                    <div class="form-group row">
+                        <label asp-for="Phone" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="Phone" class="form-control" disabled>
+                        </div>
+                        <label asp-for="WhatsApp" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="WhatsApp" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="FacebookUrl" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="FacebookUrl" class="form-control" disabled>
+                        </div>
+                        <label asp-for="InstagramUrl" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="InstagramUrl" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="WebsiteUrl" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="WebsiteUrl" class="form-control" disabled>
+                        </div>
+                        <label asp-for="Email" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="Email" class="form-control" disabled>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="AndroidMinVersion" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="AndroidMinVersion" class="form-control" disabled>
+                        </div>
+                        <label asp-for="IOSMinVersion" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="IOSMinVersion" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="AndriodDown" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="AndriodDown" class="form-control" disabled>
+                        </div>
+                        <label asp-for="IOSDown" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="IOSDown" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="DownMessage" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <textarea rows="5" asp-for="DownMessage" class="form-control" disabled></textarea>
+                        </div>
+
+                        <label asp-for="Description" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <textarea rows="5" asp-for="Description" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label asp-for="LastModifiedAt" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.LastModifiedAt)" class=" form-control LastModifiedAt" disabled>
+                        </div>
+                        <label asp-for="LastModifiedBy" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="LastModifiedBy" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CreatedAt" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.CreatedAt)" class=" form-control CreatedAt" disabled>
+                        </div>
+                        <label asp-for="CreatedBy" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="CreatedBy" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/lib/momentjs/moment.min.js" asp-append-version="true"></script>
+
+    <script>
+        $("#_LastModifiedAt").attr("value", function () {
+            return moment($("#_LastModifiedAt").val()).format("ddd, D/M/YYYY, h:mm a");
+        });
+
+        $("#_CreatedAt").attr("value", function () {
+            return moment($("#_CreatedAt").val()).format("ddd, D/M/YYYY, h:mm a");
+        });
+    </script>
+}

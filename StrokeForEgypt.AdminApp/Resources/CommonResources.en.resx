@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddFiles" xml:space="preserve">
+    <value>Add Files</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="CancelUpload" xml:space="preserve">
+    <value>Cancel Upload</value>
   </data>
   <data name="Change" xml:space="preserve">
     <value>Change</value>
@@ -140,6 +146,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="Email Duplicated" xml:space="preserve">
+    <value>Email Duplicated</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
@@ -161,6 +170,9 @@
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
+  </data>
+  <data name="StartUpload" xml:space="preserve">
+    <value>Start Upload</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>

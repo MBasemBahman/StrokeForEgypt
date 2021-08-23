@@ -1,0 +1,110 @@
+﻿@model Account
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    ViewData["Title"] = EntityLocalizer.Get("Account Profile");
+
+    var Fk_AccessLevel = int.Parse(HttpContextAccessor.HttpContext.Request.Cookies[(this.ViewContext.RouteData.Values["controller"].ToString())]);
+
+    int returnItem = (int)ViewData["returnItem"];
+
+    var AccountDevice = HttpContextAccessor.HttpContext.Request.Cookies["AccountDevice"];
+    var RefreshToken = HttpContextAccessor.HttpContext.Request.Cookies["RefreshToken"];
+
+}
+
+@section Styles{
+    @{await Html.RenderPartialAsync("PartialView/_FormStylesPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_TableStylesPartial");}
+
+    <style>
+        .active {
+            background-color: #006ea6 !important;
+            border-color: #006ea6 !important;
+            color: white !important;
+        }
+
+        .nav-item :hover {
+            cursor: pointer;
+            background-color: #006ea6 !important;
+            border-color: #006ea6 !important;
+            color: white !important;
+        }
+    </style>
+}
+@if (Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess)
+{
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <a asp-action="CreateOrEdit" asp-route-id="@Model.Id" asp-route-IsProfile="true" class="btn btn-success btn-block"><i class="far fa-edit"></i><span>&nbsp;</span>@($"{CommonLocalizer.Get("Edit")}")</a>
+        </div>
+    </div>
+
+}
+
+
+@{await Html.RenderPartialAsync("../AccountEntity/Account/Details", Model, ViewData);}
+
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <section class="card">
+            <ul class="nav nav-tabs nav-fill">
+                @if (AccountDevice != null)
+                {
+                    <li class="nav-item">
+                        <a id="AccountDevice" class="nav-link @(returnItem == (int)AccountProfileItems.AccountDevice?"active":"")">
+                            @Html.DisplayNameFor(model => model.AccountDevices)
+                        </a>
+                    </li>
+                }
+                @if (RefreshToken != null)
+                {
+                    <li class="nav-item">
+                        <a id="RefreshToken" class="nav-link @(returnItem == (int)AccountProfileItems.RefreshToken?"active":"")">
+                            @Html.DisplayNameFor(model => model.RefreshTokens)
+                        </a>
+                    </li>
+                }
+              
+            
+            </ul>
+        </section>
+    </div>
+</div>
+<br />
+<br />
+
+<div id="d1"></div>
+@section Scripts {
+    <script>
+     $(document).ready(function () {
+
+         if ('@AccountDevice' != null && @returnItem == @((int)AccountProfileItems.AccountDevice)) {
+             $("#d1").load("/AccountDevice/Index/?Fk_Account=@Model.Id&ProfileLayOut=true");
+         }
+         else if ('@RefreshToken' != null && @returnItem == @((int)AccountProfileItems.RefreshToken)) {
+             $("#d1").load("/RefreshToken/Index/?Fk_Account=@Model.Id&ProfileLayOut=true");
+         }
+
+
+         $("#AccountDevice").on('click', function () {
+             $(".active").each(function () {
+                 $(this).removeClass("active");
+             });
+             $(this).addClass("active");
+             $("#d1").load("/AccountDevice/Index/?Fk_Account=@Model.Id&ProfileLayOut=true");
+         });
+
+         $("#RefreshToken").on('click', function () {
+             $(".active").each(function () {
+                 $(this).removeClass("active");
+             });
+             $(this).addClass("active");
+             $("#d1").load("/RefreshToken/Index/?Fk_Account=@Model.Id&ProfileLayOut=true");
+         });
+       
+     });
+    </script>
+}
