@@ -1,11 +1,11 @@
-﻿@model EventAgendaGalleryFilter
+﻿@model CommonFilter
 @inject CommonLocalizationService CommonLocalizer
 @inject EntityLocalizationService EntityLocalizer
 @inject UnitOfWork _UnitOfWork
 @{
-    ViewData["Title"] = EntityLocalizer.Get("EventAgendaGallery");
+    ViewData["Title"] = EntityLocalizer.Get("Gallery");
 
-    var EventAgendaGallery = new EventAgendaGallery();
+    var Gallery = new Gallery();
 
     var Fk_AccessLevel = int.Parse(HttpContextAccessor.HttpContext.Request.Cookies[(this.ViewContext.RouteData.Values["controller"].ToString())]);
 
@@ -13,7 +13,6 @@
     {
         Layout = "_AssetsLayout";
     }
-    EventAgenda EventAgenda = _UnitOfWork.EventAgenda.GetByID(Model.Fk_EventAgenda).Result;
 
 }
 
@@ -21,17 +20,7 @@
     @{await Html.RenderPartialAsync("PartialView/_FormStylesPartial");}
     @{await Html.RenderPartialAsync("PartialView/_TableStylesPartial");}
 }
-<div class="row">
-    <div class="col-sm-12">
-        @if (EventAgenda != null)
-        {
-            await Html.RenderPartialAsync("../EventEntity/EventAgenda/Details", EventAgenda, ViewData);
-            <br />
-            <hr />
 
-        }
-    </div>
-</div>
 <div class="row">
     <div class="col">
         <section class="card">
@@ -43,23 +32,22 @@
                 <h2 class="card-title">@ViewData["Title"]</h2>
             </header>
             <div class="card-body">
-                @if ((Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess) && Model.Fk_EventAgenda > 0)
+                @if ((Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess))
                 {
                     await Html.RenderPartialAsync("./PartialComponent/ImageLazyUpload", new MultiImageViewModel
                     {
-                        Id = Model.Fk_EventAgenda,
                         Name = "Attachments",
-                        UploudAction = "/EventAgendaGallery/Uploud"
+                        UploudAction = "/Gallery/Uploud"
 
                     });
                 }
                 <table class="table table-bordered table-striped mb-0" id="custom-tabletools">
                     <thead>
                         <tr>
-                            <th>@Html.DisplayNameFor(model => EventAgendaGallery.Id)</th>
-                            <th>@Html.DisplayNameFor(model => EventAgendaGallery.FileURL)</th>
-                            <th>@Html.DisplayNameFor(model => EventAgendaGallery.FileName)</th>
-                            <th>@Html.DisplayNameFor(model => EventAgendaGallery.CreatedAt)</th>
+                            <th>@Html.DisplayNameFor(model => Gallery.Id)</th>
+                            <th>@Html.DisplayNameFor(model => Gallery.FileURL)</th>
+                            <th>@Html.DisplayNameFor(model => Gallery.FileName)</th>
+                            <th>@Html.DisplayNameFor(model => Gallery.CreatedAt)</th>
                             <th>
 
                             </th>
@@ -71,15 +59,6 @@
     </div>
 </div>
 
-@if (EventAgenda != null)
-{
-    <br />
-    <div class="row">
-        <div class="col-sm-3">
-            <a asp-action="Profile" asp-controller="Event" asp-route-id="@EventAgenda.Fk_Event" asp-route-returnItem="@((int)EventProfileItems.EventAgenda)" class="btn btn-success"> @CommonLocalizer.Get("Back") </a>
-        </div>
-    </div>
-}
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="DisplayModal" tabindex="-1" role="dialog" aria-labelledby="DetailsTitle" aria-hidden="true">
@@ -116,7 +95,6 @@
                     dataType: "json",
                     data: function (data) {
                         data.Id = @Model.Id;
-                        data.Fk_EventAgenda = @(Model.Fk_EventAgenda);
                         return JSON.stringify(data);
                     }
                 },
@@ -147,8 +125,8 @@
                         data: "id",
                         render: function (data, type, row) {
                             return '<a href="' + row.fileURL + '" download="' + row.fileName + '" class="btn btn-outline-primary a-btn-slide-text mr-1" target="_blank" ><i class="fas fa-download"></i></a>'
-                                +'<a href="/EventAgendaGallery/Details/' + data + '" class="btn btn-outline-success a-btn-slide-text Displaybtn mr-1"><i class="fas fa-eye"></i></a>'
-                                + '<a href="/EventAgendaGallery/Delete/' + data + '"class="btn btn-outline-danger a-btn-slide-text Displaybtn " style="display:@(Fk_AccessLevel == (int)AccessLevelEnum.FullAccess ? "":"none")"><i class="fas fa-trash-alt"></i></a>';
+                                +'<a href="/Gallery/Details/' + data + '" class="btn btn-outline-success a-btn-slide-text Displaybtn mr-1"><i class="fas fa-eye"></i></a>'
+                                + '<a href="/Gallery/Delete/' + data + '"class="btn btn-outline-danger a-btn-slide-text Displaybtn " style="display:@(Fk_AccessLevel == (int)AccessLevelEnum.FullAccess ? "":"none")"><i class="fas fa-trash-alt"></i></a>';
                         }
                     }
                 ]

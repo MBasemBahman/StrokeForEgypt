@@ -6,6 +6,10 @@
     var SystemRole = HttpContextAccessor.HttpContext.Request.Cookies["SystemRole"];
     var SystemView = HttpContextAccessor.HttpContext.Request.Cookies["SystemView"];
     var Event = HttpContextAccessor.HttpContext.Request.Cookies["Event"];
+    var AppAbout = HttpContextAccessor.HttpContext.Request.Cookies["AppAbout"];
+    var Account = HttpContextAccessor.HttpContext.Request.Cookies["Account"];
+    var City = HttpContextAccessor.HttpContext.Request.Cookies["City"];
+    var Country = HttpContextAccessor.HttpContext.Request.Cookies["Country"];
 
 
 }
@@ -44,6 +48,55 @@
                         </li>
 
                     }
+                    @if (Account != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Index" asp-controller="Account">
+                                <i class="fas fa-users" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("Accounts")</span>
+                            </a>
+                        </li>
+
+                    }
+                    @if (AppAbout != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Details" asp-controller="AppAbout">
+                                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("AppAbout")</span>
+                            </a>
+                        </li>
+                    }
+                    @if (City != null || Country != null)
+                    {
+                        <li class="nav-parent">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-mail-bulk" aria-hidden="true"></i>
+                                <span> @EntityLocalizer.Get("Main Data")</span>
+                            </a>
+                            @if (City != null)
+                            {
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="City">
+                                            <span class="fas fa-city"></span> @EntityLocalizer.Get("Cities")
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                            @if (Country != null)
+                            {
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="Country">
+                                            <span class="fas fa-city"></span> @EntityLocalizer.Get("Countries")
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                        </li>
+                    }
+
                     @if (SystemUser != null || SystemView != null || SystemRole != null)
                     {
                         <li class="nav-parent">

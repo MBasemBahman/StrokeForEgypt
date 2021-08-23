@@ -1,18 +1,11 @@
-﻿@model EventGalleryFilter
-@inject CommonLocalizationService CommonLocalizer
+﻿@inject CommonLocalizationService CommonLocalizer
 @inject EntityLocalizationService EntityLocalizer
 @{
-    ViewData["Title"] = EntityLocalizer.Get("EventGallery");
+    ViewData["Title"] = EntityLocalizer.Get("Countries");
 
-    var EventGallery = new EventGallery();
+    var Country = new Country();
 
     var Fk_AccessLevel = int.Parse(HttpContextAccessor.HttpContext.Request.Cookies[(this.ViewContext.RouteData.Values["controller"].ToString())]);
-
-    if (ViewData["ProfileLayOut"] != null && (bool)ViewData["ProfileLayOut"] == true)
-    {
-        Layout = "_AssetsLayout";
-    }
-
 }
 
 @section Styles{
@@ -23,30 +16,25 @@
     <div class="col">
         <section class="card">
             <header class="card-header">
-                <div class="card-actions">
-                    <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-                    <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
-                </div>
                 <h2 class="card-title">@ViewData["Title"]</h2>
             </header>
             <div class="card-body">
-                @if ((Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess) && Model.Fk_Event > 0)
-                {
-                    await Html.RenderPartialAsync("./PartialComponent/ImageLazyUpload", new MultiImageViewModel
-                    {
-                        Id = Model.Fk_Event,
-                        Name = "Attachments",
-                        UploudAction = "/EventGallery/Uploud"
 
-                    });
+                @if (Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess)
+                {
+                    <a asp-action="CreateOrEdit" class="btn btn-outline-primary a-btn-slide-text mb-4">
+                        <i class="fas fa-plus-circle"></i>
+                        <span><strong>@CommonLocalizer.Get("Create")</strong></span>
+                    </a>
                 }
                 <table class="table table-bordered table-striped mb-0" id="custom-tabletools">
                     <thead>
                         <tr>
-                            <th>@Html.DisplayNameFor(model => EventGallery.Id)</th>
-                            <th>@Html.DisplayNameFor(model => EventGallery.FileURL)</th>
-                            <th>@Html.DisplayNameFor(model => EventGallery.FileName)</th>
-                            <th>@Html.DisplayNameFor(model => EventGallery.CreatedAt)</th>
+                            <th>@Html.DisplayNameFor(model => Country.Id)</th>
+                            <th>@Html.DisplayNameFor(model => Country.Name)</th>
+                            <th>@Html.DisplayNameFor(model => Country.ImageURL)</th>
+                            <th>@Html.DisplayNameFor(model => Country.Order)</th>
+                            <th>@Html.DisplayNameFor(model => Country.IsActive)</th>
                             <th>
 
                             </th>
@@ -75,16 +63,14 @@
 </div>
 
 @section Scripts{
-    @Html.RenderPartialSectionScripts();
+
     @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
     @{await Html.RenderPartialAsync("PartialView/_TableScriptsPartial");}
 
-
     <script>
         $(document).ready(function () {
             var $table = $('#custom-tabletools').DataTable({
-                "scrollX": true,
                 // Ajax Filter
                 ajax: {
                     url: '@Url.Action("LoadTable")',
@@ -92,41 +78,38 @@
                     contentType: "application/json",
                     dataType: "json",
                     data: function (data) {
-                        data.Id = @Model.Id;
-                        data.Fk_Event = @(Model.Fk_Event);
+                        data.Id = @ViewData["Id"];
                         return JSON.stringify(data);
                     }
                 },
                 // Columns Setups
                 columns: [
                     { data: "id" },
-                                          {
-                          data: "fileURL",
-                        render: function (data) {
-                            if (data != null) {
-                                return '<a class="image-popup-no-margins" href="' + data + '"><img class="img-thumbnail img-fluid" src="' + data + '" width="75" alt="No Image Selected"></a>'
-                            }
-                            else {
-                                return '@CommonLocalizer.Get("Not Found")';
-                            }
+                    { data: "name" },
+                    {
+                        data: "imageURL",
+                        render: function (data, type, row) {
+                            return '<a class="image-popup-no-margins" href="' + data + '"><img class="img-thumbnail img-fluid" src="' + data + '" width="75" alt="No Image Selected"></a>'
                         }
                     },
-
-
-                    { data: "fileName" },
-
+                    { data: "order" },
                     {
-                        data: "createdAt",
+                        data: "isActive",
                         render: function (data, type, row) {
-                            return moment(data).format("ddd, D/M/YYYY, h:mm a");
+                            if (data == true) {
+                                return '<input type="checkbox" class="form-control" checked disabled>';
+                            }
+                            else {
+                                return '<input type="checkbox" class="form-control" disabled >';
+                            }
                         }
                     },
                     {
                         data: "id",
                         render: function (data, type, row) {
-                            return '<a href="' + row.fileURL + '" download="' + row.fileName + '" class="btn btn-outline-primary a-btn-slide-text mr-1" target="_blank" ><i class="fas fa-download"></i></a>'
-                                +'<a href="/EventGallery/Details/' + data + '" class="btn btn-outline-success a-btn-slide-text Displaybtn mr-1"><i class="fas fa-eye"></i></a>'
-                                + '<a href="/EventGallery/Delete/' + data + '"class="btn btn-outline-danger a-btn-slide-text Displaybtn " style="display:@(Fk_AccessLevel == (int)AccessLevelEnum.FullAccess ? "":"none")"><i class="fas fa-trash-alt"></i></a>';
+                            return '<a href="/Country/Details/' + data + '" class="btn btn-outline-success a-btn-slide-text Displaybtn mr-1"><i class="fas fa-eye"></i></a>'
+                                + '<a href="/Country/CreateOrEdit/' + data +'" class="btn btn-outline-primary a-btn-slide-text mr-1" style="display:@(Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess? "":"none")"><i class="fas fa-edit"></i></a>'
+                                + '<a href="/Country/Delete/' + data + '"class="btn btn-outline-danger a-btn-slide-text Displaybtn " style="display:@(Fk_AccessLevel == (int)AccessLevelEnum.FullAccess?"":"none")"><i class="fas fa-trash-alt"></i></a>';
                         }
                     }
                 ]
