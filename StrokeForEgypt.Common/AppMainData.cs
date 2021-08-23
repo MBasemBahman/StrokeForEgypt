@@ -81,7 +81,7 @@ namespace StrokeForEgypt.Common
         public enum EventProfileItems
         {
             EventActivity = 1,
-            EventAgenda  = 2,
+            EventAgenda = 2,
             EventGallery = 3,
             EventPackage = 4
         }
