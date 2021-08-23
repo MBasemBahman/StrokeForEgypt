@@ -72,5 +72,19 @@ namespace StrokeForEgypt.Common
         public enum AppViewEnum
         {
         }
+
+        public enum EventProfileItems
+        {
+            EventActivity = 1,
+            EventAgenda  = 2,
+            EventGallery = 3,
+            EventPackage = 4
+        }
+
+        public enum AccountProfileItems
+        {
+            AccountDevice = 1,
+            RefreshToken = 2
+        }
     }
 }
