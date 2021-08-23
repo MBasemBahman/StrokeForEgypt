@@ -1,0 +1,44 @@
+﻿@model SystemUser
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    Layout = "_LoginLayout";
+    ViewData["Title"] = CommonLocalizer.Get("Login");
+}
+
+<form asp-action="Index">
+    <div class="form-group mb-3">
+        <label asp-for="Email"></label>
+        <div class="input-group">
+            <input asp-for="Email" class="form-control form-control-lg" />
+            <span class="input-group-append">
+                <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                </span>
+            </span>
+        </div>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <div class="clearfix">
+            <label asp-for="Password" class="float-left"></label>
+        </div>
+        <div class="input-group">
+            <input type="password" asp-for="Password" class="form-control form-control-lg" />
+            <span class="input-group-append">
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+            </span>
+        </div>
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <span class="text-danger">@ViewData["Error"]</span>
+    <div class="row">
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-primary mt-2">@ViewData["Title"]</button>
+        </div>
+    </div>
+</form>

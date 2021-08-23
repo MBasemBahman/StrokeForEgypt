@@ -1,3 +1,27 @@
 ﻿@using StrokeForEgypt.AdminApp
 @using StrokeForEgypt.AdminApp.Models
+@using StrokeForEgypt.AdminApp.ViewModel
+@using StrokeForEgypt.Entity
+@using StrokeForEgypt.Entity.AuthEntity
+@using StrokeForEgypt.Entity.AccountEntity
+@using StrokeForEgypt.Entity.EventEntity
+@using StrokeForEgypt.Entity.BookingEntity
+@using StrokeForEgypt.Entity.MainDataEntity
+@using StrokeForEgypt.Entity.NewsEntity
+@using StrokeForEgypt.Entity.NotificationEntity
+@using StrokeForEgypt.Entity.CommonEntity
+@using StrokeForEgypt.Entity.SponsorEntity
+@using Microsoft.AspNetCore.Http
+@using StrokeForEgypt.Repository
+@using StrokeForEgypt.Common
+@using static StrokeForEgypt.Common.EnumData;
+@using StrokeForEgypt.AdminApp.HtmlHelper;
+@using StrokeForEgypt.AdminApp.Filters;
+@using StrokeForEgypt.AdminApp.Services
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+

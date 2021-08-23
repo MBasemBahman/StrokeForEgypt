@@ -1,21 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using StrokeForEgypt.AdminApp.Models;
+using StrokeForEgypt.DAL;
+using StrokeForEgypt.Repository;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace StrokeForEgypt.AdminApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ISession _Session;
+        private readonly UnitOfWork _UnitOfWork;
+        private readonly BaseDBContext _BaseDBContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IHttpContextAccessor HttpContextAccessor, UnitOfWork UnitOfWork, BaseDBContext BaseDBContext)
         {
-            _logger = logger;
+            _Session = HttpContextAccessor.HttpContext.Session;
+            _UnitOfWork = UnitOfWork;
+            _BaseDBContext = BaseDBContext;
         }
 
         public IActionResult Index()
@@ -23,9 +28,51 @@ namespace StrokeForEgypt.AdminApp.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult SetCulture(string returnUrl, string Language)
         {
-            return View();
+            string Culture = "en";
+
+            if (!string.IsNullOrEmpty(Language))
+            {
+                Culture = Language;
+            }
+            else
+            {
+                // Retrieves the requested culture
+                IRequestCultureFeature CultureFeature = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                // Culture contains the information of the requested culture
+                CultureInfo CurrentCulture = CultureFeature.RequestCulture.UICulture;
+                if (CurrentCulture.Name == "en")
+                {
+                    Culture = "ar";
+                }
+            }
+
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture: "en", uiCulture: Culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+            return LocalRedirect(returnUrl);
+        }
+
+        public IActionResult SetTheme(string returnUrl)
+        {
+            CookieOptions cookie = new()
+            {
+                Expires = DateTime.Now.AddMonths(1)
+            };
+
+            if (bool.Parse(Request.Cookies["IsDarkMode"]) == false)
+            {
+                Response.Cookies.Append("IsDarkMode", "true", cookie);
+            }
+            else
+            {
+                Response.Cookies.Append("IsDarkMode", "false", cookie);
+            }
+
+            return LocalRedirect(returnUrl);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

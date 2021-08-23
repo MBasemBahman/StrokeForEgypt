@@ -1,48 +1,237 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    var FullName = HttpContextAccessor.HttpContext.Request.Cookies["FullName"];
+    var JopTitle = HttpContextAccessor.HttpContext.Request.Cookies["JopTitle"];
+    var Email = HttpContextAccessor.HttpContext.Request.Cookies["Email"];
+    var IsDarkMode = bool.Parse(HttpContextAccessor.HttpContext.Request.Cookies["IsDarkMode"]);
+
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+<!DOCTYPE html>
+<html class="sidebar-light fixed sidebar-left-collapsed @(IsDarkMode?"dark":"")">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - StrokeForEgypt.AdminApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <!-- Basic -->
+    <meta charset="UTF-8">
+
+    <title>@ViewData["Title"] | @EntityLocalizer.Get("StrokeForEgypt")</title>
+    <link rel="shortcut icon" type="image/jpg" href="~/Layer 3.png" />
+
+    <meta name="keywords" content="Admin Panel" />
+    <meta name="description" content="Admin Panel">
+    <meta name="author" content="Admin Panel">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/Template-Assets/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Template-Assets/vendor/animate/animate.css">
+
+    <link rel="stylesheet" href="~/Template-Assets/vendor/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/Template-Assets/vendor/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="~/Template-Assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+
+    <!-- Specific Page Vendor CSS -->
+    <link rel="stylesheet" href="~/Template-Assets/vendor/elusive-icons/css/elusive-icons.css" />
+    <link rel="stylesheet" href="~/Template-Assets/vendor/simple-line-icons/css/simple-line-icons.css" />
+    <link rel="stylesheet" href="~/Template-Assets/vendor/meteocons/css/meteocons.css" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="~/Template-Assets/css/theme.css" />
+
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="~/Template-Assets/css/skins/default.css" />
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="~/Template-Assets/css/custom.css">
+
+    <!-- Head Libs -->
+    <script src="~/Template-Assets/vendor/modernizr/modernizr.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .active {
+            background-color: #7DE0AF !important;
+            border-color: #7DE0AF !important;
+            color: white !important;
+        }
+
+        .nav-item :hover {
+            cursor: pointer;
+            background-color: #7DE0AF !important;
+            border-color: #7DE0AF !important;
+            color: white !important;
+        }
+    </style>
+    @if (IsDarkMode)
+    {
+        <link rel="stylesheet" href="~/Template-Assets/css/DarkMode.css">
+    }
+    @RenderSection("Styles", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">StrokeForEgypt.AdminApp</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <section class="body">
+
+        <!-- start: header -->
+        <header class="header">
+            <div class="logo-container">
+                <a asp-controller="Home" asp-action="Index" class="logo">
+                    <h2 style="margin-top:0px;">
+                        @if (IsDarkMode)
+                        {
+                            <img src="~/Layer 1.png" style="width:100px" />
+                        }
+                        else
+                        {
+                            <img src="~/Layer 2.png" style="width:100px" />
+                        }
+                    </h2>
+                </a>
+                <div class="d-md-none toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+                    <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - StrokeForEgypt.AdminApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <!-- start: search & user box -->
+            <div class="header-right">
+
+                <span class="separator"></span>
+
+                <div id="userbox" class="userbox">
+                    <a href="#" data-toggle="dropdown">
+                        <figure class="profile-picture">
+                            <i class="fas fa-user fa-2x text-dark"></i>
+                        </figure>
+                        <div class="profile-info" data-lock-name="@FullName" data-lock-email="@Email">
+                            <span class="name">@FullName</span>
+                            <span class="role">@JopTitle</span>
+                        </div>
+
+                        <i class="fa custom-caret"></i>
+                    </a>
+
+                    <div class="dropdown-menu">
+                        <ul class="list-unstyled mb-2">
+                            <li class="divider"></li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" asp-controller="Home" asp-action="SetCulture" asp-route-returnUrl="@returnUrl"><i class="fas fa-language"></i>@CommonLocalizer.Get("Change Language")</a>
+                            </li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" asp-controller="Home" asp-action="SetTheme" asp-route-returnUrl="@returnUrl"><i class="fas fa-paint-roller"></i>@CommonLocalizer.Get("Change Theme")</a>
+                            </li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" asp-controller="Login" asp-action="Edit"><i class="fas fa-user"></i>@CommonLocalizer.Get("Edit Account")</a>
+                            </li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" asp-controller="Login" asp-action="Logout"><i class="fas fa-power-off"></i>@CommonLocalizer.Get("Logout")</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- end: search & user box -->
+        </header>
+        <!-- end: header -->
+
+        <div class="inner-wrapper">
+
+            @{await Html.RenderPartialAsync("_Navigation");}
+
+            <section role="main" class="content-body">
+                <header class="page-header">
+                    <h2>@ViewData["Title"]</h2>
+
+                    <div class="right-wrapper text-right">
+                        <ol class="breadcrumbs">
+                            <li>
+                                <a asp-action="Index" asp-controller="Home">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li><span>@ViewData["Title"]</span></li>
+                        </ol>
+
+                        <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a>
+                    </div>
+                </header>
+                <!-- start: page -->
+                @RenderBody()
+                <!-- end: page -->
+            </section>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+        <aside id="sidebar-right" class="sidebar-right">
+            <div class="nano">
+                <div class="nano-content">
+                    <a href="#" class="mobile-close d-md-none">
+                        Collapse <i class="fas fa-chevron-right"></i>
+                    </a>
+
+                    <div class="sidebar-right-wrapper">
+
+                        <div class="sidebar-widget widget-calendar">
+                            <h6>Calendar</h6>
+                            <div data-plugin-datepicker data-plugin-skin="dark"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+    </section>
+
+    <!-- Vendor -->
+    <script src="~/Template-Assets/vendor/jquery/jquery.js"></script>
+    <script src="~/Template-Assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="~/Template-Assets/vendor/popper/umd/popper.min.js"></script>
+    <script src="~/Template-Assets/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Template-Assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/Template-Assets/vendor/common/common.js"></script>
+    <script src="~/Template-Assets/vendor/nanoscroller/nanoscroller.js"></script>
+    <script src="~/Template-Assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+    <script src="~/Template-Assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+    <!-- Specific Page Vendor -->
+    <script src="~/Template-Assets/vendor/jquery-mockjax/jquery.mockjax.js"></script>
+
+    @RenderSection("Scripts", required: false)
+    @Html.RenderPartialSectionScripts()
+
+    <!-- Theme Base, Components and Settings -->
+    <script src="~/Template-Assets/js/theme.js"></script>
+
+    <!-- Theme Custom -->
+    <script src="~/Template-Assets/js/custom.js"></script>
+
+    <!-- Theme Initialization Files -->
+    <script src="~/Template-Assets/js/theme.init.js"></script>
+    <script src="~/Template-Assets/js/examples/examples.modals.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script src="~/js/site.js"></script>
+
+    <script type="text/javascript">
+        //this will add * next to required label
+        $('input[type=text],input[type=radio],input[type=checkbox],textarea,select,input[type=email],input[type=number]').each(function () {
+            var req = $(this).attr('data-val-required');
+            var exclude = $(this).attr('data-exclude');
+            if (undefined != req && undefined == exclude) {
+                var label = $('label[for="' + $(this).attr('id') + '"]');
+                var text = label.text();
+                if (text.length > 0) {
+                    label.append('<span style="color:red"> *</span>');
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
