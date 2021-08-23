@@ -499,7 +499,7 @@ namespace StrokeForEgypt.API.Controllers
 
         private void SetJwtTokenHeader(string token)
         {
-            Response.Headers.Add("Expires", DateTime.UtcNow.AddMinutes(60).ToString());
+            Response.Headers.Add("Expires", DateTime.UtcNow.AddMinutes(60).ToString("ddd, dd MMM yyy HH’:’mm’:’ss ‘GMT’"));
             Response.Headers.Add("Authorization", token);
         }
 
