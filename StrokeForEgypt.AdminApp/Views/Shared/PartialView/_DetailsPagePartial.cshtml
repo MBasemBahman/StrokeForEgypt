@@ -1,0 +1,28 @@
+﻿<script src="~/lib/momentjs/moment.min.js" asp-append-version="true"></script>
+
+<script>
+
+
+    $("#LastModifiedAt").attr("value", function () {
+        return moment($("#LastModifiedAt").val()).format("ddd, D/M/YYYY, h:mm a");
+    });
+
+    $("#CreatedAt").attr("value", function () {
+        return moment($("#CreatedAt").val()).format("ddd, D/M/YYYY, h:mm a");
+    });
+
+    $("#EndOfLicense").attr("value", function () {
+        return moment($("#EndOfLicense").val()).format("ddd, D/M/YYYY");
+    });
+
+    $("#LicenseDate").attr("value", function () {
+        return moment($("#LicenseDate").val()).format("ddd, D/M/YYYY");
+    });
+
+    $("#ExpiryDate").attr("value", function () {
+        return moment($("#ExpiryDate").val()).format("ddd, D/M/YYYY, h:mm a");
+    });
+
+
+    
+</script>

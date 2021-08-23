@@ -1,0 +1,73 @@
+﻿@model SystemRoleViewModel
+@inject UnitOfWork _UnitOfWork
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    ViewData["Title"] = $"{CommonLocalizer.Get("CreateOrEdit")} {EntityLocalizer.Get("System Role")}";
+}
+
+@section Styles{
+    @{await Html.RenderPartialAsync("PartialView/_FormStylesPartial");}
+}
+<div class="row">
+    <div class="col-lg-12">
+        <form asp-action="CreateOrEdit" class="form-horizontal">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+                    <h2 class="card-title">@ViewData["Title"]</h2>
+                </header>
+                <div class="card-body">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" asp-for="SystemRole.Id" />
+                    <div class="form-group row">
+                        <label asp-for="SystemRole.Name" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="SystemRole.Name" class="form-control">
+                            <span asp-validation-for="SystemRole.Name" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label  class="col-sm-2 control-label  pt-2">@EntityLocalizer.Get("Full Access Views")</label>
+                        <div class="col-sm-10">
+                            <select asp-for="FullAccessViews"  data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "includeSelectAllOption": true }' class="form-control populate" asp-items="@(new MultiSelectList(Model.SystemViews,"Key","Value"))">
+                            </select>
+                            <span asp-validation-for="FullAccessViews" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label  class="col-sm-2 control-label  pt-2">@EntityLocalizer.Get("Control Access Views")</label>
+                        <div class="col-sm-10">
+                            <select asp-for="ControlAccessViews"  data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "includeSelectAllOption": true }' class="form-control populate" asp-items="@(new MultiSelectList(Model.SystemViews,"Key","Value"))">
+                            </select>
+                            <span asp-validation-for="ControlAccessViews" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label  class="col-sm-2 control-label  pt-2">@EntityLocalizer.Get("View Access Views")</label>
+                        <div class="col-sm-10">
+                            <select asp-for="ViewAccessViews"  data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "includeSelectAllOption": true }' class="form-control populate" asp-items="@(new MultiSelectList(Model.SystemViews,"Key","Value"))">
+                            </select>
+                            <span asp-validation-for="ViewAccessViews" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <footer class="card-footer text-left">
+                    <button class="btn btn-primary"> @CommonLocalizer.Get("Submit") </button>
+                    <button type="reset" class="btn btn-default"> @CommonLocalizer.Get("Reset") </button>
+                    <a asp-action="Index" class="btn btn-success"> @CommonLocalizer.Get("Back") </a>
+                </footer>
+            </section>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
+}

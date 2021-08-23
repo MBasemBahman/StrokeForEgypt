@@ -1,0 +1,11 @@
+﻿td, th, li {
+    color: white;
+}
+
+html.dark .tab-navigation nav > ul > li > ul > li > a {
+    color: white;
+}
+
+html.dark .tab-navigation nav > ul > li > ul > li .dropdown-menu li > a {
+    color: white;
+}

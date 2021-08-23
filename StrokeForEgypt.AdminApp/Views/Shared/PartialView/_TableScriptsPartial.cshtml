@@ -1,0 +1,36 @@
+﻿<script src="~/Template-Assets/vendor/select2/js/select2.js"></script>
+<script src="~/lib/momentjs/moment.min.js" asp-append-version="true"></script>
+<script src="~/Template-Assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datetime-moment/datetime-moment.js" asp-append-version="true"></script>
+<script src="~/Template-Assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Ajax Table -->
+<script src="~/Template-Assets/js/examples/examples.datatables.ajax.js"></script>
+<script src="~/Template-Assets/js/examples/examples.lightbox.js"></script>
+
+<!-- Advanced Table -->
+<script src="~/Template-Assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js"></script>
+<script src="~/Template-Assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.bootstrap4.min.js"></script>
+<script src="~/Template-Assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.html5.min.js"></script>
+<script src="~/Template-Assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.print.min.js"></script>
+<script src="~/Template-Assets/vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js"></script>
+<script src="~/Template-Assets/vendor/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js"></script>
+
+<script src="~/Template-Assets/js/examples/examples.datatables.default.js"></script>
+<script src="~/Template-Assets/js/examples/examples.datatables.row.with.details.js"></script>
+<script src="~/Template-Assets/js/examples/examples.datatables.tabletools.js"></script>
+<script src="~/Template-Assets/js/examples/examples.datatables.Custom.js"></script>
+
+<!-- Editable Table -->
+<script src="~/Template-Assets/js/examples/examples.datatables.editable.js"></script>
+
+<script>
+ 
+    $('body').on('click', '.Displaybtn', function () {
+        event.preventDefault();
+        var href = $(this).attr('href');
+        $('#Display').load(href);
+        $("#DisplayModal").modal("show");
+    });
+
+</script>

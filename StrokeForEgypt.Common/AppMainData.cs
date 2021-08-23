@@ -77,5 +77,19 @@ namespace StrokeForEgypt.Common
             PaymentFailed = 4,
             Refunded = 5
         }
+
+        public enum EventProfileItems
+        {
+            EventActivity = 1,
+            EventAgenda  = 2,
+            EventGallery = 3,
+            EventPackage = 4
+        }
+
+        public enum AccountProfileItems
+        {
+            AccountDevice = 1,
+            RefreshToken = 2
+        }
     }
 }
