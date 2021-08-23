@@ -12,7 +12,7 @@ namespace StrokeForEgypt.Entity.CommonEntity
         public int Id { get; set; }
 
         [DisplayName("IsActive")]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
         [DisplayName("Order")]
         public int Order { get; set; }

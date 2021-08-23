@@ -24,7 +24,7 @@ namespace StrokeForEgypt.Repository
                 cfg.CreateMap<DateTime, string>().ConvertUsing(new DateTimeTypeConverter());
                 cfg.CreateMap<DateTime, string>().ConvertUsing(new DateTimeTypeConverter());
 
-                cfg.AllowNullCollections = true;
+                cfg.AllowNullCollections = false;
             });
 
             #region AuthEntity
@@ -46,7 +46,6 @@ namespace StrokeForEgypt.Repository
             CreateMap<SystemUser, SystemUser>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.SystemRole, opt => opt.Ignore())
-                .ForMember(dest => dest.IsActive, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
             #endregion
@@ -135,7 +134,6 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Country, opt => opt.Ignore())
                 .ForMember(dest => dest.BookingMembers, opt => opt.Ignore())
-                .ForMember(dest => dest.IsActive, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
 
@@ -143,7 +141,6 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Cities, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageURL, opt => opt.Ignore())
-                .ForMember(dest => dest.IsActive, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
 
