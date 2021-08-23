@@ -153,10 +153,18 @@ namespace StrokeForEgypt.API.Controllers
             {
                 returnData = _AccountService.Authenticate(model, IpAddress());
 
-                SetJwtTokenHeader(returnData.JwtToken);
-                SetTokenCookie(returnData.RefreshToken);
+                if (returnData.IsActive)
+                {
+                    SetJwtTokenHeader(returnData.JwtToken);
+                    SetTokenCookie(returnData.RefreshToken);
 
-                Status = new Status(true);
+                    Status = new Status(true);
+                }
+                else
+                {
+                    Status.ErrorMessage = _Localizer.Get("Account is inactive contact support!");
+                }
+
             }
             catch (Exception ex)
             {
