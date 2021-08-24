@@ -67,7 +67,7 @@ namespace StrokeForEgypt.Common
                 string _epass = "&1^rOz#gpFgl";
                 string _dispName = "Stroke For Egypt";
 
-                var pathToFile = AppMainData.WebRootPath
+                string pathToFile = AppMainData.WebRootPath
                            + Path.DirectorySeparatorChar.ToString()
                            + "wwwroot"
                            + Path.DirectorySeparatorChar.ToString()
@@ -77,7 +77,7 @@ namespace StrokeForEgypt.Common
                            + Path.DirectorySeparatorChar.ToString()
                            + "VerifyEmail.html";
 
-                var builder = new BodyBuilder();
+                BodyBuilder builder = new BodyBuilder();
                 using (StreamReader SourceReader = System.IO.File.OpenText(pathToFile))
                 {
                     builder.HtmlBody = SourceReader.ReadToEnd();
@@ -109,7 +109,7 @@ namespace StrokeForEgypt.Common
                 smtp.SendCompleted += (s, e) => { smtp.Dispose(); };
                 await smtp.SendMailAsync(myMessage);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
