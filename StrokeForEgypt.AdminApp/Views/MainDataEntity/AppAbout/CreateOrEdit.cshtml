@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
-                   
+
                     <div class="form-group row">
                         <label asp-for="Phone" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
@@ -61,16 +61,16 @@
                         </div>
 
                     </div>
-                   
+
                     <div class="form-group row">
                         <label asp-for="AndroidMinVersion" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            <input asp-for="AndroidMinVersion" class="form-control" >
+                            <input asp-for="AndroidMinVersion" class="form-control">
                             <span asp-validation-for="AndroidMinVersion" class="text-danger"></span>
                         </div>
                         <label asp-for="IOSMinVersion" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            <input asp-for="IOSMinVersion" class="form-control" >
+                            <input asp-for="IOSMinVersion" class="form-control">
                             <span asp-validation-for="IOSMinVersion" class="text-danger"></span>
                         </div>
                     </div>
@@ -78,31 +78,31 @@
                     <div class="form-group row">
                         <label asp-for="AndriodDown" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            <input asp-for="AndriodDown" class="form-control" >
+                            <input asp-for="AndriodDown" class="form-control">
                             <span asp-validation-for="AndriodDown" class="text-danger"></span>
                         </div>
                         <label asp-for="IOSDown" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            <input asp-for="IOSDown" class="form-control" >
+                            <input asp-for="IOSDown" class="form-control">
                             <span asp-validation-for="IOSDown" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label asp-for="DownMessage" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <textarea rows="5" asp-for="DownMessage" class="form-control" ></textarea>
+                        <div class="col-sm-10">
+                            <textarea rows="5" asp-for="DownMessage" class="form-control summernote" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'></textarea>
                             <span asp-validation-for="DownMessage" class="text-danger"></span>
                         </div>
-
+                    </div>
+                    <div class="form-group row">
                         <label asp-for="Description" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <textarea rows="5" asp-for="Description" class="form-control"></textarea>
+                        <div class="col-sm-10">
+                            <textarea rows="5" asp-for="Description" class="form-control summernote" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                     </div>
 
-                
                 </div>
 
                 <footer class="card-footer text-left">

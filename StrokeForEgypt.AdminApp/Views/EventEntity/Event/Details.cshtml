@@ -33,13 +33,20 @@
 
                     <div class="form-group row">
                         <label asp-for="ShortDescription" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <textarea rows="5" asp-for="ShortDescription" class="form-control" disabled></textarea>
+                        <div class="col-sm-10">
+                            @Html.Raw(Model.ShortDescription)
                         </div>
-
+                    </div>
+                    <div class="form-group row">
                         <label asp-for="LongDescription" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <textarea rows="5" asp-for="LongDescription" class="form-control" disabled></textarea>
+                        <div class="col-sm-10">
+                            @Html.Raw(Model.LongDescription)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="TermsConditions" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-10">
+                            @Html.Raw(Model.TermsConditions)
                         </div>
                     </div>
 
@@ -57,7 +64,7 @@
                     <div class="form-group row">
                         <label asp-for="Address" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-10">
-                            <textarea asp-for="Address" rows="5" class="form-control" disabled></textarea>
+                            @Html.Raw(Model.Address)
                         </div>
                     </div>
 
@@ -88,7 +95,7 @@
                     <div class="form-group row">
                         <label asp-for="PackageNotes" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-10">
-                            <textarea asp-for="PackageNotes" rows="5" class="form-control" disabled></textarea>
+                            @Html.Raw(Model.PackageNotes)
                         </div>
                     </div>
 
@@ -98,6 +105,8 @@
                             <input asp-for="IsActive" class="form-control" disabled>
                         </div>
                     </div>
+                    <hr />
+
                     <div class="form-group row">
                         <label asp-for="LastModifiedAt" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">

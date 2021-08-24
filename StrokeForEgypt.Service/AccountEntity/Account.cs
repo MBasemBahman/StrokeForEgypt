@@ -43,6 +43,12 @@ namespace StrokeForEgypt.Service.AccountEntity
         [Required(ErrorMessage = "{0} is required")]
         public string FullName { get; set; }
 
+
+        [DisplayName("Phone")]
+        [DataType(DataType.PhoneNumber)]
+        [Phone]
+        public string Phone { get; set; }
+
         [DisplayName("Email")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]

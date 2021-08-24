@@ -55,6 +55,10 @@ namespace StrokeForEgypt.Entity.EventEntity
         [DataType(DataType.MultilineText)]
         public string PackageNotes { get; set; }
 
+        [DisplayName("Terms & Conditions")]
+        [DataType(DataType.MultilineText)]
+        public string TermsConditions { get; set; }
+
         [DisplayName("Event Agendas")]
         public ICollection<EventAgenda> EventAgendas { get; set; }
 

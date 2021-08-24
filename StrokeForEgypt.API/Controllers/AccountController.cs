@@ -203,6 +203,10 @@ namespace StrokeForEgypt.API.Controllers
                 {
                     Status.ErrorMessage = _Localizer.Get("Email already registered!");
                 }
+                else if (!string.IsNullOrEmpty(model.Phone) && _UnitOfWork.Account.Any(a => a.Phone == model.Phone))
+                {
+                    Status.ErrorMessage = _Localizer.Get("Phone already registered!");
+                }
                 else if (!string.IsNullOrEmpty(model.LoginToken) && _UnitOfWork.Account.Any(a => a.LoginTokenHash == BC.HashPassword(model.LoginToken)))
                 {
                     Status.ErrorMessage = _Localizer.Get("You already registered!");

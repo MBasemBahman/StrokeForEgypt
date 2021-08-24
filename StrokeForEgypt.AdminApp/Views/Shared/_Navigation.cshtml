@@ -68,13 +68,23 @@
                             </a>
                         </li>
                     }
-                    @if (City != null || Country != null || Gallery != null)
+                    @if (City != null || Country != null || Gallery != null || AppAbout != null)
                     {
                         <li class="nav-parent">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-mail-bulk" aria-hidden="true"></i>
                                 <span> @EntityLocalizer.Get("Main Data")</span>
                             </a>
+                            @if (AppAbout != null)
+                            {
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a asp-action="Details" asp-controller="AppAbout">
+                                            <span class="fas fa-info-circle"></span> @EntityLocalizer.Get("AppAbout")
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
                             @if (Country != null)
                             {
                                 <ul class="nav nav-children">

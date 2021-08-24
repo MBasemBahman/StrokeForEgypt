@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
 
     <title>@ViewData["Title"] | @EntityLocalizer.Get("StrokeForEgypt")</title>
-    <link rel="shortcut icon" type="image/jpg" href="~/Layer 3.png" />
+    <link rel="shortcut icon" type="image/jpg" href="~/logo.png" />
 
     <meta name="keywords" content="Admin Panel" />
     <meta name="description" content="Admin Panel">
@@ -230,6 +230,13 @@
                     label.append('<span style="color:red"> *</span>');
                 }
             }
+        });
+
+        // This will set `ignore` for all validation calls
+        jQuery.validator.setDefaults({
+            // This will ignore all hidden elements alongside `contenteditable` elements
+            // that have no `name` attribute
+            ignore: ":hidden, [contenteditable='true']:not([name])"
         });
     </script>
 
