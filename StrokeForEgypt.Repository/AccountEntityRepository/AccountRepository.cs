@@ -31,6 +31,12 @@ namespace StrokeForEgypt.Repository.AccountEntityRepository
                 account.LoginTokenHash = BC.HashPassword(account.LoginTokenHash);
             }
 
+            if (!string.IsNullOrEmpty(account.VerificationCodeHash))
+            {
+                // hash VerificationCode
+                account.VerificationCodeHash = BC.HashPassword(account.VerificationCodeHash);
+            }
+
             return account;
         }
     }

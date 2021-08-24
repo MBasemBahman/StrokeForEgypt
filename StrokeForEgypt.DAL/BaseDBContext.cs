@@ -119,6 +119,18 @@ namespace StrokeForEgypt.DAL
                     });
             }
 
+            #region AccountEntity
+
+            #region Account
+
+            modelBuilder.Entity<Account>()
+                        .Property("IsVerified")
+                        .HasDefaultValue(false);
+
+            #endregion
+
+            #endregion
+
             #region BookingEntity
 
             #region BookingMemberActivity

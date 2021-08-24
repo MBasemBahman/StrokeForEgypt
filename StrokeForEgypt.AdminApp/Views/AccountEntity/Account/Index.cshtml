@@ -36,6 +36,7 @@
                             <th>@Html.DisplayNameFor(model => Account.Phone)</th>
                             <th>@Html.DisplayNameFor(model => Account.Email)</th>
                             <th>@EntityLocalizer.Get("Image")</th>
+                            <th>@Html.DisplayNameFor(model => Account.IsVerified)</th>
                             <th>@Html.DisplayNameFor(model => Account.IsActive)</th>
                             <th>
 
@@ -98,6 +99,17 @@
                             }
                             else {
                                 return '@CommonLocalizer.Get("Not Found")';
+                            }
+                        }
+                    },
+                    {
+                        data: "isVerified",
+                        render: function (data, type, row) {
+                            if (data == true) {
+                                return '<input type="checkbox" class="form-control" checked disabled>';
+                            }
+                            else {
+                                return '<input type="checkbox" class="form-control" disabled >';
                             }
                         }
                     },

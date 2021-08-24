@@ -46,98 +46,6 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
-        /// Post: Send Verification Code
-        /// </summary>
-        [HttpPost]
-        [AllowAnonymous]
-        [Route(nameof(SendVerificationCode))]
-        public async Task<string> SendVerificationCode([FromBody] EmailCode model)
-        {
-            string returnData = "";
-
-            Status Status = new();
-
-            try
-            {
-                if (!_UnitOfWork.Account.Any(a => a.Email == model.Email))
-                {
-                    returnData = RandomGenerator.RandomString(3, true) + RandomGenerator.RandomNumber(100, 999);
-
-                    // Send Email
-                    string Title = "'Stroke For Egypt' password code";
-                    string Message = "Your verification code is: " + returnData;
-
-                    await EmailManager.SendMail(model.Email, Title, Message);
-
-                    Status = new Status(true);
-                }
-                else
-                {
-                    Status.ErrorMessage = _Localizer.Get("Email already registered!");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Status.ExceptionMessage = ex.Message;
-                if (ex.InnerException != null)
-                {
-                    Status.ExceptionMessage = ex.InnerException.Message;
-                }
-            }
-
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
-
-            return returnData;
-        }
-
-        /// <summary>
-        /// Post: Forget Password
-        /// </summary>
-        [HttpPost]
-        [AllowAnonymous]
-        [Route(nameof(ForgetPassword))]
-        public async Task<string> ForgetPassword([FromBody] EmailCode model)
-        {
-            string returnData = "";
-
-            Status Status = new();
-
-            try
-            {
-                if (_UnitOfWork.Account.Any(a => a.Email == model.Email))
-                {
-                    returnData = RandomGenerator.RandomString(3, true) + RandomGenerator.RandomNumber(100, 999);
-
-                    // Send Email
-                    string Title = "'Stroke For Egypt' password code";
-                    string Message = "Your verification code is: " + returnData;
-
-                    await EmailManager.SendMail(model.Email, Title, Message);
-
-                    Status = new Status(true);
-                }
-                else
-                {
-                    Status.ErrorMessage = _Localizer.Get("Email not registered register now!");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Status.ExceptionMessage = ex.Message;
-                if (ex.InnerException != null)
-                {
-                    Status.ExceptionMessage = ex.InnerException.Message;
-                }
-            }
-
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
-
-            return returnData;
-        }
-
-        /// <summary>
         /// Post: Login
         /// </summary>
         [HttpPost]
@@ -216,6 +124,13 @@ namespace StrokeForEgypt.API.Controllers
                     Account account = new();
                     _Mapper.Map(model, account);
 
+                    string code = "";
+                    if (!string.IsNullOrEmpty(model.Email))
+                    {
+                        code = RandomGenerator.RandomString(3, true) + RandomGenerator.RandomNumber(100, 999);
+                        account.VerificationCodeHash = code;
+                    }
+
                     account = _UnitOfWork.Account.Register(account);
 
                     _UnitOfWork.Account.CreateEntity(account);
@@ -233,6 +148,15 @@ namespace StrokeForEgypt.API.Controllers
                     SetTokenCookie(returnData.RefreshToken);
 
                     Status = new Status(true);
+
+                    if (!string.IsNullOrEmpty(code))
+                    {
+                        // Send Email
+                        string Title = "'Stroke For Egypt' verification code";
+                        string Message = code;
+
+                        await EmailManager.SendMailWithTemplate(account.Email, Title, Message);
+                    }
                 }
             }
             catch (Exception ex)
@@ -248,6 +172,49 @@ namespace StrokeForEgypt.API.Controllers
             Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
 
             return returnData;
+        }
+
+        /// <summary>
+        /// Post: Verify Account
+        /// </summary>
+        [HttpPost]
+        [Route(nameof(VerifyAccount))]
+        public async Task VerifyAccount([FromBody] VerifyAccountModel model)
+        {
+            Status Status = new();
+
+            try
+            {
+                Account account = (Account)Request.HttpContext.Items["Account"];
+                if (!string.IsNullOrEmpty(account.VerificationCodeHash) &&
+                    BC.Verify(model.Code, account.VerificationCodeHash))
+                {
+                    Account data = await _UnitOfWork.Account.GetByID(account.Id);
+
+                    data.VerificationCodeHash = null;
+                    data.IsVerified = true;
+                    data.LastModifiedAt = DateTime.UtcNow;
+
+                    _UnitOfWork.Account.UpdateEntity(data);
+                    await _UnitOfWork.Save();
+
+                    Status = new Status(true);
+                }
+                else
+                {
+                    Status.ErrorMessage = _Localizer.Get("Verification code is wrong!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
         }
 
         /// <summary>
@@ -337,9 +304,130 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
+        /// Post: Forget Password
+        /// </summary>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route(nameof(ForgetPassword))]
+        public async Task ForgetPassword([FromBody] ForgetPasswordModel model)
+        {
+            Status Status = new();
+
+            try
+            {
+                if (_UnitOfWork.Account.Any(a => a.Email == model.Email))
+                {
+                    Account data = await _UnitOfWork.Account.GetFirst(a => a.Email == model.Email);
+
+                    if (data.IsActive)
+                    {
+                        string code = RandomGenerator.RandomString(3, true) + RandomGenerator.RandomNumber(100, 999);
+
+                        data.VerificationCodeHash = BC.HashPassword(code);
+                        data.LastModifiedAt = DateTime.UtcNow;
+
+                        _UnitOfWork.Account.UpdateEntity(data);
+                        await _UnitOfWork.Save();
+
+                        // Send Email
+                        string Title = "'Stroke For Egypt' verification code";
+                        string Message = code;
+
+                        await EmailManager.SendMailWithTemplate(model.Email, Title, Message);
+
+                        Status = new Status(true);
+                    }
+                    else
+                    {
+                        Status.ErrorMessage = _Localizer.Get("Account is inactive contact support!");
+                    }
+                }
+                else
+                {
+                    Status.ErrorMessage = _Localizer.Get("Email not registered, register now!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+        }
+
+        /// <summary>
+        /// Post: Reset Password
+        /// </summary>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route(nameof(ResetPassword))]
+        public async Task<AuthenticateResponse> ResetPassword([FromBody] ResetPasswordModel model)
+        {
+            AuthenticateResponse returnData = new();
+
+            Status Status = new();
+
+            try
+            {
+                if (_UnitOfWork.Account.Any(a => a.Email == model.Email))
+                {
+                    Account account = await _UnitOfWork.Account.GetFirst(a => a.Email == model.Email);
+
+                    if (!string.IsNullOrEmpty(account.VerificationCodeHash) &&
+                    BC.Verify(model.Code, account.VerificationCodeHash))
+                    {
+                        account.VerificationCodeHash = null;
+                        account.PasswordHash = BC.HashPassword(model.NewPassword);
+                        account.LastModifiedAt = DateTime.UtcNow;
+
+                        _UnitOfWork.Account.UpdateEntity(account);
+                        await _UnitOfWork.Save();
+
+                        returnData = _AccountService.Authenticate(new AuthenticateRequest
+                        {
+                            Email = account.Email,
+                            Password = account.PasswordHash,
+                            LoginToken = account.LoginTokenHash
+                        }, IpAddress());
+
+                        SetJwtTokenHeader(returnData.JwtToken);
+                        SetTokenCookie(returnData.RefreshToken);
+
+                        Status = new Status(true);
+                    }
+                    else
+                    {
+                        Status.ErrorMessage = _Localizer.Get("Verification code is wrong!");
+                    }
+                }
+                else
+                {
+                    Status.ErrorMessage = _Localizer.Get("Email not registered, register now!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
         /// Post: Change Password
         /// </summary>
         [HttpPost]
+        [AllowAnonymous]
         [Route(nameof(ChangePassword))]
         public async void ChangePassword([FromBody] ChangePasswordModel model)
         {

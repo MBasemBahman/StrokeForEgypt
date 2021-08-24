@@ -17,6 +17,8 @@ namespace StrokeForEgypt.API.Models.Accounts
 
         public bool IsActive { get; set; }
 
+        public bool IsVerified { get; set; }
+
         public AuthenticateResponse()
         {
 
@@ -27,6 +29,7 @@ namespace StrokeForEgypt.API.Models.Accounts
             FullName = account.FullName;
             ImageURL = account.ImageURL;
             IsActive = account.IsActive;
+            IsVerified = account.IsVerified;
             JwtToken = jwtToken;
             RefreshToken = refreshToken;
         }

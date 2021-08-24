@@ -158,9 +158,14 @@ namespace StrokeForEgypt.AdminApp.Controllers.AccountEntity
 
                         _Mapper.Map(Account, Data);
 
-                        if (Account.PasswordHash != Data.PasswordHash)
+                        if (!string.IsNullOrEmpty(Account.PasswordHash) && Account.PasswordHash != Data.PasswordHash)
                         {
                             Data.PasswordHash = BC.HashPassword(Account.PasswordHash);
+                        }
+
+                        if (!string.IsNullOrEmpty(Account.VerificationCodeHash) && Account.VerificationCodeHash != Data.VerificationCodeHash)
+                        {
+                            Data.VerificationCodeHash = BC.HashPassword(Account.VerificationCodeHash);
                         }
 
                         _UnitOfWork.Account.UpdateEntity(Data);

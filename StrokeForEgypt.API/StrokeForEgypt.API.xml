@@ -4,16 +4,6 @@
         <name>StrokeForEgypt.API</name>
     </assembly>
     <members>
-        <member name="M:StrokeForEgypt.API.Controllers.AccountController.SendVerificationCode(StrokeForEgypt.Service.AccountEntity.EmailCode)">
-            <summary>
-            Post: Send Verification Code
-            </summary>
-        </member>
-        <member name="M:StrokeForEgypt.API.Controllers.AccountController.ForgetPassword(StrokeForEgypt.Service.AccountEntity.EmailCode)">
-            <summary>
-            Post: Forget Password
-            </summary>
-        </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.Login(StrokeForEgypt.API.Models.Accounts.AuthenticateRequest)">
             <summary>
             Post: Login
@@ -24,6 +14,11 @@
             Post: Create Account
             </summary>
         </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.VerifyAccount(StrokeForEgypt.Service.AccountEntity.VerifyAccountModel)">
+            <summary>
+            Post: Verify Account
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.GetProfile">
             <summary>
             Get: Get Profile
@@ -32,6 +27,16 @@
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.EditProfile(StrokeForEgypt.Service.AccountEntity.EditProfileModel)">
             <summary>
             Post: Edit Profile
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.ForgetPassword(StrokeForEgypt.Service.AccountEntity.ForgetPasswordModel)">
+            <summary>
+            Post: Forget Password
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.ResetPassword(StrokeForEgypt.Service.AccountEntity.ResetPasswordModel)">
+            <summary>
+            Post: Reset Password
             </summary>
         </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.ChangePassword(StrokeForEgypt.Service.AccountEntity.ChangePasswordModel)">

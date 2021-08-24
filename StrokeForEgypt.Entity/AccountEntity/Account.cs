@@ -23,14 +23,20 @@ namespace StrokeForEgypt.Entity.AccountEntity
         [EmailAddress]
         public string Email { get; set; }
 
-        [DisplayName("Password Hash")]
+        [DisplayName("Password")]
         [Required(ErrorMessage = "{0} is required")]
         [DataType(DataType.Password)]
         [PasswordPropertyText]
         public string PasswordHash { get; set; }
 
-        [DisplayName("Login Token Hash")]
+        [DisplayName("Login Token")]
         public string LoginTokenHash { get; set; }
+
+        [DisplayName("Verification Code")]
+        public string VerificationCodeHash { get; set; }
+
+        [DisplayName("IsVerified")]
+        public bool IsVerified { get; set; } = false;
 
         [DisplayName("Account Devices")]
         public ICollection<AccountDevice> AccountDevices { get; set; }

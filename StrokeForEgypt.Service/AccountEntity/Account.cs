@@ -26,15 +26,37 @@ namespace StrokeForEgypt.Service.AccountEntity
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string Email { get; set; }
+
+        [DisplayName("IsVerified")]
+        public bool IsVerified { get; set; }
     }
 
-    public class EmailCode
+    public class ForgetPasswordModel
     {
         [Required(ErrorMessage = "{0} is required")]
         [DisplayName("Email")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string Email { get; set; }
+    }
+
+    public class ResetPasswordModel
+    {
+        [Required(ErrorMessage = "{0} is required")]
+        [DisplayName("Email")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [DisplayName("Code")]
+        [Required(ErrorMessage = "{0} is required")]
+        public string Code { get; set; }
+
+        [DisplayName("New Password")]
+        [Required(ErrorMessage = "{0} is required")]
+        [DataType(DataType.Password)]
+        [PasswordPropertyText]
+        public string NewPassword { get; set; }
     }
 
     public class RegisterModel
@@ -94,5 +116,12 @@ namespace StrokeForEgypt.Service.AccountEntity
         [DataType(DataType.Password)]
         [PasswordPropertyText]
         public string NewPassword { get; set; }
+    }
+
+    public class VerifyAccountModel
+    {
+        [DisplayName("Code")]
+        [Required(ErrorMessage = "{0} is required")]
+        public string Code { get; set; }
     }
 }
