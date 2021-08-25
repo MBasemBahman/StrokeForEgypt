@@ -27,6 +27,7 @@
     <Folder Include="wwwroot\Uploud\Gallery\" />
     <Folder Include="wwwroot\Uploud\EventActivity\" />
     <Folder Include="wwwroot\Uploud\EventPackage\" />
+    <Folder Include="wwwroot\Uploud\BookingMemberAttachment\" />
   </ItemGroup>
 
 </Project>

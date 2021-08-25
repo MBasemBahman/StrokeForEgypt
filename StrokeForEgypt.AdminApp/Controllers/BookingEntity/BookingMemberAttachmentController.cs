@@ -152,7 +152,6 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
             _UnitOfWork.BookingMemberAttachment.DeleteEntity(BookingMemberAttachment);
             await _UnitOfWork.BookingMemberAttachment.Save();
 
-
             return RedirectToAction("Index", "BookingMemberAttachment", new { Fk_BookingMember = BookingMemberAttachment.Fk_BookingMember });
         }
     }
