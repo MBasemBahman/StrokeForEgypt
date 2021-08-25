@@ -89,7 +89,15 @@ namespace StrokeForEgypt.Common
         public enum AccountProfileItems
         {
             AccountDevice = 1,
-            RefreshToken = 2
+            RefreshToken = 2,
+            Booking = 3
         }
+
+        public enum BookingProfileItems
+        {
+            BookingMember = 1,
+            BookingStateHistory = 2
+        }
+
     }
 }

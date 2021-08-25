@@ -1,4 +1,19 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function getEventPackages(Fk_Event) {
+    var serviceUrl = '/DataFilter/GetEventPackages/?Fk_Event=' + Fk_Event;
 
-// Write your JavaScript code.
+    $.ajax({
+        type: 'GET',
+        url: serviceUrl,
+        success: function (result) {
+            $("#Fk_EventPackage").empty();
+
+            var options = ' ';
+            if (result.length > 0) {
+                for (var i = 0; i < result.length; i++) {
+                    options += '<option value="' + result[i].id + '">' + result[i].name + '</option>'
+                }
+            }
+            $("#Fk_EventPackage").append(options);
+        }
+    });
+}

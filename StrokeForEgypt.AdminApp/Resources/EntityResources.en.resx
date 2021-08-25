@@ -141,6 +141,30 @@
   <data name="AppAbout" xml:space="preserve">
     <value>App About</value>
   </data>
+  <data name="Booking" xml:space="preserve">
+    <value>Booking</value>
+  </data>
+  <data name="Booking Member Activities" xml:space="preserve">
+    <value>Booking Member Activities</value>
+  </data>
+  <data name="Booking Members" xml:space="preserve">
+    <value>Booking Members</value>
+  </data>
+  <data name="Booking Profile" xml:space="preserve">
+    <value>Booking Profile</value>
+  </data>
+  <data name="Booking State" xml:space="preserve">
+    <value>Booking State</value>
+  </data>
+  <data name="Booking State Histories" xml:space="preserve">
+    <value>Booking State Histories</value>
+  </data>
+  <data name="Booking States" xml:space="preserve">
+    <value>Booking States</value>
+  </data>
+  <data name="BookingMember" xml:space="preserve">
+    <value>Booking Member</value>
+  </data>
   <data name="Bookings" xml:space="preserve">
     <value>Bookings</value>
   </data>
@@ -149,6 +173,9 @@
   </data>
   <data name="City" xml:space="preserve">
     <value>City</value>
+  </data>
+  <data name="Club" xml:space="preserve">
+    <value>Club</value>
   </data>
   <data name="Countries" xml:space="preserve">
     <value>Countries</value>
@@ -167,6 +194,12 @@
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="Date Of Birth" xml:space="preserve">
+    <value>Date Of Birth</value>
+  </data>
+  <data name="Days Count" xml:space="preserve">
+    <value>Days Count</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
@@ -246,6 +279,9 @@
   <data name="File URL" xml:space="preserve">
     <value>File URL</value>
   </data>
+  <data name="First Name" xml:space="preserve">
+    <value>First Name</value>
+  </data>
   <data name="From Date" xml:space="preserve">
     <value>From Date</value>
   </data>
@@ -254,6 +290,9 @@
   </data>
   <data name="Gallery" xml:space="preserve">
     <value>Gallery</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>#</value>
@@ -291,6 +330,9 @@
   <data name="Last Modified By" xml:space="preserve">
     <value>Last Modified By</value>
   </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
   <data name="Latitude" xml:space="preserve">
     <value>Latitude</value>
   </data>
@@ -305,6 +347,9 @@
   </data>
   <data name="MainData" xml:space="preserve">
     <value>Main Data</value>
+  </data>
+  <data name="Member Attachments" xml:space="preserve">
+    <value>Member Attachments</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -338,6 +383,9 @@
   </data>
   <data name="Password Hash" xml:space="preserve">
     <value>Password Hash</value>
+  </data>
+  <data name="Person Count" xml:space="preserve">
+    <value>Person Count</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
@@ -419,6 +467,9 @@
   </data>
   <data name="Token" xml:space="preserve">
     <value>Token</value>
+  </data>
+  <data name="Total Price" xml:space="preserve">
+    <value>Total Price</value>
   </data>
   <data name="Website Url" xml:space="preserve">
     <value>Website Url</value>

@@ -20,7 +20,7 @@ namespace StrokeForEgypt.Entity.BookingEntity
         [DisplayName(nameof(EventPackage))]
         public int Fk_EventPackage { get; set; }
 
-        [DisplayName("Event Package")]
+        [DisplayName("EventPackage")]
         public EventPackage EventPackage { get; set; }
 
         [DisplayName("Person Count")]

@@ -141,6 +141,30 @@
   <data name="AppAbout" xml:space="preserve">
     <value>بيانات التطبيق</value>
   </data>
+  <data name="Booking" xml:space="preserve">
+    <value>Booking</value>
+  </data>
+  <data name="Booking Member Activities" xml:space="preserve">
+    <value>Booking Member Activities</value>
+  </data>
+  <data name="Booking Members" xml:space="preserve">
+    <value>Booking Members</value>
+  </data>
+  <data name="Booking Profile" xml:space="preserve">
+    <value>Booking Profile</value>
+  </data>
+  <data name="Booking State" xml:space="preserve">
+    <value>Booking State</value>
+  </data>
+  <data name="Booking State Histories" xml:space="preserve">
+    <value>Booking State Histories</value>
+  </data>
+  <data name="Booking States" xml:space="preserve">
+    <value>Booking States</value>
+  </data>
+  <data name="BookingMember" xml:space="preserve">
+    <value>Booking Member</value>
+  </data>
   <data name="Bookings" xml:space="preserve">
     <value>الحجوزات</value>
   </data>
@@ -149,6 +173,9 @@
   </data>
   <data name="City" xml:space="preserve">
     <value>مدينه</value>
+  </data>
+  <data name="Club" xml:space="preserve">
+    <value>Club</value>
   </data>
   <data name="Countries" xml:space="preserve">
     <value>الدول</value>
@@ -167,6 +194,12 @@
   </data>
   <data name="Date" xml:space="preserve">
     <value>تاريخ</value>
+  </data>
+  <data name="Date Of Birth" xml:space="preserve">
+    <value>Date Of Birth</value>
+  </data>
+  <data name="Days Count" xml:space="preserve">
+    <value>Days Count</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>وصف</value>
@@ -246,6 +279,9 @@
   <data name="File URL" xml:space="preserve">
     <value>رابط الملف</value>
   </data>
+  <data name="First Name" xml:space="preserve">
+    <value>First Name</value>
+  </data>
   <data name="From Date" xml:space="preserve">
     <value>من تاريخ</value>
   </data>
@@ -254,6 +290,9 @@
   </data>
   <data name="Gallery" xml:space="preserve">
     <value>معرض الصور</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>#</value>
@@ -291,6 +330,9 @@
   <data name="Last Modified By" xml:space="preserve">
     <value>التعديل الأخير من قبل</value>
   </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
   <data name="Latitude" xml:space="preserve">
     <value>خط العرض</value>
   </data>
@@ -308,6 +350,9 @@
   </data>
   <data name="MainData" xml:space="preserve">
     <value>البيانات الرئيسيه</value>
+  </data>
+  <data name="Member Attachments" xml:space="preserve">
+    <value>Member Attachments</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
@@ -341,6 +386,9 @@
   </data>
   <data name="Password Hash" xml:space="preserve">
     <value>الرقم السري</value>
+  </data>
+  <data name="Person Count" xml:space="preserve">
+    <value>Person Count</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>رقم الهاتف</value>
@@ -419,6 +467,9 @@
   </data>
   <data name="Token" xml:space="preserve">
     <value>الرمز</value>
+  </data>
+  <data name="Total Price" xml:space="preserve">
+    <value>Total Price</value>
   </data>
   <data name="Website Url" xml:space="preserve">
     <value>رابط الموقع الألكتروني</value>
