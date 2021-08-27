@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace StrokeForEgypt.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Produces("application/json")]
     [ApiExplorerSettings(GroupName = "Event")]
