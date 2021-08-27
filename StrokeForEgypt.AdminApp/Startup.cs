@@ -65,8 +65,6 @@ namespace StrokeForEgypt.AdminApp
                      options.SerializerSettings.Converters.Add(new StringEnumConverter());
                  });
 
-            services.AddControllersWithViews();
-
             services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(20));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
