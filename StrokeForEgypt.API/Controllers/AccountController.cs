@@ -11,6 +11,7 @@ using StrokeForEgypt.Repository;
 using StrokeForEgypt.Service;
 using StrokeForEgypt.Service.AccountEntity;
 using System;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using BC = BCrypt.Net.BCrypt;
@@ -517,9 +518,12 @@ namespace StrokeForEgypt.API.Controllers
             try
             {
                 string token = model.Token ?? Request.Cookies["refreshToken"];
+                token = WebUtility.UrlDecode(token);
                 if (!string.IsNullOrEmpty(token))
                 {
                     AuthenticateResponse response = _AccountService.RefreshToken(token, IpAddress());
+
+                    SetJwtTokenHeader(returnData.JwtToken);
                     SetTokenCookie(response.RefreshToken);
 
                     Status = new Status(true);
