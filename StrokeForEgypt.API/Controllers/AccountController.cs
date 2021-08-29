@@ -278,6 +278,14 @@ namespace StrokeForEgypt.API.Controllers
                 {
                     Account data = await _UnitOfWork.Account.GetByID(account.Id);
 
+                    string code = "";
+                    if (model.Email != data.Email)
+                    {
+                        code = RandomGenerator.RandomString(3, true) + RandomGenerator.RandomNumber(100, 999);
+                        account.VerificationCodeHash = code;
+                        account.IsVerified = false;
+                    }
+
                     _Mapper.Map(model, data);
 
                     data.LastModifiedAt = DateTime.UtcNow;
@@ -288,6 +296,15 @@ namespace StrokeForEgypt.API.Controllers
                     _Mapper.Map(data, returnData);
 
                     Status = new Status(true);
+
+                    if (!string.IsNullOrEmpty(code))
+                    {
+                        // Send Email
+                        string Title = "'Stroke For Egypt' verification code";
+                        string Message = code;
+
+                        await EmailManager.SendMailWithTemplate(account.Email, Title, Message);
+                    }
                 }
             }
             catch (Exception ex)
