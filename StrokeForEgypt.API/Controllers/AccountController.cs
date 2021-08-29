@@ -540,7 +540,7 @@ namespace StrokeForEgypt.API.Controllers
                 {
                     AuthenticateResponse response = _AccountService.RefreshToken(token, IpAddress());
 
-                    SetJwtTokenHeader(returnData.JwtToken);
+                    SetJwtTokenHeader(response.JwtToken);
                     SetTokenCookie(response.RefreshToken);
 
                     Status = new Status(true);
