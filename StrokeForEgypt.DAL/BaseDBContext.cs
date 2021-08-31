@@ -24,6 +24,7 @@ namespace StrokeForEgypt.DAL
 
         public DbSet<Account> Account { get; set; }
         public DbSet<AccountDevice> AccountDevice { get; set; }
+        public DbSet<AccountPayment> AccountPayment { get; set; }
         public DbSet<RefreshToken> RefreshToken { get; set; }
 
         #endregion
