@@ -1,0 +1,125 @@
+﻿@model Booking
+@inject UnitOfWork _UnitOfWork
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    ViewData["Title"] = $"{CommonLocalizer.Get("CreateOrEdit")} {EntityLocalizer.Get("Booking")}";
+
+    bool IsProfile = false;
+    int Fk_Event = 0;
+
+
+    if (Model.Id > 0)
+    {
+        Fk_Event = _UnitOfWork.EventPackage.GetByID(Model.Fk_EventPackage).Result.Fk_Event;
+    }
+    else
+    {
+        Fk_Event = _UnitOfWork.Event.GetFirst().Result.Id;
+        Model.TotalPrice = _UnitOfWork.EventPackage.GetFirst(a => a.Fk_Event == Fk_Event).Result.Price;
+    }
+    if (ViewData["IsProfile"] != null)
+    {
+        IsProfile = (bool)ViewData["IsProfile"];
+    }
+}
+
+@section Styles{
+    @{await Html.RenderPartialAsync("PartialView/_FormStylesPartial");}
+}
+<div class="row">
+    <div class="col-lg-12">
+        <form asp-action="CreateOrEdit" class="form-horizontal" enctype="multipart/form-data">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">@ViewData["Title"]</h2>
+                </header>
+                <div class="card-body">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="Fk_Account" />
+                    <input type="hidden" asp-for="@IsProfile" />
+
+                    <div class="form-group row">
+                        <label asp-for="EventPackage.Event" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <select asp-for="@Fk_Event" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.Event.GetLookUp(a=>true,"Id","Title"),"Key","Value"))"></select>
+                            <span asp-validation-for="@Fk_Event" class="text-danger"></span>
+                        </div>
+
+                        <label asp-for="EventPackage" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <select asp-for="Fk_EventPackage" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.EventPackage.GetLookUp(a=>a.Fk_Event==Fk_Event,"Id","Title"),"Key","Value"))"></select>
+                            <span asp-validation-for="Fk_EventPackage" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="PersonCount" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="PersonCount" class="form-control">
+                            <span asp-validation-for="PersonCount" class="text-danger"></span>
+                        </div>
+                        <label asp-for="DaysCount" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="DaysCount" class="form-control">
+                            <span asp-validation-for="DaysCount" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <label asp-for="TotalPrice" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="TotalPrice" class="form-control">
+                            <span asp-validation-for="TotalPrice" class="text-danger"></span>
+                        </div>
+
+                        <label asp-for="BookingState" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <select asp-for="Fk_BookingState" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.BookingState.GetLookUp(),"Key","Value"))"></select>
+                            <span asp-validation-for="Fk_BookingState" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label asp-for="IsActive" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="IsActive" class="form-control">
+                            <span asp-validation-for="IsActive" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer text-left">
+                    <button class="btn btn-primary"> @CommonLocalizer.Get("Submit") </button>
+                    <button type="reset" class="btn btn-default"> @CommonLocalizer.Get("Reset") </button>
+                    @if (IsProfile)
+                    {
+                        <a asp-action="Profile" asp-route-id="@Model.Id" class="btn btn-success"> @CommonLocalizer.Get("Back") </a>
+                    }
+                    else
+                    { <a asp-action="Index" class="btn btn-success"> @CommonLocalizer.Get("Back") </a>}
+                </footer>
+            </section>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
+<script>
+    $(document).ready(function () {
+        $("#Fk_Event").on("change", function () {
+            getEventPackages(this.value);
+        });
+
+        $("#Fk_EventPackage").on("change", function () {
+            getEventPackagePrice(this.value)
+        });
+    });
+</script>
+}

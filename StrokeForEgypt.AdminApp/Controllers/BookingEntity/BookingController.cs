@@ -56,8 +56,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
 
             if (!string.IsNullOrEmpty(searchBy))
             {
-                result = result.Where(a => a.EventPackage.Title.ToLower().Contains(searchBy.ToLower())
-                                        || a.BookingState.Name.ToLower().Contains(searchBy.ToLower())
+                result = result.Where(a => a.BookingState.Name.ToLower().Contains(searchBy.ToLower())
                                         || a.Account.FullName.ToLower().Contains(searchBy.ToLower())
                                         || a.DaysCount.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.PersonCount.ToString().ToLower().Contains(searchBy.ToLower())
@@ -99,7 +98,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
         }
 
         [Authorize((int)AccessLevelEnum.ReadAccess)]
-        public async Task<IActionResult> Profile(int id)
+        public async Task<IActionResult> Profile(int id,int returnItem = (int)BookingProfileItems.BookingMember)
         {
             Booking Booking = await _UnitOfWork.Booking.GetByID(id);
 
@@ -107,6 +106,8 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
             {
                 return NotFound();
             }
+
+            ViewData["returnItem"] = returnItem;
 
             return View("~/Views/BookingEntity/Booking/Profile.cshtml", Booking);
         }

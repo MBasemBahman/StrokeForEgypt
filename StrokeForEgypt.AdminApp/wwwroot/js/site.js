@@ -39,3 +39,26 @@ function getEventPackages(Fk_Event) {
     });
 }
 
+function getCities(Fk_Country) {
+    var serviceUrl = '/DataFilter/GetCities/?Fk_Country=' + Fk_Country;
+
+    $.ajax({
+        type: 'GET',
+        url: serviceUrl,
+        success: function (result) {
+            $("#Fk_City").empty();
+
+            var options = ' ';
+            if (result.length > 0) {
+                for (var i = 0; i < result.length; i++) {
+                    options += '<option value="' + result[i].id + '">' + result[i].name + '</option>'
+                }
+            }
+            $("#Fk_City").append(options);
+           
+        }
+    });
+}
+
+
+

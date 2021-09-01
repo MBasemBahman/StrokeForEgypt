@@ -11,6 +11,7 @@
     var City = HttpContextAccessor.HttpContext.Request.Cookies["City"];
     var Country = HttpContextAccessor.HttpContext.Request.Cookies["Country"];
     var Gallery = HttpContextAccessor.HttpContext.Request.Cookies["Gallery"];
+    var BookingState = HttpContextAccessor.HttpContext.Request.Cookies["BookingState"];
 
 
 }
@@ -70,52 +71,62 @@
                     }
                     @if (City != null || Country != null || Gallery != null || AppAbout != null)
                     {
-                        <li class="nav-parent">
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-mail-bulk" aria-hidden="true"></i>
-                                <span> @EntityLocalizer.Get("Main Data")</span>
-                            </a>
-                            @if (AppAbout != null)
-                            {
-                                <ul class="nav nav-children">
-                                    <li>
-                                        <a asp-action="Details" asp-controller="AppAbout">
-                                            <span class="fas fa-info-circle"></span> @EntityLocalizer.Get("AppAbout")
-                                        </a>
-                                    </li>
-                                </ul>
-                            }
-                            @if (Country != null)
-                            {
-                                <ul class="nav nav-children">
-                                    <li>
-                                        <a asp-action="Index" asp-controller="Country">
-                                            <span class="fas fa-city"></span> @EntityLocalizer.Get("Countries")
-                                        </a>
-                                    </li>
-                                </ul>
-                            }
-                            @if (City != null)
-                            {
-                                <ul class="nav nav-children">
-                                    <li>
-                                        <a asp-action="Index" asp-controller="City">
-                                            <span class="fas fa-city"></span> @EntityLocalizer.Get("Cities")
-                                        </a>
-                                    </li>
-                                </ul>
-                            }
-                            @if (Gallery != null)
-                            {
-                                <ul class="nav nav-children">
-                                    <li>
-                                        <a asp-action="Index" asp-controller="Gallery">
-                                            <span class="fas fa-images"></span> @EntityLocalizer.Get("Gallery")
-                                        </a>
-                                    </li>
-                                </ul>
-                            }
-                        </li>
+                <li class="nav-parent">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-mail-bulk" aria-hidden="true"></i>
+                        <span> @EntityLocalizer.Get("Main Data")</span>
+                    </a>
+                    @if (AppAbout != null)
+                    {
+                        <ul class="nav nav-children">
+                            <li>
+                                <a asp-action="Details" asp-controller="AppAbout">
+                                    <span class="fas fa-info-circle"></span> @EntityLocalizer.Get("AppAbout")
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    @if (Country != null)
+                    {
+                        <ul class="nav nav-children">
+                            <li>
+                                <a asp-action="Index" asp-controller="Country">
+                                    <span class="fas fa-city"></span> @EntityLocalizer.Get("Countries")
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    @if (City != null)
+                    {
+                        <ul class="nav nav-children">
+                            <li>
+                                <a asp-action="Index" asp-controller="City">
+                                    <span class="fas fa-city"></span> @EntityLocalizer.Get("Cities")
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    @if (Gallery != null)
+                    {
+                        <ul class="nav nav-children">
+                            <li>
+                                <a asp-action="Index" asp-controller="Gallery">
+                                    <span class="fas fa-images"></span> @EntityLocalizer.Get("Gallery")
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    @if (BookingState != null)
+                    {
+                        <ul class="nav nav-children">
+                            <li>
+                                <a asp-action="Index" asp-controller="BookingState">
+                                    <span class="fas fa-check"></span> @EntityLocalizer.Get("Booking States")
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                </li>
                     }
 
                     @if (SystemUser != null || SystemView != null || SystemRole != null)

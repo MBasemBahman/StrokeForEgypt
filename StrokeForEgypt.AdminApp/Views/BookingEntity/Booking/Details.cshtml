@@ -1,0 +1,131 @@
+﻿@model Booking
+@inject UnitOfWork _UnitOfWork
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    Layout = "_AssetsLayout";
+
+    int Fk_Event = _UnitOfWork.EventPackage.GetByID(Model.Fk_EventPackage).Result.Fk_Event;
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <form asp-action="" class="form-horizontal">
+            <section class="card">
+                <div class="card-body">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+
+
+                    <div class="form-group row">
+                        <label asp-for="Account" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="@_UnitOfWork.Account.GetByID(Model.Fk_Account).Result.FullName" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="EventPackage.Event" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <a class="btn btn-info" href="/Event/Profile/@Fk_Event" target="_blank">
+                                @_UnitOfWork.Event.GetByID(Fk_Event).Result.Title
+                            </a>
+                        </div>
+
+                        <label asp-for="EventPackage" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="@_UnitOfWork.EventPackage.GetByID(Model.Fk_EventPackage).Result.Title" class="form-control" disabled />
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="PersonCount" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="PersonCount" class="form-control" disabled>
+                        </div>
+                        <label asp-for="DaysCount" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="DaysCount" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <label asp-for="TotalPrice" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="TotalPrice" class="form-control" disabled>
+                        </div>
+
+                        <label asp-for="BookingState" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                          <input asp-for="@_UnitOfWork.BookingState.GetByID(Model.Fk_BookingState).Result.Name" class="form-control" disabled />
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label asp-for="IsActive" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="IsActive" class="form-control" disabled>
+
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="form-group row">
+                        <label asp-for="LastModifiedAt" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input id="_LastModifiedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.LastModifiedAt)" class=" form-control LastModifiedAt" disabled>
+                        </div>
+                        <label asp-for="LastModifiedBy" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="LastModifiedBy" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CreatedAt" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input id="_CreatedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.CreatedAt)" class=" form-control CreatedAt" disabled>
+                        </div>
+                        <label asp-for="CreatedBy" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="CreatedBy" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/lib/momentjs/moment.min.js" asp-append-version="true"></script>
+
+    <script>
+        $("#_LastModifiedAt").attr("value", function () {
+            return moment($("#_LastModifiedAt").val()).format("ddd, D/M/YYYY, h:mm a");
+        });
+
+        $("#_CreatedAt").attr("value", function () {
+            return moment($("#_CreatedAt").val()).format("ddd, D/M/YYYY, h:mm a");
+        });
+
+        $("#_RegistrationFrom").attr("value", function () {
+            return moment($("#_RegistrationFrom").val()).format("ddd, D/M/YYYY, h:mm a");
+        });
+
+        $("#_RegistrationTo").attr("value", function () {
+            return moment($("#_RegistrationTo").val()).format("ddd, D/M/YYYY, h:mm a");
+        });
+
+        $("#_FromDate").attr("value", function () {
+            return moment($("#_FromDate").val()).format("ddd, D/M/YYYY");
+        });
+
+        $("#_ToDate").attr("value", function () {
+            return moment($("#_ToDate").val()).format("ddd, D/M/YYYY");
+        });
+    </script>
+}

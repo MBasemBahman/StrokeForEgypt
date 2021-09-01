@@ -45,5 +45,13 @@ namespace StrokeForEgypt.AdminApp.Controllers
 
             return Json(result);
         }
+
+        [HttpGet]
+        public JsonResult GetCities(int Fk_Country)
+        {
+            var result = _UnitOfWork.City.GetAll(a=>a.Fk_Country==Fk_Country).Result.Select(a => new { Id = a.Id,Name=a.Name});
+
+            return Json(result);
+        }
     }
 }
