@@ -11,6 +11,7 @@ using StrokeForEgypt.Repository;
 using StrokeForEgypt.Service;
 using StrokeForEgypt.Service.AccountEntity;
 using System;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using BC = BCrypt.Net.BCrypt;
@@ -277,6 +278,14 @@ namespace StrokeForEgypt.API.Controllers
                 {
                     Account data = await _UnitOfWork.Account.GetByID(account.Id);
 
+                    string code = "";
+                    if (model.Email != data.Email)
+                    {
+                        code = RandomGenerator.RandomString(3, true) + RandomGenerator.RandomNumber(100, 999);
+                        account.VerificationCodeHash = code;
+                        account.IsVerified = false;
+                    }
+
                     _Mapper.Map(model, data);
 
                     data.LastModifiedAt = DateTime.UtcNow;
@@ -287,6 +296,15 @@ namespace StrokeForEgypt.API.Controllers
                     _Mapper.Map(data, returnData);
 
                     Status = new Status(true);
+
+                    if (!string.IsNullOrEmpty(code))
+                    {
+                        // Send Email
+                        string Title = "'Stroke For Egypt' verification code";
+                        string Message = code;
+
+                        await EmailManager.SendMailWithTemplate(account.Email, Title, Message);
+                    }
                 }
             }
             catch (Exception ex)
@@ -517,9 +535,12 @@ namespace StrokeForEgypt.API.Controllers
             try
             {
                 string token = model.Token ?? Request.Cookies["refreshToken"];
+                token = WebUtility.UrlDecode(token);
                 if (!string.IsNullOrEmpty(token))
                 {
                     AuthenticateResponse response = _AccountService.RefreshToken(token, IpAddress());
+
+                    SetJwtTokenHeader(response.JwtToken);
                     SetTokenCookie(response.RefreshToken);
 
                     Status = new Status(true);

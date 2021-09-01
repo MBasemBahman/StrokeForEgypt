@@ -1,0 +1,80 @@
+﻿@model StrokeForEgypt.Common.ChargeRequest
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet"
+          href="@Model.StylesheetUrl">
+</head>
+
+<body>
+
+    <script src="@Model.ScriptUrl"></script>
+
+    <button type="image" onclick="checkout()" alt="pay-using-fawry" id="fawry-payment-btn" style="display: none;"></button>
+    <div id="fawry-UAT"></div>
+    <script>
+
+		window.onload = function () {
+			document.getElementById('fawry-payment-btn').click();
+		}
+
+		function checkout() {
+			const configuration = {
+				locale: "en", //default en, allowed [ar, en]
+				divSelector: 'fawry-UAT', //required and you can change it as desired
+				mode: DISPLAY_MODE.SEPARATED, //required, allowd values [POPUP, INSIDE_PAGE, SIDE_PAGE, SEPARATED]
+				onSuccess: successCallBack, //optional and not supported with separated display mode
+				onFailure: failureCallBack, //optional and not supported with separated display mode
+			};
+
+			FawryPay.checkout(buildChargeRequest(), configuration);
+		}
+
+		function buildChargeRequest() {
+			const chargeRequest = {
+                merchantCode: '@Html.Raw(Model.MerchantCode)', // the merchant account number in Fawry
+				merchantRefNum: '@Model.MerchantRefNum', // order refrence number from merchant sidess
+				customerMobile: '@Model.CustomerMobile',
+				customerEmail: '@Model.CustomerEmail',
+				customerName: '@Model.CustomerName',
+				paymentExpiry: '@Model.PaymentExpiry',
+				customerProfileId: '@Model.CustomerProfileId', // in case merchant has customer profiling then can send profile id to attach it with order as reference
+				chargeItems: [
+					{
+						itemId: '@Model.ChargeItem.ItemId',
+						description: '@Html.Raw(Model.ChargeItem.Description)',
+						price: @Model.ChargeItem.Price,
+						quantity: @Model.ChargeItem.Quantity,
+						imageUrl: '@Model.ChargeItem.ImageUrl',
+					}
+				],
+
+				paymentMethod: 'CARD',
+				returnUrl: '@Model.ReturnUrl',
+				signature: '@Model.Signature'
+
+				//SHA-256 of merchantCode + merchantRefNum + customerProfileId + returnUrl + Item ID + price (Decimal with 2 fraction parts) +  secure_key
+			};
+
+			return chargeRequest;
+		}
+
+		function successCallBack(data) {
+			console.log('handle success call back as desired, data', data);
+			document.getElementById('fawryPayPaymentFrame')?.remove();
+		}
+
+		function failureCallBack(data) {
+			console.log('handle failure call back as desired, data', data);
+			document.getElementById('fawryPayPaymentFrame')?.remove();
+		}
+    </script>
+</body>
+
+</html>

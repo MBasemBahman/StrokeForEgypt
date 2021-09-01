@@ -4,13 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.AccountEntity
 {
-    public class AccountModel : ImageEntityModel
-    {
-        [DisplayName("Full Name")]
-        [Required(ErrorMessage = "{0} is required")]
-        public string FullName { get; set; }
-    }
-
     public class AccountFullModel : ImageEntityModel
     {
         [DisplayName("Full Name")]

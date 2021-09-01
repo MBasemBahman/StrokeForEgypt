@@ -15,6 +15,12 @@ namespace StrokeForEgypt.API.Authorization
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+            bool allowAll = context.ActionDescriptor.EndpointMetadata.OfType<AllowAllAttribute>().Any();
+            if (allowAll)
+            {
+                return;
+            }
+
             string secret = context.HttpContext.Request.Cookies["Secret"];
             string ApiKey = context.HttpContext.Request.Cookies["Api-Key"];
             string UserAgent = context.HttpContext.Request.Headers["User-Agent"];

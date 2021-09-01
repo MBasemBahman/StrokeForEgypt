@@ -145,7 +145,9 @@ namespace StrokeForEgypt.API.Services
 
         private Account GetAccountByRefreshToken(string token)
         {
-            Account account = _context.Account.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            Account account = _context.Account
+                                      .Include(a => a.RefreshTokens)
+                                      .SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
 
             if (account == null)
             {

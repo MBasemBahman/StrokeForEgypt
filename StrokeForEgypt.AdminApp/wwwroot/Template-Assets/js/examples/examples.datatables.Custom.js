@@ -40,7 +40,7 @@ Theme Version: 	2.2.0
                         return data;
                     }
                 },
-                { targets: "date-type", type: "date-eu" }
+                { targets: "date-type", type: "date-euro" }
             ]
         });
     };
