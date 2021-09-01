@@ -175,6 +175,9 @@ namespace StrokeForEgypt.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{controller=Fawry}/{action=Index}/{id?}");
             });
         }
     }
