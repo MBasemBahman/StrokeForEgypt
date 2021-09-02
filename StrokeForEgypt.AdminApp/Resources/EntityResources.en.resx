@@ -357,6 +357,9 @@
   <data name="News" xml:space="preserve">
     <value>News</value>
   </data>
+  <data name="News Galleries" xml:space="preserve">
+    <value>News Galleries</value>
+  </data>
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
   </data>
@@ -417,6 +420,15 @@
   <data name="Short Description" xml:space="preserve">
     <value>Short Description</value>
   </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Sponsor</value>
+  </data>
+  <data name="Sponsor Type" xml:space="preserve">
+    <value>Sponsor Type</value>
+  </data>
+  <data name="Sponsor Types" xml:space="preserve">
+    <value>Sponsor Types</value>
+  </data>
   <data name="Sponsors" xml:space="preserve">
     <value>Sponsors</value>
   </data>
@@ -470,6 +482,9 @@
   </data>
   <data name="Total Price" xml:space="preserve">
     <value>Total Price</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
   </data>
   <data name="Website Url" xml:space="preserve">
     <value>Website Url</value>

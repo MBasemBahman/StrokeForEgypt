@@ -12,6 +12,9 @@
     var Country = HttpContextAccessor.HttpContext.Request.Cookies["Country"];
     var Gallery = HttpContextAccessor.HttpContext.Request.Cookies["Gallery"];
     var BookingState = HttpContextAccessor.HttpContext.Request.Cookies["BookingState"];
+    var News = HttpContextAccessor.HttpContext.Request.Cookies["News"];
+    var Sponsor = HttpContextAccessor.HttpContext.Request.Cookies["Sponsor"];
+    var SponsorType = HttpContextAccessor.HttpContext.Request.Cookies["SponsorType"];
 
 
 }
@@ -46,6 +49,26 @@
                             <a class="nav-link" asp-action="Index" asp-controller="Event">
                                 <i class="fas fa-calendar-alt" aria-hidden="true"></i>
                                 <span>@EntityLocalizer.Get("Events")</span>
+                            </a>
+                        </li>
+
+                    }
+                    @if (News != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Index" asp-controller="News">
+                                <i class="fas fa-newspaper" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("News")</span>
+                            </a>
+                        </li>
+
+                    }
+                    @if (Sponsor != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Index" asp-controller="Sponsor">
+                                <i class="far fa-handshake" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("Sponsors")</span>
                             </a>
                         </li>
 
@@ -113,6 +136,16 @@
                             <li>
                                 <a asp-action="Index" asp-controller="BookingState">
                                     <span class="fas fa-check"></span> @EntityLocalizer.Get("Booking States")
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    @if (SponsorType != null)
+                    {
+                        <ul class="nav nav-children">
+                            <li>
+                                <a asp-action="Index" asp-controller="SponsorType">
+                                    <span class="far fa-handshake"></span> @EntityLocalizer.Get("Sponsor Types")
                                 </a>
                             </li>
                         </ul>

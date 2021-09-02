@@ -6,6 +6,7 @@ using StrokeForEgypt.Entity.EventEntity;
 using StrokeForEgypt.Entity.MainDataEntity;
 using StrokeForEgypt.Entity.NewsEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
+using StrokeForEgypt.Entity.SponsorEntity;
 using StrokeForEgypt.Service.AccountEntity;
 using StrokeForEgypt.Service.EventEntity;
 using StrokeForEgypt.Service.MainDataEntity;
@@ -163,6 +164,14 @@ namespace StrokeForEgypt.Repository
 
             CreateMap<NewsGallery, NewsGalleryModel>();
 
+
+            CreateMap<News, News>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Event, opt => opt.Ignore())
+                .ForMember(dest => dest.NewsGalleries, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
             #endregion
 
             #region NotificationEntity
@@ -231,6 +240,23 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.BookingStateHistories, opt => opt.Ignore())
                 .ForMember(dest => dest.Bookings, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+            #endregion
+
+            #region SponsorEntity
+            CreateMap<Sponsor, Sponsor>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.SponsorType, opt => opt.Ignore())
+                .ForMember(dest => dest.Event, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageURL, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
+
+            CreateMap<SponsorType, SponsorType>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Sponsors, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
             #endregion

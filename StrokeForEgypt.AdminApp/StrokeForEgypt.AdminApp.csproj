@@ -28,6 +28,8 @@
     <Folder Include="wwwroot\Uploud\EventActivity\" />
     <Folder Include="wwwroot\Uploud\EventPackage\" />
     <Folder Include="wwwroot\Uploud\BookingMemberAttachment\" />
+    <Folder Include="wwwroot\Uploud\Sponsor\" />
+    <Folder Include="wwwroot\Uploud\NewsGallery\" />
   </ItemGroup>
 
 </Project>
