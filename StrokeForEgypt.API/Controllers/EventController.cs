@@ -199,6 +199,8 @@ namespace StrokeForEgypt.API.Controllers
             return returnData;
         }
 
+
+
         /// <summary>
         /// Get: Get Event Activities
         /// </summary>
@@ -275,8 +277,8 @@ namespace StrokeForEgypt.API.Controllers
                     EventAgendaModel eventAgendaModel = new();
                     _Mapper.Map(EventAgenda, eventAgendaModel);
 
-                    eventAgendaModel.EventAgendaGalleries = new List<EventAgendaGalleryModel>();
-                    _Mapper.Map(EventAgenda.EventAgendaGalleries, eventAgendaModel.EventAgendaGalleries);
+                    //eventAgendaModel.EventAgendaGalleries = new List<EventAgendaGalleryModel>();
+                    //_Mapper.Map(EventAgenda.EventAgendaGalleries, eventAgendaModel.EventAgendaGalleries);
 
                     returnData.Add(eventAgendaModel);
                 }
@@ -288,6 +290,39 @@ namespace StrokeForEgypt.API.Controllers
                 };
 
                 Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PaginationMetaData).Replace(@"\u0026", "&"));
+
+                Status = new Status(true);
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+            }
+
+            Status.ErrorMessage = EncodeManager.Base64Encode(Status.ErrorMessage);
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
+        /// Get: Get Event Agenda Profile
+        /// </summary>
+        [HttpGet]
+        [Route(nameof(GetEventAgendaProfile))]
+        public async Task<EventAgendaModel> GetEventAgendaProfile(
+            [FromQuery] int Id)
+        {
+            EventAgendaModel returnData = new();
+            Status Status = new();
+
+            try
+            {
+                EventAgenda eventAgenda = await _UnitOfWork.EventAgenda.GetFirst(a => a.Id == Id, new List<string> { "EventAgendaGalleries" });
+
+                _Mapper.Map(eventAgenda, returnData);
+
+                returnData.EventAgendaGalleries = new List<EventAgendaGalleryModel>();
+                _Mapper.Map(eventAgenda.EventAgendaGalleries, returnData.EventAgendaGalleries);
 
                 Status = new Status(true);
             }

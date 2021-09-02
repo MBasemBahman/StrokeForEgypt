@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StrokeForEgypt.DAL;
 
 namespace StrokeForEgypt.DAL.Migrations
 {
     [DbContext(typeof(BaseDBContext))]
-    partial class BaseDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210902193126_mkmskdkds")]
+    partial class mkmskdkds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -597,7 +599,7 @@ namespace StrokeForEgypt.DAL.Migrations
                             JobTitle = "Developer",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0,
-                            Password = "zkxr2881on",
+                            Password = "jczi9157mo",
                             Phone = "01000000000"
                         });
                 });
@@ -1238,9 +1240,6 @@ namespace StrokeForEgypt.DAL.Migrations
 
                     b.Property<TimeSpan>("FromTime")
                         .HasColumnType("time");
-
-                    b.Property<string>("ImageURL")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()

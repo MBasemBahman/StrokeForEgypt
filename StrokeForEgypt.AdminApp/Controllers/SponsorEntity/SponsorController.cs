@@ -28,7 +28,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.SponsorEntity
         }
 
         [Authorize((int)AccessLevelEnum.ReadAccess)]
-        public IActionResult Index(int Id, int Fk_Event,int Fk_SponsorType, bool ProfileLayOut = false)
+        public IActionResult Index(int Id, int Fk_Event, int Fk_SponsorType, bool ProfileLayOut = false)
         {
             SponsorFilter Filter = new SponsorFilter
             {
@@ -48,7 +48,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.SponsorEntity
 
             List<Sponsor> result = await _UnitOfWork.Sponsor.GetAll(a => (dtParameters.Id == 0 || a.Id == dtParameters.Id)
                                                                                          && (dtParameters.Fk_Event == 0 || a.Fk_Event == dtParameters.Fk_Event)
-                                                                                         &&(dtParameters.Fk_SponsorType == 0 || a.Fk_SponsorType == dtParameters.Fk_SponsorType)
+                                                                                         && (dtParameters.Fk_SponsorType == 0 || a.Fk_SponsorType == dtParameters.Fk_SponsorType)
                                                                                          , new List<string> { "SponsorType" });
 
 
@@ -57,7 +57,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.SponsorEntity
                 result = result.Where(a => a.Name.ToLower().Contains(searchBy.ToLower())
                                         || a.IsActive.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.SponsorType.Name.ToLower().ToLower().Contains(searchBy.ToLower())
-                                        || (a.ImageURL!=null&&a.ImageURL.ToLower().Contains(searchBy.ToLower()))
+                                        || (a.ImageURL != null && a.ImageURL.ToLower().Contains(searchBy.ToLower()))
                                         || a.Id.ToString().ToLower().Contains(searchBy.ToLower()))
                                .ToList();
             }
@@ -106,7 +106,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.SponsorEntity
                     return NotFound();
                 }
             }
-           
+
             return View("~/Views/SponsorEntity/Sponsor/CreateOrEdit.cshtml", Sponsor);
         }
 
@@ -194,7 +194,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.SponsorEntity
             {
                 return NotFound();
             }
-          
+
 
             return View("~/Views/SponsorEntity/Sponsor/Delete.cshtml", Sponsor);
         }
@@ -205,15 +205,15 @@ namespace StrokeForEgypt.AdminApp.Controllers.SponsorEntity
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             Sponsor Sponsor = await _UnitOfWork.Sponsor.GetByID(id);
-           
-                if (!string.IsNullOrEmpty(Sponsor.ImageURL))
-                {
-                    ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
-                    ImgManager.DeleteImage(Sponsor.ImageURL, AppMainData.DomainName);
-                }
 
-                _UnitOfWork.Sponsor.DeleteEntity(Sponsor);
-                await _UnitOfWork.Sponsor.Save();
+            if (!string.IsNullOrEmpty(Sponsor.ImageURL))
+            {
+                ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
+                ImgManager.DeleteImage(Sponsor.ImageURL, AppMainData.DomainName);
+            }
+
+            _UnitOfWork.Sponsor.DeleteEntity(Sponsor);
+            await _UnitOfWork.Sponsor.Save();
 
             return RedirectToAction(nameof(Index));
         }

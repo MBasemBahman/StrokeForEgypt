@@ -119,6 +119,11 @@
             Get: Get Event Agendas
             </summary>
         </member>
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventAgendaProfile(System.Int32)">
+            <summary>
+            Get: Get Event Agenda Profile
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.MainDataController.GetAppAbout">
             <summary>
             Get: Get App About
@@ -144,9 +149,14 @@
             Get: Get Cities
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.NewsController.GetNews(StrokeForEgypt.Service.Paging,System.Int32,System.Boolean)">
+        <member name="M:StrokeForEgypt.API.Controllers.NewsController.GetNews(StrokeForEgypt.Service.Paging,System.Int32)">
             <summary>
             Get: Get News
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.NewsController.GetNewsProfile(System.Int32)">
+            <summary>
+            Get: Get News Profile
             </summary>
         </member>
         <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetNotificationTypes(StrokeForEgypt.Service.Paging)">

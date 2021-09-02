@@ -47,18 +47,24 @@ namespace StrokeForEgypt.AdminApp.Controllers.NewsEntity
             string searchBy = dtParameters.Search?.Value;
 
             List<News> result = await _UnitOfWork.News.GetAll(a => (dtParameters.Id == 0 || a.Id == dtParameters.Id)
-                                                                                         && (dtParameters.Fk_Event == 0 || a.Fk_Event == dtParameters.Fk_Event));
+                                                                  && (dtParameters.Fk_Event == 0 || a.Fk_Event == dtParameters.Fk_Event), new List<string>
+                                                                  {
+                                                                      "Event"
+                                                                  });
 
 
             if (!string.IsNullOrEmpty(searchBy))
             {
                 result = result.Where(a => a.Title.ToLower().Contains(searchBy.ToLower())
                                         || a.IsActive.ToString().ToLower().Contains(searchBy.ToLower())
+                                        || a.Event.Title.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.Id.ToString().ToLower().Contains(searchBy.ToLower()))
                                .ToList();
             }
 
-            DataTableManager<News> DataTableManager = new DataTableManager<News>();
+            result.ForEach(a => a.Event.News = null);
+
+            DataTableManager<News> DataTableManager = new();
 
             DataTableResult<News> DataTableResult = DataTableManager.LoadTable(dtParameters, result, _UnitOfWork.News.Count());
 
@@ -77,7 +83,10 @@ namespace StrokeForEgypt.AdminApp.Controllers.NewsEntity
         [Authorize((int)AccessLevelEnum.ReadAccess)]
         public async Task<IActionResult> Details(int id)
         {
-            News News = await _UnitOfWork.News.GetByID(id);
+            News News = await _UnitOfWork.News.GetFirst(a => a.Id == id, new List<string>
+            {
+                "Event"
+            });
 
             if (News == null)
             {
@@ -92,7 +101,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NewsEntity
         {
             News News = new News();
 
-           
+
             if (id > 0)
             {
                 News = await _UnitOfWork.News.GetByID(id);
@@ -101,7 +110,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NewsEntity
                     return NotFound();
                 }
             }
-           
+
 
             return View("~/Views/NewsEntity/News/CreateOrEdit.cshtml", News);
         }
@@ -133,7 +142,6 @@ namespace StrokeForEgypt.AdminApp.Controllers.NewsEntity
                         News.LastModifiedBy = _Session.GetString("FullName");
 
                         _Mapper.Map(News, Data);
-
 
                         _UnitOfWork.News.UpdateEntity(Data);
                         await _UnitOfWork.News.Save();

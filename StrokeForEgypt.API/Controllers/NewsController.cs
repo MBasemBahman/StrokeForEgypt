@@ -10,7 +10,6 @@ using StrokeForEgypt.Service;
 using StrokeForEgypt.Service.NewsEntity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -44,8 +43,7 @@ namespace StrokeForEgypt.API.Controllers
         [Route(nameof(GetNews))]
         public async Task<List<NewsModel>> GetNews(
             [FromQuery] Paging paging,
-            [FromQuery] int Fk_Event = 0,
-            [FromQuery] bool IncludeGallery = false)
+            [FromQuery] int Fk_Event)
         {
             string ActionName = nameof(GetNews);
             List<NewsModel> returnData = new();
@@ -53,8 +51,7 @@ namespace StrokeForEgypt.API.Controllers
 
             try
             {
-                List<News> Data = await _UnitOfWork.News.GetAll(a => a.IsActive &&
-                                                                     (Fk_Event == 0 || (a.Fk_Event > 0 && a.Fk_Event == Fk_Event)));
+                List<News> Data = await _UnitOfWork.News.GetAll(a => a.IsActive && a.Fk_Event == Fk_Event);
 
                 Data = OrderBy<News>.OrderData(Data, paging.OrderBy);
 
@@ -65,17 +62,8 @@ namespace StrokeForEgypt.API.Controllers
                 foreach (News News in PagedData)
                 {
                     NewsModel newsModel = new();
+
                     _Mapper.Map(News, newsModel);
-
-                    if (IncludeGallery)
-                    {
-                        News.NewsGalleries = await _UnitOfWork.NewsGallery.GetAll(a => a.IsActive &&
-                                                                            a.Fk_News == News.Id);
-                        News.NewsGalleries = OrderBy<NewsGallery>.OrderData(News.NewsGalleries.ToList(), paging.OrderBy);
-
-                        newsModel.NewsGalleries = new List<NewsGalleryModel>();
-                        _Mapper.Map(News.NewsGalleries, newsModel.NewsGalleries);
-                    }
 
                     returnData.Add(newsModel);
                 }
@@ -87,6 +75,39 @@ namespace StrokeForEgypt.API.Controllers
                 };
 
                 Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PaginationMetaData).Replace(@"\u0026", "&"));
+
+                Status = new Status(true);
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+            }
+
+            Status.ErrorMessage = EncodeManager.Base64Encode(Status.ErrorMessage);
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
+        /// Get: Get News Profile
+        /// </summary>
+        [HttpGet]
+        [Route(nameof(GetNewsProfile))]
+        public async Task<NewsModel> GetNewsProfile(
+            [FromQuery] int Id)
+        {
+            NewsModel returnData = new();
+            Status Status = new();
+
+            try
+            {
+                News news = await _UnitOfWork.News.GetFirst(a => a.Id == Id, new List<string> { "NewsGalleries" });
+
+                _Mapper.Map(news, returnData);
+
+                news.NewsGalleries = new List<NewsGallery>();
+                _Mapper.Map(news.NewsGalleries, returnData.NewsGalleries);
 
                 Status = new Status(true);
             }

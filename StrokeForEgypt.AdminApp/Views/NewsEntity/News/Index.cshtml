@@ -38,7 +38,9 @@
                     <thead>
                         <tr>
                             <th>@Html.DisplayNameFor(model => News.Id)</th>
+                            <th>@Html.DisplayNameFor(model => News.Event)</th>
                             <th>@Html.DisplayNameFor(model => News.Title)</th>
+                            <th>@Html.DisplayNameFor(model => News.Order)</th>
                             <th>@Html.DisplayNameFor(model => News.IsActive)</th>
                             <th>
 
@@ -92,6 +94,8 @@
                 columns: [
                     { data: "id" },
                     { data: "title" },
+                    { data: "event.title" },
+                    { data: "order" },
                     {
                         data: "isActive",
                         render: function (data, type, row) {

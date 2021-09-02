@@ -142,9 +142,30 @@ namespace StrokeForEgypt.AdminApp.Controllers.EventEntity
 
                         _Mapper.Map(EventAgenda, Data);
 
-
                         _UnitOfWork.EventAgenda.UpdateEntity(Data);
                         await _UnitOfWork.EventAgenda.Save();
+
+                        EventAgenda = Data;
+                    }
+
+                    IFormFile ImageFile = HttpContext.Request.Form.Files["ImageFile"];
+
+                    if (ImageFile != null)
+                    {
+                        ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
+
+                        string FileURL = await ImgManager.UploudImage(AppMainData.DomainName, EventAgenda.Id.ToString(), ImageFile, "Uploud/EventAgenda");
+
+                        if (!string.IsNullOrEmpty(FileURL))
+                        {
+                            if (!string.IsNullOrEmpty(EventAgenda.ImageURL))
+                            {
+                                ImgManager.DeleteImage(EventAgenda.ImageURL, AppMainData.DomainName);
+                            }
+                            EventAgenda.ImageURL = FileURL;
+                            _UnitOfWork.EventAgenda.UpdateEntity(EventAgenda);
+                            await _UnitOfWork.EventActivity.Save();
+                        }
                     }
                 }
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StrokeForEgypt.DAL;
 
 namespace StrokeForEgypt.DAL.Migrations
 {
     [DbContext(typeof(BaseDBContext))]
-    partial class BaseDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210902195627_dsmsm")]
+    partial class dsmsm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -597,7 +599,7 @@ namespace StrokeForEgypt.DAL.Migrations
                             JobTitle = "Developer",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0,
-                            Password = "zkxr2881on",
+                            Password = "kaax8399ou",
                             Phone = "01000000000"
                         });
                 });
@@ -1238,9 +1240,6 @@ namespace StrokeForEgypt.DAL.Migrations
 
                     b.Property<TimeSpan>("FromTime")
                         .HasColumnType("time");
-
-                    b.Property<string>("ImageURL")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -2133,7 +2132,7 @@ namespace StrokeForEgypt.DAL.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Fk_Event")
+                    b.Property<int>("Fk_Event")
                         .HasColumnType("int");
 
                     b.Property<int>("Fk_SponsorType")
@@ -2537,7 +2536,9 @@ namespace StrokeForEgypt.DAL.Migrations
                 {
                     b.HasOne("StrokeForEgypt.Entity.EventEntity.Event", "Event")
                         .WithMany("Sponsors")
-                        .HasForeignKey("Fk_Event");
+                        .HasForeignKey("Fk_Event")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("StrokeForEgypt.Entity.SponsorEntity.SponsorType", "SponsorType")
                         .WithMany("Sponsors")

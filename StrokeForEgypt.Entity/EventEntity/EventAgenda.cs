@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Entity.EventEntity
 {
-    public class EventAgenda : BaseEntity
+    public class EventAgenda : ImageEntity
     {
         [ForeignKey("Event")]
         [DisplayName(nameof(Event))]

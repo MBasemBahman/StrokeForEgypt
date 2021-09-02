@@ -84,7 +84,7 @@ namespace StrokeForEgypt.Common
             EventAgenda = 2,
             EventGallery = 3,
             EventPackage = 4,
-            News =  5,
+            News = 5,
             Sponsor = 6
         }
 

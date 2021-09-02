@@ -42,7 +42,16 @@
                             <span>@CommonLocalizer.Get("Home")</span>
                         </a>
                     </li>
+                    @if (Account != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Index" asp-controller="Account">
+                                <i class="fas fa-users" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("Accounts")</span>
+                            </a>
+                        </li>
 
+                    }
                     @if (Event != null)
                     {
                         <li>
@@ -73,84 +82,74 @@
                         </li>
 
                     }
-                    @if (Account != null)
-                    {
-                        <li>
-                            <a class="nav-link" asp-action="Index" asp-controller="Account">
-                                <i class="fas fa-users" aria-hidden="true"></i>
-                                <span>@EntityLocalizer.Get("Accounts")</span>
-                            </a>
-                        </li>
-
-                    }
                     @if (City != null || Country != null || Gallery != null || AppAbout != null)
                     {
-                <li class="nav-parent">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-mail-bulk" aria-hidden="true"></i>
-                        <span> @EntityLocalizer.Get("Main Data")</span>
-                    </a>
-                    @if (AppAbout != null)
-                    {
-                        <ul class="nav nav-children">
-                            <li>
-                                <a asp-action="Details" asp-controller="AppAbout">
-                                    <span class="fas fa-info-circle"></span> @EntityLocalizer.Get("AppAbout")
-                                </a>
-                            </li>
-                        </ul>
-                    }
-                    @if (Country != null)
-                    {
-                        <ul class="nav nav-children">
-                            <li>
-                                <a asp-action="Index" asp-controller="Country">
-                                    <span class="fas fa-city"></span> @EntityLocalizer.Get("Countries")
-                                </a>
-                            </li>
-                        </ul>
-                    }
-                    @if (City != null)
-                    {
-                        <ul class="nav nav-children">
-                            <li>
-                                <a asp-action="Index" asp-controller="City">
-                                    <span class="fas fa-city"></span> @EntityLocalizer.Get("Cities")
-                                </a>
-                            </li>
-                        </ul>
-                    }
-                    @if (Gallery != null)
-                    {
-                        <ul class="nav nav-children">
-                            <li>
-                                <a asp-action="Index" asp-controller="Gallery">
-                                    <span class="fas fa-images"></span> @EntityLocalizer.Get("Gallery")
-                                </a>
-                            </li>
-                        </ul>
-                    }
-                    @if (BookingState != null)
-                    {
-                        <ul class="nav nav-children">
-                            <li>
-                                <a asp-action="Index" asp-controller="BookingState">
-                                    <span class="fas fa-check"></span> @EntityLocalizer.Get("Booking States")
-                                </a>
-                            </li>
-                        </ul>
-                    }
-                    @if (SponsorType != null)
-                    {
-                        <ul class="nav nav-children">
-                            <li>
-                                <a asp-action="Index" asp-controller="SponsorType">
-                                    <span class="far fa-handshake"></span> @EntityLocalizer.Get("Sponsor Types")
-                                </a>
-                            </li>
-                        </ul>
-                    }
-                </li>
+                        <li class="nav-parent">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-mail-bulk" aria-hidden="true"></i>
+                                <span> @EntityLocalizer.Get("Main Data")</span>
+                            </a>
+                            @if (AppAbout != null)
+                            {
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a asp-action="Details" asp-controller="AppAbout">
+                                            <span class="fas fa-info-circle"></span> @EntityLocalizer.Get("AppAbout")
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                            @if (Country != null)
+                            {
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="Country">
+                                            <span class="fas fa-city"></span> @EntityLocalizer.Get("Countries")
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                            @if (City != null)
+                            {
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="City">
+                                            <span class="fas fa-city"></span> @EntityLocalizer.Get("Cities")
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                            @if (Gallery != null)
+                            {
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="Gallery">
+                                            <span class="fas fa-images"></span> @EntityLocalizer.Get("Gallery")
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                            @if (BookingState != null)
+                            {
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="BookingState">
+                                            <span class="fas fa-check"></span> @EntityLocalizer.Get("Booking States")
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                            @if (SponsorType != null)
+                            {
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="SponsorType">
+                                            <span class="far fa-handshake"></span> @EntityLocalizer.Get("Sponsor Types")
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                        </li>
                     }
 
                     @if (SystemUser != null || SystemView != null || SystemRole != null)

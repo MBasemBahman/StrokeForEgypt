@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StrokeForEgypt.Service.EventEntity
 {
-    public class EventAgendaModel : BaseEntityModel
+    public class EventAgendaModel : ImageEntityModel
     {
         [DisplayName("Title")]
         [Required(ErrorMessage = "{0} is required")]

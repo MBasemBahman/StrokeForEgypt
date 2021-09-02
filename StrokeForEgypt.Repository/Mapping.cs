@@ -8,6 +8,7 @@ using StrokeForEgypt.Entity.NewsEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
 using StrokeForEgypt.Entity.SponsorEntity;
 using StrokeForEgypt.Service.AccountEntity;
+using StrokeForEgypt.Service.BookingEntity;
 using StrokeForEgypt.Service.EventEntity;
 using StrokeForEgypt.Service.MainDataEntity;
 using StrokeForEgypt.Service.NewsEntity;
@@ -212,6 +213,9 @@ namespace StrokeForEgypt.Repository
             #endregion
 
             #region BookingEntity
+
+            CreateMap<BookingCreateModel, Booking>();
+
             CreateMap<Booking, Booking>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Account, opt => opt.Ignore())
@@ -242,6 +246,8 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.Bookings, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
+            CreateMap<BookingState, BookingStateModel>();
             #endregion
 
             #region SponsorEntity
