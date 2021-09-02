@@ -52,9 +52,9 @@ namespace StrokeForEgypt.Repository
 
         #region BookingEntity
 
-        public BaseRepository<Booking> Booking => new(_DBContext);
+        public BookingRepository Booking => new(_DBContext,_Mapper);
         public BaseRepository<BookingMember> BookingMember => new(_DBContext);
-        public BaseRepository<BookingMemberActivity> BookingMemberActivity => new(_DBContext);
+        public BookingMemberActivityRepository BookingMemberActivity => new(_DBContext,_Mapper);
         public BookingMemberAttachmentRepository BookingMemberAttachment => new(_DBContext, _Mapper);
         public BaseRepository<BookingState> BookingState => new(_DBContext);
         public BaseRepository<BookingStateHistory> BookingStateHistory => new(_DBContext);

@@ -1,0 +1,136 @@
+﻿@model BookingMember
+@inject UnitOfWork _UnitOfWork
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    Layout = "_AssetsLayout";
+    int Fk_Country = _UnitOfWork.City.GetByID(Model.Fk_City).Result.Fk_Country;
+    List<string> Activities = _UnitOfWork.EventActivity.GetAll(a => a.BookingMemberActivities.Any(b => b.Fk_BookingMember == Model.Id)).Result.Select(a => a.Name).ToList();
+
+
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <form asp-action="" class="form-horizontal">
+            <section class="card">
+                <div class="card-body">
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group row">
+                        <label asp-for="FirstName" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="FirstName" class="form-control" disabled />
+                        </div>
+
+                        <label asp-for="LastName" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="LastName" class="form-control" disabled />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="Phone" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="Phone" class="form-control" disabled />
+                        </div>
+
+                        <label asp-for="Email" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="Email" class="form-control" disabled />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label asp-for="Gender" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="@_UnitOfWork.Gender.GetByID(Model.Fk_Gender).Result.Name" class="form-control" disabled />
+                        </div>
+
+                        <label asp-for="DateOfBirth" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input id="DateOfBirth" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.DateOfBirth)" class=" form-control " disabled>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="City.Country" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="@_UnitOfWork.Country.GetByID(Fk_Country).Result.Name" class="form-control" disabled />
+                        </div>
+
+                        <label asp-for="City" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="@_UnitOfWork.City.GetByID(Model.Fk_City).Result.Name" class="form-control" disabled />
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="Address" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            @Html.Raw(Model.Address)
+                        </div>
+
+                        <label asp-for="Club" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="Club" class="form-control" disabled />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="BookingMemberActivities" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-10">
+                            @if (Activities != null && Activities.Any())
+                            {
+                                foreach (var activity in Activities)
+                                {
+                                    <a href="#" class="btn btn-dark disabled" tabindex="-1" role="button" aria-disabled="true">@activity</a>
+                                }
+                            }
+                            else
+                            {
+                                <input class="form-control" value="@CommonLocalizer.Get("Not Found")" disabled />
+                            }
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label asp-for="IsActive" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="IsActive" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label asp-for="LastModifiedAt" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input id="LastModifiedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.LastModifiedAt)" class=" form-control " disabled>
+                        </div>
+                        <label asp-for="LastModifiedBy" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="LastModifiedBy" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CreatedAt" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input id="CreatedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.CreatedAt)" class=" form-control " disabled>
+                        </div>
+                        <label asp-for="CreatedBy" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="CreatedBy" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("PartialView/_DetailsPagePartial");}
+}

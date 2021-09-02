@@ -10,6 +10,7 @@
 
     var AccountDevice = HttpContextAccessor.HttpContext.Request.Cookies["AccountDevice"];
     var RefreshToken = HttpContextAccessor.HttpContext.Request.Cookies["RefreshToken"];
+    var Booking = HttpContextAccessor.HttpContext.Request.Cookies["Booking"];
 
 }
 
@@ -67,8 +68,16 @@
                         </a>
                     </li>
                 }
-              
-            
+                @if (Booking != null)
+                {
+                    <li class="nav-item">
+                        <a id="Booking" class="nav-link @(returnItem == (int)AccountProfileItems.Booking?"active":"")">
+                            @Html.DisplayNameFor(model => model.Bookings)
+                        </a>
+                    </li>
+                }
+
+
             </ul>
         </section>
     </div>
@@ -87,6 +96,9 @@
          else if ('@RefreshToken' != null && @returnItem == @((int)AccountProfileItems.RefreshToken)) {
              $("#d1").load("/RefreshToken/Index/?Fk_Account=@Model.Id&ProfileLayOut=true");
          }
+         else if ('@Booking' != null && @returnItem == @((int)AccountProfileItems.Booking)) {
+             $("#d1").load("/Booking/Index/?Fk_Account=@Model.Id&ProfileLayOut=true");
+         }
 
 
          $("#AccountDevice").on('click', function () {
@@ -104,7 +116,15 @@
              $(this).addClass("active");
              $("#d1").load("/RefreshToken/Index/?Fk_Account=@Model.Id&ProfileLayOut=true");
          });
-       
+
+         $("#Booking").on('click', function () {
+             $(".active").each(function () {
+                 $(this).removeClass("active");
+             });
+             $(this).addClass("active");
+             $("#d1").load("/Booking/Index/?Fk_Account=@Model.Id&ProfileLayOut=true");
+         });
+
      });
     </script>
 }

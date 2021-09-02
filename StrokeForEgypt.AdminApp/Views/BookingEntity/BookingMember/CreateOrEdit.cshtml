@@ -1,0 +1,145 @@
+﻿@model BookingMemberViewModel
+@inject UnitOfWork _UnitOfWork
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    ViewData["Title"] = $"{CommonLocalizer.Get("CreateOrEdit")} {EntityLocalizer.Get("BookingMember")}";
+
+    int Fk_Country = 0;
+    if (Model.BookingMember.Id > 0)
+    {
+        Fk_Country = _UnitOfWork.City.GetByID(Model.BookingMember.Fk_City).Result.Fk_Country;
+    }
+    else
+    {
+        Fk_Country = _UnitOfWork.Country.GetFirst().Result.Id;
+    }
+
+    int Fk_Event = _UnitOfWork.Booking.GetFirst(a=>a.Id==Model.BookingMember.Fk_Booking,new List<string> { "EventPackage" }).Result.EventPackage.Fk_Event;
+
+}
+
+@section Styles{
+    @{await Html.RenderPartialAsync("PartialView/_FormStylesPartial");}
+}
+<div class="row">
+    <div class="col-lg-12">
+        <form asp-action="CreateOrEdit" class="form-horizontal">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">@ViewData["Title"]</h2>
+                </header>
+                <div class="card-body">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" asp-for="BookingMember.Id" />
+                    <input type="hidden" value="@Model.BookingMember.Id" name="Id" />
+                    <input type="hidden" asp-for="BookingMember.Fk_Booking" />
+                    <div class="form-group row">
+                        <label asp-for="BookingMember.FirstName" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="BookingMember.FirstName" class="form-control" />
+                            <span asp-validation-for="BookingMember.FirstName" class="text-danger"></span>
+                        </div>
+
+                        <label asp-for="BookingMember.LastName" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="BookingMember.LastName" class="form-control" />
+                            <span asp-validation-for="BookingMember.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="BookingMember.Phone" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="BookingMember.Phone" class="form-control" />
+                            <span asp-validation-for="BookingMember.Phone" class="text-danger"></span>
+                        </div>
+
+                        <label asp-for="BookingMember.Email" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="BookingMember.Email" class="form-control" />
+                            <span asp-validation-for="BookingMember.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label asp-for="BookingMember.Gender" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <select asp-for="BookingMember.Fk_Gender" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.Gender.GetLookUp(),"Key","Value"))"></select>
+                            <span asp-validation-for="BookingMember.Fk_Gender" class="text-danger"></span>
+                        </div>
+
+                        <label asp-for="BookingMember.DateOfBirth" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="BookingMember.DateOfBirth" class="form-control" />
+                            <span asp-validation-for="BookingMember.DateOfBirth" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="BookingMember.City.Country" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <select asp-for="@Fk_Country" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.Country.GetLookUp(a=>true),"Key","Value"))"></select>
+                            <span asp-validation-for="@Fk_Country" class="text-danger"></span>
+                        </div>
+
+                        <label asp-for="BookingMember.City" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <select asp-for="BookingMember.Fk_City" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.City.GetLookUp(a=>a.Fk_Country==Fk_Country),"Key","Value"))"></select>
+                            <span asp-validation-for="BookingMember.Fk_City" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="BookingMember.Address" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <textarea rows="5" asp-for="BookingMember.Address" class="form-control summernote" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'></textarea>
+                            <span asp-validation-for="BookingMember.Address" class="text-danger"></span>
+                        </div>
+
+                        <label asp-for="BookingMember.Club" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="BookingMember.Club" class="form-control" />
+                            <span asp-validation-for="BookingMember.Club" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="BookingMember.BookingMemberActivities" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-10">
+                            <select asp-for="Fk_Activities" data-plugin-selectTwo class="form-control populate" asp-items="@(new MultiSelectList(_UnitOfWork.EventActivity.GetLookUp(a=>a.Fk_Event == Fk_Event),"Key","Value"))"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="BookingMember.IsActive" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="BookingMember.IsActive" class="form-control">
+                            <span asp-validation-for="BookingMember.IsActive" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer text-left">
+                    <button class="btn btn-primary"> @CommonLocalizer.Get("Submit") </button>
+                    <button type="reset" class="btn btn-default"> @CommonLocalizer.Get("Reset") </button>
+                    <a asp-action="Profile" asp-controller="Booking" asp-route-Id="@Model.BookingMember.Fk_Booking" asp-route-returnItem="@((int)BookingProfileItems.BookingMember)" class="btn btn-success"> @CommonLocalizer.Get("Back") </a>
+                </footer>
+            </section>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
+
+<script>
+    $(document).ready(function () {
+        $("#Fk_Country").on("change", function () {
+            getCities(this.value);
+        });
+    })
+</script>
+
+}

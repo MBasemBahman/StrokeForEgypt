@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StrokeForEgypt.Entity.AccountEntity;
 using StrokeForEgypt.Entity.AuthEntity;
+using StrokeForEgypt.Entity.BookingEntity;
 using StrokeForEgypt.Entity.EventEntity;
 using StrokeForEgypt.Entity.MainDataEntity;
 using StrokeForEgypt.Entity.NewsEntity;
@@ -190,6 +191,39 @@ namespace StrokeForEgypt.Repository
 
             CreateMap<AccountDeviceModel, AccountDevice>();
 
+            #endregion
+
+            #region BookingEntity
+            CreateMap<Booking, Booking>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Account, opt => opt.Ignore())
+                .ForMember(dest => dest.Fk_Account, opt => opt.Ignore())
+                .ForMember(dest => dest.EventPackage, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingState, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingStateHistories, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingMembers, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
+            CreateMap<BookingMember, BookingMember>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Booking, opt => opt.Ignore())
+                .ForMember(dest => dest.Fk_Booking, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingMemberActivities, opt => opt.Ignore())
+                .ForMember(dest => dest.Gender, opt => opt.Ignore())
+                .ForMember(dest => dest.City, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingMemberAttachments, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingMemberActivities, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
+
+            CreateMap<BookingState, BookingState>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingStateHistories, opt => opt.Ignore())
+                .ForMember(dest => dest.Bookings, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
             #endregion
 
         }

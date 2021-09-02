@@ -1,0 +1,155 @@
+﻿@model BookingMemberAttachmentFilter
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@inject UnitOfWork _UnitOfWork
+@{
+    ViewData["Title"] = EntityLocalizer.Get("Member Attachments");
+
+    var BookingMemberAttachment = new BookingMemberAttachment();
+
+    var Fk_AccessLevel = int.Parse(HttpContextAccessor.HttpContext.Request.Cookies[(this.ViewContext.RouteData.Values["controller"].ToString())]);
+
+    if (ViewData["ProfileLayOut"] != null && (bool)ViewData["ProfileLayOut"] == true)
+    {
+        Layout = "_AssetsLayout";
+    }
+    BookingMember BookingMember = _UnitOfWork.BookingMember.GetByID(Model.Fk_BookingMember).Result;
+
+}
+
+@section Styles{
+    @{await Html.RenderPartialAsync("PartialView/_FormStylesPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_TableStylesPartial");}
+}
+<div class="row">
+    <div class="col-sm-12">
+        @if (BookingMember != null)
+        {
+            await Html.RenderPartialAsync("../BookingEntity/BookingMember/Details", BookingMember, ViewData);
+            <br />
+            <hr />
+
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <section class="card">
+            <header class="card-header">
+                <div class="card-actions">
+                    <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                    <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                </div>
+                <h2 class="card-title">@ViewData["Title"]</h2>
+            </header>
+            <div class="card-body">
+                @if ((Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess) && Model.Fk_BookingMember > 0)
+                {
+                    await Html.RenderPartialAsync("./PartialComponent/ImageLazyUpload", new MultiImageViewModel
+                    {
+                        Id = Model.Fk_BookingMember,
+                        Name = "Attachments",
+                        UploudAction = "/BookingMemberAttachment/Uploud"
+
+                    });
+                }
+                <table class="table table-bordered table-striped mb-0" id="custom-tabletools">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => BookingMemberAttachment.Id)</th>
+                            <th>@Html.DisplayNameFor(model => BookingMemberAttachment.FileName)</th>
+                            <th>@Html.DisplayNameFor(model => BookingMemberAttachment.CreatedAt)</th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+@if (BookingMember != null)
+{
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            <a asp-action="Profile" asp-controller="Booking" asp-route-id="@BookingMember.Fk_Booking" asp-route-returnItem="@((int)BookingProfileItems.BookingMember)" class="btn btn-success"> @CommonLocalizer.Get("Back") </a>
+        </div>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="DisplayModal" tabindex="-1" role="dialog" aria-labelledby="DetailsTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">@ViewData["Title"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="Display">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Html.RenderPartialSectionScripts();
+    @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_TableScriptsPartial");}
+
+
+<script>
+        $(document).ready(function () {
+            var $table = $('#custom-tabletools').DataTable({
+                "scrollX": true,
+                // Ajax Filter
+                ajax: {
+                    url: '@Url.Action("LoadTable")',
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (data) {
+                        data.Id = @Model.Id;
+                        data.Fk_BookingMember = @(Model.Fk_BookingMember);
+                        return JSON.stringify(data);
+                    }
+                },
+                // Columns Setups
+                columns: [
+                    { data: "id" },
+
+                    { data: "fileName" },
+
+                    {
+                        data: "createdAt",
+                        render: function (data, type, row) {
+                            return moment(data).format("ddd, D/M/YYYY, h:mm a");
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, row) {
+                            return '<a href="' + row.fileURL + '" download="' + row.fileName + '" class="btn btn-outline-primary a-btn-slide-text mr-1" target="_blank" ><i class="fas fa-download"></i></a>'
+                                +'<a href="/BookingMemberAttachment/Details/' + data + '" class="btn btn-outline-success a-btn-slide-text Displaybtn mr-1"><i class="fas fa-eye"></i></a>'
+                                + '<a href="/BookingMemberAttachment/Delete/' + data + '"class="btn btn-outline-danger a-btn-slide-text Displaybtn " style="display:@(Fk_AccessLevel == (int)AccessLevelEnum.FullAccess ? "":"none")"><i class="fas fa-trash-alt"></i></a>';
+                        }
+                    }
+                ]
+            });
+
+            $('#custom-tabletools_wrapper').find('.btn-secondary').removeClass('btn-secondary').addClass('btn-default');
+
+            $('body').on('submit', '.filter', function () {
+                event.preventDefault();
+                $(".modal").fadeOut();
+                $(".modal-backdrop").fadeOut();
+                $table.draw();
+            });
+    });
+</script>
+}
