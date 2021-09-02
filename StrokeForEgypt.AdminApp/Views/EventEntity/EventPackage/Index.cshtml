@@ -42,6 +42,7 @@
                             <th>@Html.DisplayNameFor(model => EventPackage.OriginalPrice)</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.Price)</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.ExtraFees)</th>
+                            <th>@Html.DisplayNameFor(model => EventPackage.Order)</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.IsActive)</th>
                             <th>
 
@@ -98,6 +99,7 @@
                     { data:"originalPrice"},
                     { data: "price" },
                     { data: "extraFees" },
+                    { data: "order" },
                     {
                         data: "isActive",
                         render: function (data, type, row) {

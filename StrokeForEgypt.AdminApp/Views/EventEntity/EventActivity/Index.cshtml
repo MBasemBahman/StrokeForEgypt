@@ -39,6 +39,7 @@
                         <tr>
                             <th>@Html.DisplayNameFor(model => EventActivity.Id)</th>
                             <th>@Html.DisplayNameFor(model => EventActivity.Name)</th>
+                            <th>@Html.DisplayNameFor(model => EventActivity.Order)</th>
                             <th>@Html.DisplayNameFor(model => EventActivity.IsActive)</th>
                             <th>
 
@@ -92,6 +93,7 @@
                 columns: [
                     { data: "id" },
                     { data: "name" },
+                    { data: "order" },
                     {
                         data: "isActive",
                         render: function (data, type, row) {

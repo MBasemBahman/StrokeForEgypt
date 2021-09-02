@@ -1,4 +1,5 @@
 ﻿using StrokeForEgypt.Service.CommonEntity;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -55,5 +56,7 @@ namespace StrokeForEgypt.Service.MainDataEntity
         [DisplayName("Description")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
+
+        public List<GalleryModel> Galleries { get; set; }
     }
 }

@@ -34,11 +34,15 @@
 
 
                     <div class="form-group row">
+                        <label asp-for="Order" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="Order" class="form-control">
+                            <span asp-validation-for="Order" class="text-danger"></span>
+                        </div>
                         <label asp-for="IsActive" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
                             <input asp-for="IsActive" class="form-control">
                             <span asp-validation-for="IsActive" class="text-danger"></span>
-
                         </div>
                     </div>
 
@@ -56,5 +60,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
-  
+
 }

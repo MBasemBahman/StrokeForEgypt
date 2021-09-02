@@ -54,6 +54,10 @@ namespace StrokeForEgypt.Repository
             #region EventEntity
 
             CreateMap<Event, EventModel>()
+                .ForMember(dest => dest.FromDate, opt => opt.ConvertUsing(new DateValueConverter()))
+                .ForMember(dest => dest.ToDate, opt => opt.ConvertUsing(new DateValueConverter()))
+                .ForMember(dest => dest.RegistrationFrom, opt => opt.ConvertUsing(new DateValueConverter()))
+                .ForMember(dest => dest.RegistrationTo, opt => opt.ConvertUsing(new DateValueConverter()))
                 .ForMember(dest => dest.EventAgendas, opt => opt.Ignore())
                 .ForMember(dest => dest.EventPackages, opt => opt.Ignore())
                 .ForMember(dest => dest.EventActivities, opt => opt.Ignore())
@@ -62,6 +66,10 @@ namespace StrokeForEgypt.Repository
             CreateMap<EventActivity, EventActivityModel>();
 
             CreateMap<EventAgenda, EventAgendaModel>()
+                .ForMember(dest => dest.FromDate, opt => opt.ConvertUsing(new DateValueConverter()))
+                .ForMember(dest => dest.FromTime, opt => opt.ConvertUsing(new TimeValueConverter()))
+                .ForMember(dest => dest.ToDate, opt => opt.ConvertUsing(new DateValueConverter()))
+                .ForMember(dest => dest.ToTime, opt => opt.ConvertUsing(new TimeValueConverter()))
                 .ForMember(dest => dest.EventAgendaGalleries, opt => opt.Ignore());
 
             CreateMap<EventAgendaGallery, EventAgendaGalleryModel>();
@@ -230,11 +238,20 @@ namespace StrokeForEgypt.Repository
         }
     }
 
-    public class DateTimeValueConverter : IValueConverter<DateTime, string>
+    public class DateValueConverter : IValueConverter<DateTime, string>
     {
         public string Convert(DateTime sourceMember, ResolutionContext context)
         {
-            return sourceMember.ToString("dd/M/yyyy hh:mm tt", CultureInfo.InvariantCulture);
+            return sourceMember.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+        }
+    }
+
+    public class TimeValueConverter : IValueConverter<TimeSpan, string>
+    {
+        public string Convert(TimeSpan source, ResolutionContext context)
+        {
+            DateTime dateTime = DateTime.Now.Date + source;
+            return dateTime.ToString("h:mm tt");
         }
     }
 

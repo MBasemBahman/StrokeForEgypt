@@ -33,11 +33,10 @@
                         <tr>
                             <th>@Html.DisplayNameFor(model => Event.Id)</th>
                             <th>@Html.DisplayNameFor(model => Event.Title)</th>
-                            <th>@Html.DisplayNameFor(model => Event.ShortDescription)</th>
                             <th>@Html.DisplayNameFor(model => Event.FromDate)</th>
                             <th>@Html.DisplayNameFor(model => Event.ToDate)</th>
-                            <th>@Html.DisplayNameFor(model => Event.Address)</th>
                             <th>@EntityLocalizer.Get("Image")</th>
+                            <th>@Html.DisplayNameFor(model => Event.Order)</th>
                             <th>@Html.DisplayNameFor(model => Event.IsActive)</th>
                             <th>
 
@@ -90,7 +89,6 @@
                 columns: [
                     { data: "id" },
                     { data: "title" },
-                    { data: "shortDescription" },
                     {
                         data: "fromDate",
                         render: function (data, type, row) {
@@ -103,7 +101,6 @@
                             return moment(data).format("ddd, D/M/YYYY");
                         }
                     },
-                    { data: "address" },
                       {
                           data: "imageURL",
                         render: function (data) {
@@ -115,6 +112,7 @@
                             }
                         }
                     },
+                    { data: "order" },
                     {
                         data: "isActive",
                         render: function (data, type, row) {

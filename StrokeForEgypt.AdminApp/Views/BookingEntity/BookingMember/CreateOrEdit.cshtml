@@ -15,7 +15,7 @@
         Fk_Country = _UnitOfWork.Country.GetFirst().Result.Id;
     }
 
-    int Fk_Event = _UnitOfWork.Booking.GetFirst(a=>a.Id==Model.BookingMember.Fk_Booking,new List<string> { "EventPackage" }).Result.EventPackage.Fk_Event;
+    int Fk_Event = _UnitOfWork.Booking.GetFirst(a => a.Id == Model.BookingMember.Fk_Booking, new List<string> { "EventPackage" }).Result.EventPackage.Fk_Event;
 
 }
 
@@ -95,7 +95,7 @@
                     <div class="form-group row">
                         <label asp-for="BookingMember.Address" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            <textarea rows="5" asp-for="BookingMember.Address" class="form-control summernote" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'></textarea>
+                            <textarea rows="2" asp-for="BookingMember.Address" class="form-control "></textarea>
                             <span asp-validation-for="BookingMember.Address" class="text-danger"></span>
                         </div>
 
@@ -134,12 +134,12 @@
     @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
 
-<script>
-    $(document).ready(function () {
-        $("#Fk_Country").on("change", function () {
-            getCities(this.value);
-        });
-    })
-</script>
+    <script>
+        $(document).ready(function () {
+            $("#Fk_Country").on("change", function () {
+                getCities(this.value);
+            });
+        })
+    </script>
 
 }

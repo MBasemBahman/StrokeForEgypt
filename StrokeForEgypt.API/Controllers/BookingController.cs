@@ -191,7 +191,7 @@ namespace StrokeForEgypt.API.Controllers
             {
                 Account account = (Account)Request.HttpContext.Items["Account"];
 
-                List<Booking> Data = await _UnitOfWork.Booking.GetAll(a => a.Fk_Account == account.Id, new List<string>
+                List<Booking> Data = await _UnitOfWork.Booking.GetAll(a => a.IsActive && a.Fk_Account == account.Id, new List<string>
                 {
                     "BookingState",
                     "EventPackage"
@@ -301,7 +301,7 @@ namespace StrokeForEgypt.API.Controllers
             {
                 Account account = (Account)Request.HttpContext.Items["Account"];
 
-                List<BookingMember> Data = await _UnitOfWork.BookingMember.GetAll(a => a.Fk_Booking == Fk_Booking &&
+                List<BookingMember> Data = await _UnitOfWork.BookingMember.GetAll(a => a.IsActive && a.Fk_Booking == Fk_Booking &&
                                                                                  a.Booking.Fk_Account == account.Id, new List<string>
                 {
                     "BookingMemberAttachments"

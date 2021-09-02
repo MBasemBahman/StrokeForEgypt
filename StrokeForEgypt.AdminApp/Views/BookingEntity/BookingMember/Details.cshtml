@@ -71,7 +71,7 @@
                     <div class="form-group row">
                         <label asp-for="Address" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            @Html.Raw(Model.Address)
+                            <textarea rows="2" asp-for="Address" class="form-control " disabled></textarea>
                         </div>
 
                         <label asp-for="Club" class="col-sm-2 control-label  pt-2"></label>

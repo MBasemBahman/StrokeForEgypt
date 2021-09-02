@@ -52,6 +52,10 @@ namespace StrokeForEgypt.API.Controllers
 
                 _Mapper.Map(Data, returnData);
 
+                List<Gallery> Gallery = await _UnitOfWork.Gallery.GetAll(a => a.IsActive);
+                returnData.Galleries = new List<GalleryModel>();
+                _Mapper.Map(Gallery, returnData.Galleries);
+
                 Status = new Status(true);
             }
             catch (Exception ex)

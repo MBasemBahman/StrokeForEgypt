@@ -11,18 +11,31 @@ namespace StrokeForEgypt.Service.EventEntity
         [Required(ErrorMessage = "{0} is required")]
         public string Title { get; set; }
 
-        [DisplayName("Description")]
+        [DisplayName("Short Description")]
         [Required(ErrorMessage = "{0} is required")]
         [DataType(DataType.MultilineText)]
-        public string Description { get; set; }
+        public string ShortDescription { get; set; }
 
-        [DisplayName("Date")]
+        [DisplayName("Long Description")]
+        [Required(ErrorMessage = "{0} is required")]
+        [DataType(DataType.MultilineText)]
+        public string LongDescription { get; set; }
+
+        [DisplayName("From Date")]
         [DataType(DataType.Date)]
-        public string Date { get; set; }
+        public string FromDate { get; set; }
 
-        [DisplayName("Time")]
+        [DisplayName("From Time")]
         [DataType(DataType.Time)]
-        public string Time { get; set; }
+        public string FromTime { get; set; }
+
+        [DisplayName("To Date")]
+        [DataType(DataType.Date)]
+        public string ToDate { get; set; }
+
+        [DisplayName("To Time")]
+        [DataType(DataType.Time)]
+        public string ToTime { get; set; }
 
         [DisplayName("Event Agenda Galleries")]
         public ICollection<EventAgendaGalleryModel> EventAgendaGalleries { get; set; }

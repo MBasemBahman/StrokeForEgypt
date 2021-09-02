@@ -52,8 +52,8 @@ namespace StrokeForEgypt.AdminApp.Controllers.EventEntity
             if (!string.IsNullOrEmpty(searchBy))
             {
                 result = result.Where(a => a.Title.ToLower().Contains(searchBy.ToLower())
-                                        || a.Date.ToString().ToLower().Contains(searchBy.ToLower())
-                                        || a.Time.ToString().ToLower().Contains(searchBy.ToLower())
+                                        || a.FromDate.ToString().ToLower().Contains(searchBy.ToLower())
+                                        || a.FromTime.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.IsActive.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.Id.ToString().ToLower().Contains(searchBy.ToLower()))
                                .ToList();

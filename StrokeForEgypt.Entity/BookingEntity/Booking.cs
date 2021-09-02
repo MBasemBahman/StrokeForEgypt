@@ -3,6 +3,7 @@ using StrokeForEgypt.Entity.CommonEntity;
 using StrokeForEgypt.Entity.EventEntity;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StrokeForEgypt.Entity.BookingEntity
@@ -45,6 +46,10 @@ namespace StrokeForEgypt.Entity.BookingEntity
 
         [DisplayName("Booking State")]
         public BookingState BookingState { get; set; }
+
+        [DisplayName("Admin Notes")]
+        [DataType(DataType.MultilineText)]
+        public string Notes { get; set; }
 
         [DisplayName("Booking State Histories")]
         public ICollection<BookingStateHistory> BookingStateHistories { get; set; }

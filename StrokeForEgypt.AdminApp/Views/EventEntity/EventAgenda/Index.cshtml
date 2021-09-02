@@ -39,8 +39,7 @@
                         <tr>
                             <th>@Html.DisplayNameFor(model => EventAgenda.Id)</th>
                             <th>@Html.DisplayNameFor(model => EventAgenda.Title)</th>
-                            <th>@Html.DisplayNameFor(model => EventAgenda.Date)</th>
-                            <th>@Html.DisplayNameFor(model => EventAgenda.Time)</th>
+                            <th>@Html.DisplayNameFor(model => EventAgenda.Order)</th>
                             <th>@Html.DisplayNameFor(model => EventAgenda.IsActive)</th>
                             <th>
 
@@ -94,18 +93,7 @@
                 columns: [
                     { data: "id" },
                     { data: "title" },
-                    {
-                        data: "date",
-                        render: function (data, type, row) {
-                            if (data != null) {
-                                return moment(data).format("ddd, D/M/YYYY");
-                            }
-                            else {
-                                return '-';
-                            }
-                        }
-                    },
-                    { data: "time" },
+                    { data: "order" },
                     {
                         data: "isActive",
                         render: function (data, type, row) {
