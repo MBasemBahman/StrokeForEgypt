@@ -46,7 +46,7 @@
                         <tr>
                             <th>@Html.DisplayNameFor(model => Gallery.Id)</th>
                             <th>@Html.DisplayNameFor(model => Gallery.FileURL)</th>
-                            <th>@Html.DisplayNameFor(model => Gallery.FileName)</th>
+                            <th>@Html.DisplayNameFor(model => Gallery.FileType)</th>
                             <th>@Html.DisplayNameFor(model => Gallery.CreatedAt)</th>
                             <th>
 
@@ -113,8 +113,7 @@
                         }
                     },
 
-                    { data: "fileName" },
-
+                    { data: "fileType" },
                     {
                         data: "createdAt",
                         render: function (data, type, row) {

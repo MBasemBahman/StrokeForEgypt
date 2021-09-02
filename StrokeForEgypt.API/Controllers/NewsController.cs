@@ -59,15 +59,6 @@ namespace StrokeForEgypt.API.Controllers
 
                 _Mapper.Map(PagedData, returnData);
 
-                foreach (News News in PagedData)
-                {
-                    NewsModel newsModel = new();
-
-                    _Mapper.Map(News, newsModel);
-
-                    returnData.Add(newsModel);
-                }
-
                 PaginationMetaData<News> PaginationMetaData = new(PagedData)
                 {
                     PrevoisPageLink = (PagedData.HasPrevious) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber - 1), paging.PageSize }) : null,
@@ -106,7 +97,7 @@ namespace StrokeForEgypt.API.Controllers
 
                 _Mapper.Map(news, returnData);
 
-                news.NewsGalleries = new List<NewsGallery>();
+                returnData.NewsGalleries = new List<NewsGalleryModel>();
                 _Mapper.Map(news.NewsGalleries, returnData.NewsGalleries);
 
                 Status = new Status(true);

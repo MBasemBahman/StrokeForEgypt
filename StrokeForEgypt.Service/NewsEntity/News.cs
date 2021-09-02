@@ -20,10 +20,15 @@ namespace StrokeForEgypt.Service.NewsEntity
         [Required(ErrorMessage = "{0} is required")]
         public string Title { get; set; }
 
-        [DisplayName("Description")]
+        [DisplayName("Short Description")]
         [Required(ErrorMessage = "{0} is required")]
         [DataType(DataType.MultilineText)]
-        public string Description { get; set; }
+        public string ShortDescription { get; set; }
+
+        [DisplayName("Long Description")]
+        [Required(ErrorMessage = "{0} is required")]
+        [DataType(DataType.MultilineText)]
+        public string LongDescription { get; set; }
 
         [DisplayName("News Galleries")]
         public ICollection<NewsGalleryModel> NewsGalleries { get; set; }

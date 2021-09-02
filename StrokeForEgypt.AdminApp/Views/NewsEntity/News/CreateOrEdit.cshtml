@@ -13,7 +13,7 @@
 }
 <div class="row">
     <div class="col-lg-12">
-        <form asp-action="CreateOrEdit" class="form-horizontal">
+        <form asp-action="CreateOrEdit" class="form-horizontal" enctype="multipart/form-data">
             <section class="card">
                 <header class="card-header">
                     <h2 class="card-title">@ViewData["Title"]</h2>
@@ -53,6 +53,9 @@
                             <span asp-validation-for="LongDescription" class="text-danger"></span>
                         </div>
                     </div>
+
+                    @{await Html.RenderPartialAsync("PartialComponent/ImageUpload", new ImageViewModel { LabelName = EntityLocalizer.Get("Image"), OldImageURL = Model.ImageURL });}
+
                     <div class="form-group row">
                         <label asp-for="Order" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">

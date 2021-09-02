@@ -42,6 +42,7 @@
                             <th>@Html.DisplayNameFor(model => EventPackage.OriginalPrice)</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.Price)</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.ExtraFees)</th>
+                            <th>@EntityLocalizer.Get("Image")</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.Order)</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.IsActive)</th>
                             <th>
@@ -99,6 +100,17 @@
                     { data:"originalPrice"},
                     { data: "price" },
                     { data: "extraFees" },
+                     {
+                          data: "imageURL",
+                        render: function (data) {
+                            if (data != null) {
+                                return '<a class="image-popup-no-margins" href="' + data + '"><img class="img-thumbnail img-fluid" src="' + data + '" width="75" alt="No Image Selected"></a>'
+                            }
+                            else {
+                                return '@CommonLocalizer.Get("Not Found")';
+                            }
+                        }
+                    },
                     { data: "order" },
                     {
                         data: "isActive",

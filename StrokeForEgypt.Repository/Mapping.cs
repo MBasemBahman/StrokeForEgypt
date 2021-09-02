@@ -216,6 +216,11 @@ namespace StrokeForEgypt.Repository
 
             CreateMap<BookingCreateModel, Booking>();
 
+            CreateMap<Booking, BookingModel>()
+                .ForMember(dest => dest.EventPackage, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingState, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+
             CreateMap<Booking, Booking>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Account, opt => opt.Ignore())

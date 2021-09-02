@@ -145,6 +145,28 @@ namespace StrokeForEgypt.AdminApp.Controllers.NewsEntity
 
                         _UnitOfWork.News.UpdateEntity(Data);
                         await _UnitOfWork.News.Save();
+
+                        News = Data;
+                    }
+
+                    IFormFile ImageFile = HttpContext.Request.Form.Files["ImageFile"];
+
+                    if (ImageFile != null)
+                    {
+                        ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
+
+                        string FileURL = await ImgManager.UploudImage(AppMainData.DomainName, News.Id.ToString(), ImageFile, "Uploud/News");
+
+                        if (!string.IsNullOrEmpty(FileURL))
+                        {
+                            if (!string.IsNullOrEmpty(News.ImageURL))
+                            {
+                                ImgManager.DeleteImage(News.ImageURL, AppMainData.DomainName);
+                            }
+                            News.ImageURL = FileURL;
+                            _UnitOfWork.News.UpdateEntity(News);
+                            await _UnitOfWork.EventActivity.Save();
+                        }
                     }
                 }
 

@@ -39,6 +39,7 @@
                         <tr>
                             <th>@Html.DisplayNameFor(model => EventActivity.Id)</th>
                             <th>@Html.DisplayNameFor(model => EventActivity.Name)</th>
+                            <th>@EntityLocalizer.Get("Image")</th>
                             <th>@Html.DisplayNameFor(model => EventActivity.Order)</th>
                             <th>@Html.DisplayNameFor(model => EventActivity.IsActive)</th>
                             <th>
@@ -93,6 +94,17 @@
                 columns: [
                     { data: "id" },
                     { data: "name" },
+                     {
+                          data: "imageURL",
+                        render: function (data) {
+                            if (data != null) {
+                                return '<a class="image-popup-no-margins" href="' + data + '"><img class="img-thumbnail img-fluid" src="' + data + '" width="75" alt="No Image Selected"></a>'
+                            }
+                            else {
+                                return '@CommonLocalizer.Get("Not Found")';
+                            }
+                        }
+                    },
                     { data: "order" },
                     {
                         data: "isActive",

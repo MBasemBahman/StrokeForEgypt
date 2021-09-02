@@ -12,7 +12,12 @@
             <section class="card">
                 <div class="card-body">
                     <input type="hidden" asp-for="Id" />
-
+                    <div class="form-group row">
+                        <a asp-controller="Booking" asp-action="Index" asp-route-Fk_EventPackage="@Model.Id" class="btn btn-outline-primary a-btn-slide-text" target="_blank">
+                            <span><strong>@Html.DisplayNameFor(model => model.Bookings) (@_UnitOfWork.Booking.Count(a => a.Fk_EventPackage == Model.Id))</strong></span>
+                        </a>
+                    </div>
+                    <hr />
                     <div class="form-group row">
                         <label asp-for="Event" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-10">
