@@ -322,6 +322,103 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
+        /// Post: Change Profile Image
+        /// </summary>
+        [HttpPost]
+        [Route(nameof(ChangeProfileImage))]
+        public async Task<string> ChangeProfileImage([FromForm] ProfileImageModel model)
+        {
+            string returnData = "";
+
+            Status Status = new();
+
+            try
+            {
+                Account account = (Account)Request.HttpContext.Items["Account"];
+
+                Account data = await _UnitOfWork.Account.GetByID(account.Id);
+
+                if (model.ProfileImage != null)
+                {
+                    ImgManager ImgManager = new(AppMainData.WebRootPath);
+
+                    string FileURL = await ImgManager.UploudImage(AppMainData.DomainName, account.Id.ToString(), model.ProfileImage, "wwwroot/Uploud/Account");
+
+                    if (!string.IsNullOrEmpty(FileURL))
+                    {
+                        if (FileURL.Contains("wwwroot"))
+                        {
+                            FileURL = FileURL.Replace("wwwroot/", "");
+                        }
+                        data.ImageURL = FileURL;
+                    }
+                }
+
+                data.LastModifiedAt = DateTime.UtcNow;
+
+                _UnitOfWork.Account.UpdateEntity(data);
+                await _UnitOfWork.Save();
+
+                returnData = data.ImageURL;
+
+                Status = new Status(true);
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
+        /// Post: Change Notification Token
+        /// </summary>
+        [HttpPost]
+        [Route(nameof(ChangeNotificationToken))]
+        public async Task<string> ChangeNotificationToken([FromBody] NotificationTokenModel model)
+        {
+            string returnData = "";
+
+            Status Status = new();
+
+            try
+            {
+                Account account = (Account)Request.HttpContext.Items["Account"];
+
+                Account data = await _UnitOfWork.Account.GetByID(account.Id);
+
+                data.NotificationToken = model.NotificationToken;
+                data.LastModifiedAt = DateTime.UtcNow;
+
+                _UnitOfWork.Account.UpdateEntity(data);
+                await _UnitOfWork.Save();
+
+                returnData = data.ImageURL;
+
+                Status = new Status(true);
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
         /// Post: Forget Password
         /// </summary>
         [HttpPost]

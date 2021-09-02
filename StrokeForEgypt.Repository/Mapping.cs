@@ -174,6 +174,7 @@ namespace StrokeForEgypt.Repository
 
             CreateMap<Account, Account>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForMember(dest => dest.NotificationToken, opt => opt.Ignore())
                 .ForMember(dest => dest.LoginTokenHash, opt => opt.Ignore())
                 .ForMember(dest => dest.VerificationCodeHash, opt => opt.Ignore())
                 .ForMember(dest => dest.AccountDevices, opt => opt.Ignore())

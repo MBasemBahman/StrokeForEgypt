@@ -1,4 +1,5 @@
-﻿using StrokeForEgypt.Service.CommonEntity;
+﻿using Microsoft.AspNetCore.Http;
+using StrokeForEgypt.Service.CommonEntity;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -77,6 +78,20 @@ namespace StrokeForEgypt.Service.AccountEntity
 
         [DisplayName("Login Token")]
         public string LoginToken { get; set; }
+    }
+
+    public class NotificationTokenModel
+    {
+        [Required(ErrorMessage = "The {0} field is required")]
+        [DisplayName("Notification Token")]
+        public string NotificationToken { get; set; }
+    }
+
+    public class ProfileImageModel
+    {
+        [Required(ErrorMessage = "The {0} field is required")]
+        [DisplayName("Profile Image")]
+        public IFormFile ProfileImage { get; set; }
     }
 
     public class EditProfileModel
