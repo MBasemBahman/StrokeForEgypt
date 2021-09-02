@@ -47,7 +47,6 @@ namespace StrokeForEgypt.AdminApp.Filters
         }
     }
 
-
     public class AuthorizeAttribute : TypeFilterAttribute
     {
         public AuthorizeAttribute(int Fk_AccessLevel, bool Referer = false)

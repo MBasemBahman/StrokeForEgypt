@@ -44,6 +44,21 @@ namespace StrokeForEgypt.API.Controllers
 
             Booking booking = await _UnitOfWork.Booking.GetFirst(a => a.Id == Fk_Booking, new List<string> { "EventPackage" });
 
+            booking = new Booking
+            {
+                Id = Fk_Booking,
+                DaysCount = 4,
+                PersonCount = 1,
+                TotalPrice = 10,
+                EventPackage = new Entity.EventEntity.EventPackage
+                {
+                    Id = 1,
+                    ImageURL = ""
+                }
+            };
+
+            string TotalPrice = string.Format("{0:N2}", Convert.ToDecimal(booking.TotalPrice));
+
             FawryManager fawryManager = new(false);
             ChargeRequest ChargeRequest = fawryManager.BuildChargeRequest(new PayRequest
             {
@@ -51,13 +66,13 @@ namespace StrokeForEgypt.API.Controllers
                 CustomerEmail = account.Email,
                 CustomerMobile = account.Phone,
                 CustomerName = account.FullName.ToLower().Trim().Replace(" ", ""),
-                MerchantRefNum = Fk_Booking.ToString(),
+                MerchantRefNum = booking.Id.ToString(),
                 ChargeItem = new ChargeItem
                 {
-                    ItemId = booking.Id.ToString(),
+                    ItemId = booking.EventPackage.Id.ToString(),
                     Description = $"DaysCount: {booking.DaysCount}, PersonCount: {booking.PersonCount}",
                     ImageUrl = booking.EventPackage.ImageURL,
-                    Price = (decimal)booking.TotalPrice,
+                    Price = decimal.Parse(TotalPrice),
                     Quantity = booking.PersonCount
                 }
             });
