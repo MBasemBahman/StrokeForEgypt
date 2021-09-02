@@ -17,6 +17,11 @@
                         <label asp-for="Event" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-10">
                             <a class="btn btn-info" href="/Event/Profile/@Model.Fk_Event" target="_blank">
+                                @if (Model.Event == null)
+                                {
+                                    Model.Event = await _UnitOfWork.Event.GetByID(Model.Fk_Event);
+                                }
+                                
                                 @Model.Event.Title
                             </a>
                         </div>

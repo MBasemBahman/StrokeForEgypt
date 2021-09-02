@@ -35,7 +35,6 @@ namespace StrokeForEgypt.Repository
 
         public AccountRepository Account => new(_DBContext, _Mapper);
         public BaseRepository<AccountDevice> AccountDevice => new(_DBContext);
-        public BaseRepository<AccountPayment> AccountPayment => new(_DBContext);
         public BaseRepository<RefreshToken> RefreshToken => new(_DBContext);
 
         #endregion
@@ -53,6 +52,7 @@ namespace StrokeForEgypt.Repository
         #region BookingEntity
 
         public BookingRepository Booking => new(_DBContext, _Mapper);
+        public BaseRepository<BookingPayment> BookingPayment => new(_DBContext);
         public BaseRepository<BookingMember> BookingMember => new(_DBContext);
         public BookingMemberActivityRepository BookingMemberActivity => new(_DBContext, _Mapper);
         public BookingMemberAttachmentRepository BookingMemberAttachment => new(_DBContext, _Mapper);

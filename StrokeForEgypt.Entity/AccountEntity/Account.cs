@@ -53,7 +53,6 @@ namespace StrokeForEgypt.Entity.AccountEntity
         [DisplayName("RefreshTokens")]
         public List<RefreshToken> RefreshTokens { get; set; }
 
-        [DisplayName("Account Payments")]
-        public List<AccountPayment> AccountPayments { get; set; }
+
     }
 }

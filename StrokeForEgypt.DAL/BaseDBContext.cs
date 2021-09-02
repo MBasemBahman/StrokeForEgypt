@@ -24,7 +24,6 @@ namespace StrokeForEgypt.DAL
 
         public DbSet<Account> Account { get; set; }
         public DbSet<AccountDevice> AccountDevice { get; set; }
-        public DbSet<AccountPayment> AccountPayment { get; set; }
         public DbSet<RefreshToken> RefreshToken { get; set; }
 
         #endregion
@@ -42,6 +41,7 @@ namespace StrokeForEgypt.DAL
         #region BookingEntity
 
         public DbSet<Booking> Booking { get; set; }
+        public DbSet<BookingPayment> BookingPayment { get; set; }
         public DbSet<BookingMember> BookingMember { get; set; }
         public DbSet<BookingMemberActivity> BookingMemberActivity { get; set; }
         public DbSet<BookingMemberAttachment> BookingMemberAttachment { get; set; }

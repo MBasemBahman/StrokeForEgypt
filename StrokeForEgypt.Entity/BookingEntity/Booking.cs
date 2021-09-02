@@ -17,13 +17,6 @@ namespace StrokeForEgypt.Entity.BookingEntity
         [DisplayName("Account")]
         public Account Account { get; set; }
 
-        [ForeignKey("AccountPayment")]
-        [DisplayName(nameof(AccountPayment))]
-        public int? Fk_AccountPayment { get; set; }
-
-        [DisplayName("AccountPayment")]
-        public AccountPayment AccountPayment { get; set; }
-
         [ForeignKey("EventPackage")]
         [DisplayName(nameof(EventPackage))]
         public int Fk_EventPackage { get; set; }
@@ -56,5 +49,8 @@ namespace StrokeForEgypt.Entity.BookingEntity
 
         [DisplayName("Booking Members")]
         public ICollection<BookingMember> BookingMembers { get; set; }
+
+        [DisplayName("Booking Payments")]
+        public List<BookingPayment> BookingPayments { get; set; }
     }
 }

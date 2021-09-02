@@ -116,50 +116,53 @@ namespace StrokeForEgypt.API.Controllers
             {
                 Account account = (Account)Request.HttpContext.Items["Account"];
 
-                BookingMember bookingMember = new();
-
-                _Mapper.Map(model, bookingMember);
-
-                if (model.Activities != null && model.Activities.Any())
+                if (_UnitOfWork.Booking.Any(a => a.Id == model.Fk_Booking && a.Fk_Account == account.Id))
                 {
-                    bookingMember.BookingMemberActivities = new List<BookingMemberActivity>();
+                    BookingMember bookingMember = new();
 
-                    model.Activities
-                         .ToList()
-                         .ForEach(Fk_EventActivity => bookingMember.BookingMemberActivities.Add(new BookingMemberActivity
-                         {
-                             Fk_EventActivity = Fk_EventActivity
-                         }));
-                }
+                    _Mapper.Map(model, bookingMember);
 
-                _UnitOfWork.BookingMember.CreateEntity(bookingMember);
-                await _UnitOfWork.Save();
-
-                if (model.Attachments != null && model.Attachments.Any())
-                {
-                    foreach (IFormFile File in model.Attachments)
+                    if (model.Activities != null && model.Activities.Any())
                     {
-                        await _UnitOfWork.BookingMemberAttachment.UploudFile(bookingMember.Id, File, "wwwroot/Uploud/BookingMemberAttachment");
-                    }
-                }
+                        bookingMember.BookingMemberActivities = new List<BookingMemberActivity>();
 
-                bookingMember = await _UnitOfWork.BookingMember.GetFirst(a => a.Id == bookingMember.Id, new List<string>
+                        model.Activities
+                             .ToList()
+                             .ForEach(Fk_EventActivity => bookingMember.BookingMemberActivities.Add(new BookingMemberActivity
+                             {
+                                 Fk_EventActivity = Fk_EventActivity
+                             }));
+                    }
+
+                    _UnitOfWork.BookingMember.CreateEntity(bookingMember);
+                    await _UnitOfWork.Save();
+
+                    if (model.Attachments != null && model.Attachments.Any())
+                    {
+                        foreach (IFormFile File in model.Attachments)
+                        {
+                            await _UnitOfWork.BookingMemberAttachment.UploudFile(bookingMember.Id, File, "wwwroot/Uploud/BookingMemberAttachment");
+                        }
+                    }
+
+                    bookingMember = await _UnitOfWork.BookingMember.GetFirst(a => a.Id == bookingMember.Id, new List<string>
                 {
                     "BookingMemberAttachments"
                 });
 
-                _Mapper.Map(bookingMember, returnData);
+                    _Mapper.Map(bookingMember, returnData);
 
-                returnData.BookingMemberAttachments = new List<BookingMemberAttachmentModel>();
+                    returnData.BookingMemberAttachments = new List<BookingMemberAttachmentModel>();
 
-                _Mapper.Map(bookingMember.BookingMemberAttachments, returnData.BookingMemberAttachments);
+                    _Mapper.Map(bookingMember.BookingMemberAttachments, returnData.BookingMemberAttachments);
 
-                returnData.BookingMemberActivities = new List<EventActivityModel>();
+                    returnData.BookingMemberActivities = new List<EventActivityModel>();
 
-                List<EventActivity> BookingMemberActivities = await _UnitOfWork.EventActivity.GetAll(a => a.BookingMemberActivities.Any(b => b.Fk_BookingMember == bookingMember.Id));
-                _Mapper.Map(BookingMemberActivities, returnData.BookingMemberAttachments);
+                    List<EventActivity> BookingMemberActivities = await _UnitOfWork.EventActivity.GetAll(a => a.BookingMemberActivities.Any(b => b.Fk_BookingMember == bookingMember.Id));
+                    _Mapper.Map(BookingMemberActivities, returnData.BookingMemberAttachments);
 
-                Status = new Status(true);
+                    Status = new Status(true);
+                }
             }
             catch (Exception ex)
             {
@@ -301,43 +304,47 @@ namespace StrokeForEgypt.API.Controllers
             {
                 Account account = (Account)Request.HttpContext.Items["Account"];
 
-                List<BookingMember> Data = await _UnitOfWork.BookingMember.GetAll(a => a.IsActive && a.Fk_Booking == Fk_Booking &&
-                                                                                 a.Booking.Fk_Account == account.Id, new List<string>
+                if (_UnitOfWork.Booking.Any(a => a.Id == Fk_Booking && a.Fk_Account == account.Id))
                 {
-                    "BookingMemberAttachments"
-                });
+                    List<BookingMember> Data = await _UnitOfWork.BookingMember.GetAll(a => a.IsActive && a.Fk_Booking == Fk_Booking &&
+                                                                             a.Booking.Fk_Account == account.Id, new List<string>
+                    {
+                            "BookingMemberAttachments"
+                    });
 
-                Data = OrderBy<BookingMember>.OrderData(Data, paging.OrderBy);
+                    Data = OrderBy<BookingMember>.OrderData(Data, paging.OrderBy);
 
-                PagedList<BookingMember> PagedData = PagedList<BookingMember>.Create(Data, paging.PageNumber, paging.PageSize);
+                    PagedList<BookingMember> PagedData = PagedList<BookingMember>.Create(Data, paging.PageNumber, paging.PageSize);
 
-                foreach (BookingMember bookingMember in PagedData)
-                {
-                    BookingMemberModel bookingMemberModel = new();
+                    foreach (BookingMember bookingMember in PagedData)
+                    {
+                        BookingMemberModel bookingMemberModel = new();
 
-                    _Mapper.Map(bookingMember, returnData);
+                        _Mapper.Map(bookingMember, returnData);
 
-                    bookingMemberModel.BookingMemberAttachments = new List<BookingMemberAttachmentModel>();
+                        bookingMemberModel.BookingMemberAttachments = new List<BookingMemberAttachmentModel>();
 
-                    _Mapper.Map(bookingMember.BookingMemberAttachments, bookingMemberModel.BookingMemberAttachments);
+                        _Mapper.Map(bookingMember.BookingMemberAttachments, bookingMemberModel.BookingMemberAttachments);
 
-                    bookingMemberModel.BookingMemberActivities = new List<EventActivityModel>();
+                        bookingMemberModel.BookingMemberActivities = new List<EventActivityModel>();
 
-                    List<EventActivity> BookingMemberActivities = await _UnitOfWork.EventActivity.GetAll(a => a.BookingMemberActivities.Any(b => b.Fk_BookingMember == bookingMember.Id));
-                    _Mapper.Map(BookingMemberActivities, bookingMemberModel.BookingMemberAttachments);
+                        List<EventActivity> BookingMemberActivities = await _UnitOfWork.EventActivity.GetAll(a => a.BookingMemberActivities.Any(b => b.Fk_BookingMember == bookingMember.Id));
+                        _Mapper.Map(BookingMemberActivities, bookingMemberModel.BookingMemberAttachments);
 
-                    returnData.Add(bookingMemberModel);
+                        returnData.Add(bookingMemberModel);
+                    }
+
+                    PaginationMetaData<BookingMember> PaginationMetaData = new(PagedData)
+                    {
+                        PrevoisPageLink = (PagedData.HasPrevious) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber - 1), paging.PageSize }) : null,
+                        NextPageLink = (PagedData.HasNext) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber + 1), paging.PageSize }) : null
+                    };
+
+                    Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PaginationMetaData).Replace(@"\u0026", "&"));
+
+                    Status = new Status(true);
                 }
 
-                PaginationMetaData<BookingMember> PaginationMetaData = new(PagedData)
-                {
-                    PrevoisPageLink = (PagedData.HasPrevious) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber - 1), paging.PageSize }) : null,
-                    NextPageLink = (PagedData.HasNext) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber + 1), paging.PageSize }) : null
-                };
-
-                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PaginationMetaData).Replace(@"\u0026", "&"));
-
-                Status = new Status(true);
             }
             catch (Exception ex)
             {

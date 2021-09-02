@@ -80,8 +80,34 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         [AllowAll]
-        public IActionResult ChargeResponse(ChargeResponse model)
+        public async Task<IActionResult> ChargeResponse(ChargeResponse model)
         {
+            if (model.StatusCode == 200)
+            {
+                Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
+
+                _UnitOfWork.BookingPayment.CreateEntity(new BookingPayment
+                {
+                    Fk_Booking = booking.Id,
+                    Type = model.Type,
+                    ReferenceNumber = model.ReferenceNumber,
+                    MerchantRefNumber = model.MerchantRefNumber,
+                    OrderAmount = model.OrderAmount,
+                    PaymentAmount = model.PaymentAmount,
+                    FawryFees = model.FawryFees,
+                    PaymentMethod = model.PaymentMethod,
+                    OrderStatus = model.OrderStatus,
+                    PaymentTime = model.PaymentTime,
+                    CustomerMobile = model.CustomerMobile,
+                    CustomerMail = model.CustomerMail,
+                    CustomerProfileId = model.CustomerProfileId,
+                    Signature = model.Signature,
+                    StatusCode = model.StatusCode,
+                    StatusDescription = model.StatusDescription
+                });
+                await _UnitOfWork.Save();
+            }
+
             return Ok();
         }
     }

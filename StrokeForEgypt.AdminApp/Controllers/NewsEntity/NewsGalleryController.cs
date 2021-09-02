@@ -48,7 +48,10 @@ namespace StrokeForEgypt.AdminApp.Controllers.NewsEntity
             string searchBy = dtParameters.Search?.Value;
 
             List<NewsGallery> result = await _UnitOfWork.NewsGallery.GetAll(a => (dtParameters.Id == 0 || a.Id == dtParameters.Id)
-                                                                                            && (dtParameters.Fk_News == 0 || a.Fk_News == dtParameters.Fk_News));
+                                                                                            && (dtParameters.Fk_News == 0 || a.Fk_News == dtParameters.Fk_News), new List<string>
+                                                                                            {
+                                                                                                "News"
+                                                                                            });
 
             if (!string.IsNullOrEmpty(searchBy))
             {
@@ -58,6 +61,8 @@ namespace StrokeForEgypt.AdminApp.Controllers.NewsEntity
                                         || a.Id.ToString().ToLower().Contains(searchBy.ToLower()))
                                .ToList();
             }
+
+            result.ForEach(a => a.News.NewsGalleries = null);
 
             DataTableManager<NewsGallery> DataTableManager = new DataTableManager<NewsGallery>();
 

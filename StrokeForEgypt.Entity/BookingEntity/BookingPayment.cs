@@ -1,18 +1,17 @@
-﻿using StrokeForEgypt.Entity.BookingEntity;
-using StrokeForEgypt.Entity.CommonEntity;
+﻿using StrokeForEgypt.Entity.CommonEntity;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StrokeForEgypt.Entity.AccountEntity
+namespace StrokeForEgypt.Entity.BookingEntity
 {
-    public class AccountPayment : BaseEntity
+    public class BookingPayment : BaseEntity
     {
-        [ForeignKey("Account")]
-        [DisplayName(nameof(Account))]
-        public int Fk_Account { get; set; }
+        [ForeignKey("Booking")]
+        [DisplayName(nameof(Booking))]
+        public int Fk_Booking { get; set; }
 
-        [DisplayName("Account")]
-        public Account Account { get; set; }
+        [DisplayName("Booking")]
+        public Booking Booking { get; set; }
 
         [DisplayName("Type")]
         public string Type { get; set; }
@@ -58,8 +57,5 @@ namespace StrokeForEgypt.Entity.AccountEntity
 
         [DisplayName("Status Description")]
         public string StatusDescription { get; set; }
-
-        [DisplayName("Booking")]
-        public Booking Booking { get; set; }
     }
 }

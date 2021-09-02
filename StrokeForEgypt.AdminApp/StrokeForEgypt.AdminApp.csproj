@@ -21,19 +21,8 @@
   <ItemGroup>
     <Folder Include="wwwroot\Uploud\Event\" />
     <Folder Include="wwwroot\Uploud\EventGallery\" />
-    <Folder Include="wwwroot\Uploud\EventAgendaGallery\" />
-    <Folder Include="wwwroot\Uploud\Account\" />
-    <Folder Include="wwwroot\Uploud\Country\" />
     <Folder Include="wwwroot\Uploud\Gallery\" />
-    <Folder Include="wwwroot\Uploud\EventActivity\" />
-    <Folder Include="wwwroot\Uploud\EventPackage\" />
     <Folder Include="wwwroot\Uploud\BookingMemberAttachment\" />
-    <Folder Include="wwwroot\Uploud\EventAgenda\" />
-    <Folder Include="wwwroot\Uploud\EventPackage\" />
-    <Folder Include="wwwroot\Uploud\Account\" />
-    <Folder Include="wwwroot\Uploud\Country\" />
-    <Folder Include="wwwroot\Uploud\EventActivity\" />
-    <Folder Include="wwwroot\Uploud\EventAgendaGallery\" />
     <Folder Include="wwwroot\Uploud\Sponsor\" />
     <Folder Include="wwwroot\Uploud\NewsGallery\" />
   </ItemGroup>
