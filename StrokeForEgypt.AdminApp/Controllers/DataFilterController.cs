@@ -1,17 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using StrokeForEgypt.AdminApp.Filters;
 using StrokeForEgypt.AdminApp.Services;
-using StrokeForEgypt.AdminApp.ViewModel;
-using StrokeForEgypt.Common;
-using StrokeForEgypt.Entity.EventEntity;
 using StrokeForEgypt.Repository;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using static StrokeForEgypt.Common.EnumData;
 
 namespace StrokeForEgypt.AdminApp.Controllers
 {
@@ -41,7 +33,7 @@ namespace StrokeForEgypt.AdminApp.Controllers
         [HttpGet]
         public JsonResult GetEventPackagePrice(int Fk_EventPackage)
         {
-            var result = _UnitOfWork.EventPackage.GetByID(Fk_EventPackage).Result.Price;
+            double result = _UnitOfWork.EventPackage.GetByID(Fk_EventPackage).Result.Price;
 
             return Json(result);
         }
@@ -49,7 +41,7 @@ namespace StrokeForEgypt.AdminApp.Controllers
         [HttpGet]
         public JsonResult GetCities(int Fk_Country)
         {
-            var result = _UnitOfWork.City.GetAll(a=>a.Fk_Country==Fk_Country).Result.Select(a => new { Id = a.Id,Name=a.Name});
+            var result = _UnitOfWork.City.GetAll(a => a.Fk_Country == Fk_Country).Result.Select(a => new { Id = a.Id, Name = a.Name });
 
             return Json(result);
         }

@@ -140,7 +140,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
 
                         BookingMember.BookingMemberActivities = new List<BookingMemberActivity>();
 
-                        BookingMember =  _UnitOfWork.BookingMemberActivity.CreateEntity(BookingMember, Fk_Activities);
+                        BookingMember = _UnitOfWork.BookingMemberActivity.CreateEntity(BookingMember, Fk_Activities);
 
                         _UnitOfWork.BookingMember.CreateEntity(BookingMember);
                         await _UnitOfWork.BookingMember.Save();
@@ -157,7 +157,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
                         Data.BookingMemberActivities = await _UnitOfWork.BookingMemberActivity.GetAll(a => a.Fk_BookingMember == id);
 
                         Data = _UnitOfWork.BookingMemberActivity.UpdateEntity(BookingMember, Data.BookingMemberActivities.Select(a => a.Fk_EventActivity).ToList(), Fk_Activities);
-                       
+
                         _UnitOfWork.BookingMember.UpdateEntity(Data);
                         await _UnitOfWork.BookingMember.Save();
                     }

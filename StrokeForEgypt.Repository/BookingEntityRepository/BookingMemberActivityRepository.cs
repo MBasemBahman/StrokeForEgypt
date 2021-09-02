@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using StrokeForEgypt.BaseRepository;
-using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.BookingEntity;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace StrokeForEgypt.Repository.BookingEntityRepository
 {
-  public  class BookingMemberActivityRepository : AppBaseRepository<BookingMemberActivity>
+    public class BookingMemberActivityRepository : AppBaseRepository<BookingMemberActivity>
     {
         private readonly BaseDBContext DBContext;
         private readonly IMapper _Mapper;

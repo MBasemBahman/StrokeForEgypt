@@ -28,14 +28,14 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
         }
 
         [Authorize((int)AccessLevelEnum.ReadAccess)]
-        public IActionResult Index(int Id, int Fk_Account,int Fk_BookingState,int Fk_EventPackage, bool ProfileLayOut = false)
+        public IActionResult Index(int Id, int Fk_Account, int Fk_BookingState, int Fk_EventPackage, bool ProfileLayOut = false)
         {
             BookingFilter Filter = new BookingFilter
             {
                 Id = Id,
                 Fk_Account = Fk_Account,
                 Fk_BookingState = Fk_BookingState,
-                Fk_EventPackage  = Fk_EventPackage
+                Fk_EventPackage = Fk_EventPackage
             };
             ViewData["ProfileLayOut"] = ProfileLayOut;
             return View("~/Views/BookingEntity/Booking/Index.cshtml", Filter);
@@ -51,7 +51,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
                                                                                          && (dtParameters.Fk_EventPackage == 0 || a.Fk_EventPackage == dtParameters.Fk_EventPackage)
                                                                                          && (dtParameters.Fk_BookingState == 0 || a.Fk_BookingState == dtParameters.Fk_BookingState)
                                                                                          && (dtParameters.Fk_Account == 0 || a.Fk_Account == dtParameters.Fk_Account)
-                                                                                         , new List<string> { "EventPackage","BookingState","Account" });
+                                                                                         , new List<string> { "EventPackage", "BookingState", "Account" });
 
 
             if (!string.IsNullOrEmpty(searchBy))
@@ -66,7 +66,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
                                .ToList();
             }
 
-            result.ForEach(a => { a.Account.Bookings = null; a.EventPackage.Bookings = null;a.BookingState.Bookings = null;a.BookingState.BookingStateHistories = null; });
+            result.ForEach(a => { a.Account.Bookings = null; a.EventPackage.Bookings = null; a.BookingState.Bookings = null; a.BookingState.BookingStateHistories = null; });
 
             DataTableManager<Booking> DataTableManager = new DataTableManager<Booking>();
 
@@ -98,7 +98,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
         }
 
         [Authorize((int)AccessLevelEnum.ReadAccess)]
-        public async Task<IActionResult> Profile(int id,int returnItem = (int)BookingProfileItems.BookingMember)
+        public async Task<IActionResult> Profile(int id, int returnItem = (int)BookingProfileItems.BookingMember)
         {
             Booking Booking = await _UnitOfWork.Booking.GetByID(id);
 
@@ -209,7 +209,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
             {
                 return NotFound();
             }
-            if(_UnitOfWork.BookingMember.Any(a => a.Fk_Booking == id))
+            if (_UnitOfWork.BookingMember.Any(a => a.Fk_Booking == id))
             {
                 ViewBag.CanDelete = false;
             }
@@ -223,7 +223,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
         {
             Booking Booking = await _UnitOfWork.Booking.GetByID(id);
 
-           if(!_UnitOfWork.BookingMember.Any(a => a.Fk_Booking == id))
+            if (!_UnitOfWork.BookingMember.Any(a => a.Fk_Booking == id))
             {
                 _UnitOfWork.Booking.DeleteEntity(Booking);
                 await _UnitOfWork.Booking.Save();

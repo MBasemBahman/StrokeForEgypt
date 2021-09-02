@@ -48,7 +48,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
 
             List<BookingStateHistory> result = await _UnitOfWork.BookingStateHistory.GetAll(a => (dtParameters.Id == 0 || a.Id == dtParameters.Id)
                                                                                             && (dtParameters.Fk_Booking == 0 || a.Fk_Booking == dtParameters.Fk_Booking)
-                                                                                            ,new List<string> { "BookingState"});
+                                                                                            , new List<string> { "BookingState" });
 
             if (!string.IsNullOrEmpty(searchBy))
             {
@@ -59,7 +59,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
                                .ToList();
             }
 
-            result.ForEach(a => {a.BookingState.BookingStateHistories = null; a.BookingState.Bookings = null; });
+            result.ForEach(a => { a.BookingState.BookingStateHistories = null; a.BookingState.Bookings = null; });
 
             DataTableManager<BookingStateHistory> DataTableManager = new DataTableManager<BookingStateHistory>();
 

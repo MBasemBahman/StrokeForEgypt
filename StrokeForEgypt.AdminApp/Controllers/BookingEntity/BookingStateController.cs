@@ -137,7 +137,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
 
                     }
 
-          
+
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -184,13 +184,13 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
         {
             BookingState BookingState = await _UnitOfWork.BookingState.GetByID(id);
 
-            if (!(_UnitOfWork.Booking.Any(a => a.Fk_BookingState == id)||
+            if (!(_UnitOfWork.Booking.Any(a => a.Fk_BookingState == id) ||
                 _UnitOfWork.BookingStateHistory.Any(a => a.Fk_BookingState == id)))
             {
                 _UnitOfWork.BookingState.DeleteEntity(BookingState);
 
                 await _UnitOfWork.BookingState.Save();
-              
+
             }
 
             return RedirectToAction(nameof(Index));

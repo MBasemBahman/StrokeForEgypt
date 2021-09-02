@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using StrokeForEgypt.BaseRepository;
-using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.BookingEntity;
 using System.Collections.Generic;
