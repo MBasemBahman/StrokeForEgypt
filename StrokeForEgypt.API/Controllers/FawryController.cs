@@ -152,6 +152,7 @@ namespace StrokeForEgypt.API.Controllers
                         bookingPayment.StatusCode = model.StatusCode;
                         bookingPayment.StatusDescription = model.StatusDescription;
                         bookingPayment.Signature = model.Signature;
+                        bookingPayment.LastModifiedAt = DateTime.UtcNow;
 
                         _UnitOfWork.BookingPayment.UpdateEntity(bookingPayment);
                         await _UnitOfWork.Save();
@@ -159,7 +160,16 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            return Ok();
+            return RedirectToAction(nameof(PaymentStatus), new { model.StatusCode, model.StatusDescription });
+        }
+
+        [AllowAll]
+        public IActionResult PaymentStatus(int StatusCode, string StatusDescription)
+        {
+            ViewData["StatusCode"] = StatusCode;
+            ViewData["StatusDescription"] = StatusDescription;
+
+            return View();
         }
     }
 }

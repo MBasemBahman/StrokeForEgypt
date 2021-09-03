@@ -207,7 +207,8 @@ namespace StrokeForEgypt.API.Controllers
         [Route(nameof(GetEventActivities))]
         public async Task<List<EventActivityModel>> GetEventActivities(
             [FromQuery] Paging paging,
-            [FromQuery] int Id)
+            [FromQuery] int Id = 0,
+            [FromQuery] int Fk_Booking = 0)
         {
             string ActionName = nameof(GetEventActivities);
             List<EventActivityModel> returnData = new();
@@ -216,7 +217,8 @@ namespace StrokeForEgypt.API.Controllers
             try
             {
                 List<EventActivity> Data = await _UnitOfWork.EventActivity.GetAll(a => a.IsActive &&
-                                                                                    a.Fk_Event == Id);
+                                                                                       (Id == 0 && a.Fk_Event == Id) &&
+                                                                                       (Fk_Booking == 0 || a.BookingMemberActivities.Any(a => a.BookingMember.Fk_Booking == Fk_Booking)));
 
                 Data = OrderBy<EventActivity>.OrderData(Data, paging.OrderBy);
 
