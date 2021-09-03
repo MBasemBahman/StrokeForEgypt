@@ -58,6 +58,7 @@
                         <tr>
                             <th>@Html.DisplayNameFor(model => BookingMemberAttachment.Id)</th>
                             <th>@Html.DisplayNameFor(model => BookingMemberAttachment.FileName)</th>
+                            <th>@Html.DisplayNameFor(model => BookingMemberAttachment.FileType)</th>
                             <th>@Html.DisplayNameFor(model => BookingMemberAttachment.CreatedAt)</th>
                             <th>
 
@@ -103,7 +104,7 @@
     @{await Html.RenderPartialAsync("PartialView/_TableScriptsPartial");}
 
 
-<script>
+    <script>
         $(document).ready(function () {
             var $table = $('#custom-tabletools').DataTable({
                 "scrollX": true,
@@ -122,9 +123,8 @@
                 // Columns Setups
                 columns: [
                     { data: "id" },
-
                     { data: "fileName" },
-
+                    { data: "fileType" },
                     {
                         data: "createdAt",
                         render: function (data, type, row) {
@@ -151,5 +151,5 @@
                 $table.draw();
             });
     });
-</script>
+    </script>
 }
