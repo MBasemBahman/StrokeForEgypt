@@ -53,12 +53,6 @@ namespace StrokeForEgypt.API
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<IAccountService, AccountService>();
 
-            services.AddSession(options =>
-            {
-                options.Cookie.SameSite = SameSiteMode.None;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            });
-
             #region Swagger
 
             services.AddSwaggerGen(c =>
@@ -86,7 +80,7 @@ namespace StrokeForEgypt.API
                 {
                     builder.SetIsOriginAllowed(origin => true)
                            .AllowAnyMethod()
-                           .WithExposedHeaders("X-Status", "X-Pagination")
+                           .WithExposedHeaders("X-Status", "X-Pagination", "Authorization", "Expires", "Set-Refresh")
                            .AllowAnyHeader()
                            .AllowCredentials();
                 });
@@ -168,7 +162,14 @@ namespace StrokeForEgypt.API
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = ctx => {
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers",
+                      "Origin, X-Requested-With, Content-Type, Accept");
+                }
+            });
             app.UseFileServer();
             app.UseCors();
             app.UseRequestLocalization(app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value);

@@ -18,4 +18,11 @@
 
         public string ExceptionMessage { get; set; } = "";
     }
+
+    public class Set_Refresh
+    {
+        public string RefreshToken { get; set; }
+
+        public string Expires { get; set; }
+    }
 }

@@ -708,17 +708,19 @@ namespace StrokeForEgypt.API.Controllers
         private void SetTokenCookie(string token)
         {
             // append cookie with refresh token to the http response
-            CookieOptions cookieOptions = new()
-            {
-                HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
-            Response.Cookies.Append("refreshToken", token, cookieOptions);
+            //CookieOptions cookieOptions = new()
+            //{
+            //    HttpOnly = true,
+            //    Expires = DateTime.UtcNow.AddDays(7)
+            //};
+            //Response.Cookies.Append("refreshToken", token, cookieOptions);
+
+            Response.Headers.Add("Set-Refresh", StatusHandler.GetRefresh(token));
         }
 
         private void SetJwtTokenHeader(string token)
         {
-            Response.Headers.Add("Expires", DateTime.UtcNow.AddMinutes(60).ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'"));
+            Response.Headers.Add("Expires", StatusHandler.GetExpires());
             Response.Headers.Add("Authorization", token);
         }
 

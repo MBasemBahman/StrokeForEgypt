@@ -15,12 +15,27 @@ namespace StrokeForEgypt.API.Helpers
             model.ErrorMessage = EncodeManager.Base64Encode(model.ErrorMessage);
             return JsonSerializer.Serialize(model).Replace(",", @"\002C");
         }
+
+        public static string GetRefresh(string token)
+        {
+            Set_Refresh model = new()
+            {
+                RefreshToken = token,
+                Expires = DateTime.UtcNow.AddDays(7).ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'")
+            };
+            return JsonSerializer.Serialize(model).Replace(",", @"\002C");
+        }
+
+        public static string GetExpires()
+        {
+            return DateTime.UtcNow.AddMinutes(60).ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'").Replace(",", @"\002C");
+        }
     }
     public class StatusHandler<T>
     {
         public static string GetPagination(PaginationMetaData<T> model)
         {
-            return JsonSerializer.Serialize(model);
+            return JsonSerializer.Serialize(model).Replace(",", @"\002C");
         }
     }
 }
