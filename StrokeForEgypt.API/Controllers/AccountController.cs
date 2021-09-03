@@ -13,7 +13,6 @@ using StrokeForEgypt.Service;
 using StrokeForEgypt.Service.AccountEntity;
 using System;
 using System.Net;
-using System.Text.Json;
 using System.Threading.Tasks;
 using BC = BCrypt.Net.BCrypt;
 

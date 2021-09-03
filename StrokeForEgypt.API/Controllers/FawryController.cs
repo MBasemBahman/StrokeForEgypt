@@ -60,7 +60,7 @@ namespace StrokeForEgypt.API.Controllers
 
                 string TotalPrice = string.Format("{0:N2}", Convert.ToDecimal(booking.TotalPrice));
 
-                FawryManager fawryManager = new(false);
+                FawryManager fawryManager = new(true);
                 returnData = fawryManager.BuildChargeRequest(new PayRequest
                 {
                     CustomerProfileId = account.Id.ToString(),
@@ -112,7 +112,7 @@ namespace StrokeForEgypt.API.Controllers
                                                         a.MerchantRefNumber == model.MerchantRefNumber &&
                                                         a.CustomerProfileId == model.CustomerProfileId))
                 {
-                    FawryManager fawryManager = new(false);
+                    FawryManager fawryManager = new(true);
                     ChargeResponse paymentStatus = fawryManager.GetPaymentStatus(model.MerchantRefNumber);
 
                     if (paymentStatus != null &&

@@ -2,10 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -84,20 +81,20 @@ namespace StrokeForEgypt.Common
                 string signature = ComputeStringToSha256Hash($"{MerchantCode}" +
                                                              $"{merchantRefNumber}" +
                                                              $"{SecureKey}");
-                var url = StatusUrl + $"?merchantCode={MerchantCode}&merchantRefNumber={merchantRefNumber}&signature={signature}";
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                string url = StatusUrl + $"?merchantCode={MerchantCode}&merchantRefNumber={merchantRefNumber}&signature={signature}";
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.Method = "GET";
-                var httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
 
                 if (httpWebResponse.StatusCode == HttpStatusCode.OK)
                 {
                     Stream newStream = httpWebResponse.GetResponseStream();
                     StreamReader sr = new(newStream);
-                    var result = sr.ReadToEnd();
+                    string result = sr.ReadToEnd();
                     chargeResponse = JsonConvert.DeserializeObject<ChargeResponse>(result);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
             return chargeResponse;

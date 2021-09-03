@@ -33,14 +33,7 @@ namespace StrokeForEgypt.API.Authorization
                 string.IsNullOrEmpty(ApiKey) ||
                 string.IsNullOrEmpty(UserAgent))
             {
-                string Headers = "";
-                foreach (var Header in context.HttpContext.Request.Headers)
-                {
-                    Headers += $"Key:{Header.Key}, Value:{Header.Value},";
-                }
-
-                context.Result = new JsonResult(new { message = Headers }) { StatusCode = StatusCodes.Status400BadRequest };
-
+                context.Result = new JsonResult(new { message = "BadRequest" }) { StatusCode = StatusCodes.Status400BadRequest };
             }
             else if (secret != _appSettings.Secret)
             {

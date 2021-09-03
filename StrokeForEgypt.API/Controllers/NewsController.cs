@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using StrokeForEgypt.API.Authorization;
 using StrokeForEgypt.API.Helpers;
 using StrokeForEgypt.API.Services;
-using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.NewsEntity;
 using StrokeForEgypt.Repository;
@@ -11,7 +10,6 @@ using StrokeForEgypt.Service;
 using StrokeForEgypt.Service.NewsEntity;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace StrokeForEgypt.API.Controllers
@@ -75,7 +73,7 @@ namespace StrokeForEgypt.API.Controllers
                 Status.ExceptionMessage = ex.Message;
             }
 
-            
+
             Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
@@ -108,7 +106,7 @@ namespace StrokeForEgypt.API.Controllers
                 Status.ExceptionMessage = ex.Message;
             }
 
-            
+
             Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;

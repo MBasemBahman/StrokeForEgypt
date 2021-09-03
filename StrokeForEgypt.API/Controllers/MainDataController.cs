@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using StrokeForEgypt.API.Authorization;
 using StrokeForEgypt.API.Helpers;
 using StrokeForEgypt.API.Services;
-using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.MainDataEntity;
 using StrokeForEgypt.Repository;
@@ -11,7 +10,6 @@ using StrokeForEgypt.Service;
 using StrokeForEgypt.Service.MainDataEntity;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace StrokeForEgypt.API.Controllers
