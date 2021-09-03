@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using StrokeForEgypt.API.Authorization;
+using StrokeForEgypt.API.Helpers;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.AccountEntity;
 using StrokeForEgypt.Entity.BookingEntity;
 using StrokeForEgypt.Repository;
+using StrokeForEgypt.Service;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static StrokeForEgypt.Common.EnumData;
 
 namespace StrokeForEgypt.API.Controllers
 {
@@ -36,47 +39,55 @@ namespace StrokeForEgypt.API.Controllers
             _AccountService = AccountService;
         }
 
+        [AllowAll]
         public async Task<IActionResult> Index(
             int Fk_Booking)
         {
-            Account account = (Account)Request.HttpContext.Items["Account"];
+            ChargeRequest returnData = new();
+            Status Status = new();
 
-            Booking booking = await _UnitOfWork.Booking.GetFirst(a => a.Id == Fk_Booking, new List<string> { "EventPackage" });
-
-            booking = new Booking
+            try
             {
-                Id = Fk_Booking,
-                DaysCount = 4,
-                PersonCount = 1,
-                TotalPrice = 10,
-                EventPackage = new Entity.EventEntity.EventPackage
+                Account account = (Account)Request.HttpContext.Items["Account"];
+
+                Booking booking = await _UnitOfWork.Booking.GetFirst(a => a.Id == Fk_Booking,
+                    new List<string> { "EventPackage" });
+
+                if (account == null)
                 {
-                    Id = 1,
-                    ImageURL = ""
+                    account = await _UnitOfWork.Account.GetByID(booking.Fk_Account);
                 }
-            };
 
-            string TotalPrice = string.Format("{0:N2}", Convert.ToDecimal(booking.TotalPrice));
+                string TotalPrice = string.Format("{0:N2}", Convert.ToDecimal(booking.TotalPrice));
 
-            FawryManager fawryManager = new(false);
-            ChargeRequest ChargeRequest = fawryManager.BuildChargeRequest(new PayRequest
+                FawryManager fawryManager = new(true);
+                returnData = fawryManager.BuildChargeRequest(new PayRequest
+                {
+                    CustomerProfileId = account.Id.ToString(),
+                    CustomerEmail = account.Email,
+                    CustomerMobile = account.Phone,
+                    CustomerName = account.FullName.ToLower().Trim().Replace(" ", ""),
+                    MerchantRefNum = booking.Id.ToString(),
+                    ChargeItem = new ChargeItem
+                    {
+                        ItemId = booking.EventPackage.Id.ToString(),
+                        Description = $"DaysCount: {booking.DaysCount}, PersonCount: {booking.PersonCount}",
+                        ImageUrl = booking.EventPackage.ImageURL,
+                        Price = decimal.Parse(TotalPrice),
+                        Quantity = booking.PersonCount
+                    }
+                });
+
+                Status = new Status(true);
+            }
+            catch (Exception ex)
             {
-                CustomerProfileId = account.Id.ToString(),
-                CustomerEmail = account.Email,
-                CustomerMobile = account.Phone,
-                CustomerName = account.FullName.ToLower().Trim().Replace(" ", ""),
-                MerchantRefNum = booking.Id.ToString(),
-                ChargeItem = new ChargeItem
-                {
-                    ItemId = booking.EventPackage.Id.ToString(),
-                    Description = $"DaysCount: {booking.DaysCount}, PersonCount: {booking.PersonCount}",
-                    ImageUrl = booking.EventPackage.ImageURL,
-                    Price = decimal.Parse(TotalPrice),
-                    Quantity = booking.PersonCount
-                }
-            });
+                Status.ExceptionMessage = ex.Message;
+            }
 
-            return View(ChargeRequest);
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
+
+            return View(returnData);
         }
 
         [AllowAll]
@@ -86,6 +97,18 @@ namespace StrokeForEgypt.API.Controllers
             {
                 Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
 
+                if (booking.TotalPrice == model.PaymentAmount)
+                {
+                    booking.Fk_BookingState = (int)BookingStateEnum.Success;
+                    _UnitOfWork.Booking.UpdateEntity(booking);
+
+                    _UnitOfWork.BookingStateHistory.CreateEntity(new BookingStateHistory
+                    {
+                        Fk_Booking = booking.Id,
+                        Fk_BookingState = booking.Fk_BookingState,
+                        CreatedBy = !string.IsNullOrEmpty(booking.LastModifiedBy) ? booking.LastModifiedBy : booking.CreatedBy,
+                    });
+                }
                 _UnitOfWork.BookingPayment.CreateEntity(new BookingPayment
                 {
                     Fk_Booking = booking.Id,

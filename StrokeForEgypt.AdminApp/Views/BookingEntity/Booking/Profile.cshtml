@@ -10,6 +10,7 @@
 
     var BookingMember = HttpContextAccessor.HttpContext.Request.Cookies["BookingMember"];
     var BookingStateHistory = HttpContextAccessor.HttpContext.Request.Cookies["BookingStateHistory"];
+    var BookingPayment = HttpContextAccessor.HttpContext.Request.Cookies["BookingPayment"];
 
 }
 
@@ -67,7 +68,15 @@
                         </a>
                     </li>
                 }
-       
+                @if (BookingPayment != null)
+                {
+                    <li class="nav-item">
+                        <a id="BookingPayment" class="nav-link @(returnItem == (int)BookingProfileItems.BookingPayment?"active":"")">
+                            @Html.DisplayNameFor(model => model.BookingPayments)
+                        </a>
+                    </li>
+                }
+
             </ul>
         </section>
     </div>
@@ -86,7 +95,10 @@
          else if ('@BookingStateHistory' != null && @returnItem == @((int)BookingProfileItems.BookingStateHistory)) {
              $("#d1").load("/BookingStateHistory/Index/?Fk_Booking=@Model.Id&ProfileLayOut=true");
          }
-       
+         else if ('@BookingPayment' != null && @returnItem == @((int)BookingProfileItems.BookingPayment)) {
+             $("#d1").load("/BookingPayment/Index/?Fk_Booking=@Model.Id&ProfileLayOut=true");
+         }
+
 
 
          $("#BookingMember").on('click', function () {
@@ -104,8 +116,15 @@
              $(this).addClass("active");
              $("#d1").load("/BookingStateHistory/Index/?Fk_Booking=@Model.Id&ProfileLayOut=true");
          });
-        
-       
+
+         $("#BookingPayment").on('click', function () {
+             $(".active").each(function () {
+                 $(this).removeClass("active");
+             });
+             $(this).addClass("active");
+             $("#d1").load("/BookingPayment/Index/?Fk_Booking=@Model.Id&ProfileLayOut=true");
+         });
+
      });
     </script>
 }

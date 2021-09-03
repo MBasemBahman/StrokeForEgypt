@@ -13,7 +13,7 @@ namespace StrokeForEgypt.Common
         private readonly string ScriptUrl = "https://www.atfawry.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
         private readonly string StylesheetUrl = "https://atfawry.fawrystaging.com/atfawry/plugin/assets/payments/css/fawrypay-payments.css";
 
-        private readonly string ReturnUrl = "http://strokeforegyptapi.azurewebsites.net/fawry/ChargeResponse";
+        private readonly string ReturnUrl = "https://strokeforegyptapi.azurewebsites.net/fawry/ChargeResponse";
 
         private readonly bool Production;
 
@@ -27,6 +27,7 @@ namespace StrokeForEgypt.Common
                 ScriptUrl = "https://atfawry.fawrystaging.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
                 ReturnUrl = "https://localhost:44373/fawry/ChargeResponse";
             }
+            ScriptUrl = "https://atfawry.fawrystaging.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
         }
 
         public ChargeRequest BuildChargeRequest(PayRequest model)

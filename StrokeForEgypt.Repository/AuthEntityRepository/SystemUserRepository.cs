@@ -44,29 +44,29 @@ namespace StrokeForEgypt.Repository.AuthEntityRepository
 
         public bool CheckAuthorization(int Fk_SystemRole, string ViewName, int Fk_AccessLevel)
         {
-            SystemRolePremission SystemUser = DBContext.SystemRolePremission.FirstOrDefault(a => a.Fk_SystemRole == Fk_SystemRole && a.SystemView.Name == ViewName);
+            SystemRolePremission premission = DBContext.SystemRolePremission.FirstOrDefault(a => a.Fk_SystemRole == Fk_SystemRole && a.SystemView.Name == ViewName);
 
-            if (SystemUser != null)
+            if (premission != null)
             {
-                if (SystemUser.Fk_AccessLevel == (int)AccessLevelEnum.FullAccess)
+                if (premission.Fk_AccessLevel == (int)AccessLevelEnum.FullAccess)
                 {
                     return true;
                 }
-                //else if (SystemUser.Fk_AccessLevel == (int)AccessLevelEnum.ControlAccess)
-                //{
-                //    if (Fk_AccessLevel == (int)AccessLevelEnum.ControlAccess
-                //        || Fk_AccessLevel == (int)AccessLevelEnum.ViewAccess)
-                //    {
-                //        return true;
-                //    }
-                //}
-                //else if (SystemUser.Fk_AccessLevel == (int)AccessLevelEnum.ViewAccess)
-                //{
-                //    if (Fk_AccessLevel == (int)AccessLevelEnum.ViewAccess)
-                //    {
-                //        return true;
-                //    }
-                //}
+                else if (premission.Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess)
+                {
+                    if (Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess
+                        || Fk_AccessLevel == (int)AccessLevelEnum.ReadAccess)
+                    {
+                        return true;
+                    }
+                }
+                else if (premission.Fk_AccessLevel == (int)AccessLevelEnum.ReadAccess)
+                {
+                    if (Fk_AccessLevel == (int)AccessLevelEnum.ReadAccess)
+                    {
+                        return true;
+                    }
+                }
             }
             return false;
         }

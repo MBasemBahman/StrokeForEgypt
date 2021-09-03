@@ -180,7 +180,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.AuthEntity
             SystemRoleViewModel Data = new SystemRoleViewModel()
             {
                 SystemRole = SystemRole,
-                SystemViews = _UnitOfWork.SystemView.GetAll(a => a.Id != (int)SystemViewEnum.Home).Result.ToDictionary(a => a.Id.ToString(), a => a.Name)
+                SystemViews = _UnitOfWork.SystemView.GetAll(a => a.Id != (int)SystemViewEnum.Home).Result.ToDictionary(a => a.Id.ToString(), a => a.DisplayName)
             };
 
             if (SystemRole.Id > 0 && FullAccessViews == null && ControlAccessViews == null && ViewAccessViews == null)

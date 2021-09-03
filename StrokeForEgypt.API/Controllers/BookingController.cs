@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StrokeForEgypt.API.Authorization;
+using StrokeForEgypt.API.Helpers;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
@@ -96,7 +97,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -173,7 +174,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -224,7 +225,7 @@ namespace StrokeForEgypt.API.Controllers
                     NextPageLink = (PagedData.HasNext) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber + 1), paging.PageSize }) : null
                 };
 
-                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PaginationMetaData).Replace(@"\u0026", "&"));
+                Response.Headers.Add("X-Pagination", StatusHandler<Booking>.GetPagination(PaginationMetaData));
 
                 Status = new Status(true);
             }
@@ -233,8 +234,8 @@ namespace StrokeForEgypt.API.Controllers
                 Status.ExceptionMessage = ex.Message;
             }
 
-            Status.ErrorMessage = EncodeManager.Base64Encode(Status.ErrorMessage);
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -282,7 +283,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -340,7 +341,7 @@ namespace StrokeForEgypt.API.Controllers
                         NextPageLink = (PagedData.HasNext) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber + 1), paging.PageSize }) : null
                     };
 
-                    Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PaginationMetaData).Replace(@"\u0026", "&"));
+                    Response.Headers.Add("X-Pagination", StatusHandler<BookingMember>.GetPagination(PaginationMetaData));
 
                     Status = new Status(true);
                 }
@@ -351,8 +352,8 @@ namespace StrokeForEgypt.API.Controllers
                 Status.ExceptionMessage = ex.Message;
             }
 
-            Status.ErrorMessage = EncodeManager.Base64Encode(Status.ErrorMessage);
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }

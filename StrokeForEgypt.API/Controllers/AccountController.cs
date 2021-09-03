@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StrokeForEgypt.API.Authorization;
+using StrokeForEgypt.API.Helpers;
 using StrokeForEgypt.API.Models.Accounts;
 using StrokeForEgypt.API.Services;
 using StrokeForEgypt.Common;
@@ -85,7 +86,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -170,7 +171,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -215,7 +216,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
         }
 
         /// <summary>
@@ -246,7 +247,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -316,7 +317,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -372,7 +373,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -413,7 +414,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -471,7 +472,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
         }
 
         /// <summary>
@@ -533,7 +534,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -578,7 +579,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
         }
 
         /// <summary>
@@ -614,7 +615,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
         }
 
         /// <summary>
@@ -658,7 +659,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
         }
@@ -699,7 +700,7 @@ namespace StrokeForEgypt.API.Controllers
                 }
             }
 
-            Response.Headers.Add("X-Status", JsonSerializer.Serialize(Status));
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
         }
 
         // helper methods

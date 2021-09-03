@@ -98,7 +98,8 @@ namespace StrokeForEgypt.Common
         public enum BookingProfileItems
         {
             BookingMember = 1,
-            BookingStateHistory = 2
+            BookingStateHistory = 2,
+            BookingPayment = 3
         }
 
     }

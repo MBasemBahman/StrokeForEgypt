@@ -16,7 +16,7 @@
     var News = HttpContextAccessor.HttpContext.Request.Cookies["News"];
     var Sponsor = HttpContextAccessor.HttpContext.Request.Cookies["Sponsor"];
     var SponsorType = HttpContextAccessor.HttpContext.Request.Cookies["SponsorType"];
-
+    var BookingPayment = HttpContextAccessor.HttpContext.Request.Cookies["BookingPayment"];
 
 }
 
@@ -58,6 +58,15 @@
                             <a class="nav-link" asp-action="Index" asp-controller="Booking">
                                 <i class="fas fa-check" aria-hidden="true"></i>
                                 <span>@EntityLocalizer.Get("Bookings")</span>
+                            </a>
+                        </li>
+                    }
+                    @if (BookingPayment != null)
+                    {
+                        <li>
+                            <a class="nav-link" asp-action="Index" asp-controller="BookingPayment">
+                                <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+                                <span>@EntityLocalizer.Get("Booking Payments")</span>
                             </a>
                         </li>
                     }

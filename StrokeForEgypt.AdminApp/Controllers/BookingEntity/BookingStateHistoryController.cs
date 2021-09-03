@@ -89,7 +89,5 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
 
             return View("~/Views/BookingEntity/BookingStateHistory/Details.cshtml", BookingStateHistory);
         }
-
-
     }
 }
