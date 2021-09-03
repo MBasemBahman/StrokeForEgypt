@@ -1,5 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,6 +21,8 @@ namespace StrokeForEgypt.Common
 
         private readonly string ReturnUrl = "https://strokeforegyptapi.azurewebsites.net/fawry/ChargeResponse";
 
+        private readonly string StatusUrl = "https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2";
+
         private readonly bool Production;
 
         public FawryManager(bool Production = true)
@@ -26,6 +34,7 @@ namespace StrokeForEgypt.Common
                 SecureKey = "6b1684246a2f44f682f24f039fc0d8e6";
                 ScriptUrl = "https://atfawry.fawrystaging.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
                 ReturnUrl = "https://localhost:44373/fawry/ChargeResponse";
+                StatusUrl = "https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2";
             }
             ScriptUrl = "https://atfawry.fawrystaging.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
         }
@@ -65,6 +74,35 @@ namespace StrokeForEgypt.Common
             return chargeRequest;
         }
 
+
+        public ChargeResponse GetPaymentStatus(string merchantRefNumber)
+        {
+            ChargeResponse chargeResponse = null;
+
+            try
+            {
+                string signature = ComputeStringToSha256Hash($"{MerchantCode}" +
+                                                             $"{merchantRefNumber}" +
+                                                             $"{SecureKey}");
+                var url = StatusUrl + $"?merchantCode={MerchantCode}&merchantRefNumber={merchantRefNumber}&signature={signature}";
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.Method = "GET";
+                var httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+                if (httpWebResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    Stream newStream = httpWebResponse.GetResponseStream();
+                    StreamReader sr = new(newStream);
+                    var result = sr.ReadToEnd();
+                    chargeResponse = JsonConvert.DeserializeObject<ChargeResponse>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return chargeResponse;
+        }
+
         public static string ComputeStringToSha256Hash(string plainText)
         {
             // Create a SHA256 hash from string   
@@ -80,6 +118,13 @@ namespace StrokeForEgypt.Common
             }
             return stringbuilder.ToString();
         }
+    }
+
+    public class fawrypay_request
+    {
+        public string merchantCode { get; set; }
+        public string merchantRefNumber { get; set; }
+        public string signature { get; set; }
     }
 
     public class PayRequest

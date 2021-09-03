@@ -63,7 +63,7 @@ namespace StrokeForEgypt.API.Controllers
                 _Mapper.Map(model, booking);
 
                 booking.Fk_Account = account.Id;
-                booking.Fk_BookingState = (int)BookingStateEnum.PendingOnPayment;
+                booking.Fk_BookingState = (int)BookingStateEnum.PendingOnMembersData;
                 booking.BookingStateHistories = new List<BookingStateHistory> { new BookingStateHistory
                 {
                     Fk_BookingState = booking.Fk_BookingState
@@ -151,6 +151,25 @@ namespace StrokeForEgypt.API.Controllers
                     "BookingMemberAttachments"
                 });
 
+                    Booking booking = await _UnitOfWork.Booking.GetByID(model.Fk_Booking);
+                    if (booking.Fk_BookingState == (int)BookingStateEnum.PendingOnMembersData &&
+                        _UnitOfWork.BookingMember.Count(a => a.Fk_Booking == model.Fk_Booking) == booking.PersonCount)
+                    {
+                        booking.Fk_BookingState = (int)BookingStateEnum.PendingOnPayment;
+                        booking.LastModifiedAt = DateTime.UtcNow;
+
+                        _UnitOfWork.Booking.UpdateEntity(booking);
+
+                        _UnitOfWork.BookingStateHistory.CreateEntity(new BookingStateHistory
+                        {
+                            Fk_Booking = booking.Id,
+                            Fk_BookingState = booking.Fk_BookingState,
+                            CreatedBy = !string.IsNullOrEmpty(booking.LastModifiedBy) ? booking.LastModifiedBy : booking.CreatedBy,
+                        });
+
+                        await _UnitOfWork.Save();
+                    }
+
                     _Mapper.Map(bookingMember, returnData);
 
                     returnData.BookingMemberAttachments = new List<BookingMemberAttachmentModel>();
@@ -234,7 +253,7 @@ namespace StrokeForEgypt.API.Controllers
                 Status.ExceptionMessage = ex.Message;
             }
 
-            
+
             Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
@@ -352,7 +371,7 @@ namespace StrokeForEgypt.API.Controllers
                 Status.ExceptionMessage = ex.Message;
             }
 
-            
+
             Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
 
             return returnData;
