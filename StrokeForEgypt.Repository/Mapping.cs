@@ -216,6 +216,7 @@ namespace StrokeForEgypt.Repository
 
             CreateMap<BookingCreateModel, Booking>();
 
+
             CreateMap<Booking, BookingModel>()
                 .ForMember(dest => dest.EventPackage, opt => opt.Ignore())
                 .ForMember(dest => dest.BookingState, opt => opt.Ignore())
@@ -232,6 +233,8 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
 
+            CreateMap<BookingMemberCreateModel, BookingMember>();
+
             CreateMap<BookingMember, BookingMember>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Booking, opt => opt.Ignore())
@@ -244,6 +247,12 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
 
+            CreateMap<BookingMember, BookingMemberModel>()
+                .ForMember(dest => dest.BookingMemberAttachments, opt => opt.Ignore())
+                .ForMember(dest => dest.BookingMemberActivities, opt => opt.Ignore());
+
+            CreateMap<BookingMemberAttachment, BookingMemberAttachmentModel>()
+                .ForMember(dest => dest.BookingMember, opt => opt.Ignore());
 
             CreateMap<BookingState, BookingState>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
