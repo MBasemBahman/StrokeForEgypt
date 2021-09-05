@@ -109,54 +109,112 @@ namespace StrokeForEgypt.API.Controllers
         {
             if (model.StatusCode == 200)
             {
-                if (_UnitOfWork.BookingPayment.Any(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
-                                                        a.MerchantRefNumber == model.MerchantRefNumber &&
-                                                        a.CustomerProfileId == model.CustomerProfileId))
+                if (model.PaymentMethod == "PayAtFawry")
                 {
-                    FawryManager fawryManager = new(Production);
-                    ChargeResponse paymentStatus = fawryManager.GetPaymentStatus(model.MerchantRefNumber);
-
-                    if (paymentStatus != null &&
-                        paymentStatus.OrderStatus == model.OrderStatus &&
-                        paymentStatus.PaymentAmount == model.PaymentAmount)
+                    if (_UnitOfWork.BookingPayment.Any(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
+                                                            a.MerchantRefNumber == model.MerchantRefNumber &&
+                                                            a.CustomerProfileId == model.CustomerProfileId))
                     {
-                        Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
+                        FawryManager fawryManager = new(Production);
+                        ChargeResponse paymentStatus = fawryManager.GetPaymentStatus(model.MerchantRefNumber);
 
-                        if (booking.TotalPrice == model.PaymentAmount &&
-                            booking.Fk_BookingState != (int)BookingStateEnum.Success &&
-                            model.OrderStatus == "PAID")
+                        if (paymentStatus != null &&
+                            paymentStatus.OrderStatus == model.OrderStatus &&
+                            paymentStatus.PaymentAmount == model.PaymentAmount)
                         {
-                            booking.Fk_BookingState = (int)BookingStateEnum.Success;
-                            _UnitOfWork.Booking.UpdateEntity(booking);
+                            BookingPayment bookingPayment = await _UnitOfWork.BookingPayment.GetFirst(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
+                                                               a.MerchantRefNumber == model.MerchantRefNumber &&
+                                                               a.CustomerProfileId == model.CustomerProfileId);
 
-                            _UnitOfWork.BookingStateHistory.CreateEntity(new BookingStateHistory
+                            bookingPayment.ReferenceNumber = model.ReferenceNumber;
+                            bookingPayment.OrderAmount = model.OrderAmount;
+                            bookingPayment.PaymentAmount = model.PaymentAmount;
+                            bookingPayment.FawryFees = model.FawryFees;
+                            bookingPayment.PaymentMethod = model.PaymentMethod;
+                            bookingPayment.OrderStatus = model.OrderStatus;
+                            bookingPayment.CustomerMobile = model.CustomerMobile;
+                            bookingPayment.PaymentTime = model.PaymentTime;
+                            bookingPayment.CustomerMail = model.CustomerMail;
+                            bookingPayment.StatusCode = model.StatusCode;
+                            bookingPayment.StatusDescription = model.StatusDescription;
+                            bookingPayment.Signature = model.Signature;
+                            bookingPayment.LastModifiedAt = DateTime.UtcNow;
+
+                            _UnitOfWork.BookingPayment.UpdateEntity(bookingPayment);
+                            await _UnitOfWork.Save();
+
+                            if (paymentStatus.OrderStatus == "PAID")
                             {
-                                Fk_Booking = booking.Id,
-                                Fk_BookingState = booking.Fk_BookingState,
-                                CreatedBy = !string.IsNullOrEmpty(booking.LastModifiedBy) ? booking.LastModifiedBy : booking.CreatedBy,
-                            });
+                                Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
+
+                                if (booking.TotalPrice == model.OrderAmount &&
+                                    booking.Fk_BookingState != (int)BookingStateEnum.Success)
+                                {
+                                    booking.Fk_BookingState = (int)BookingStateEnum.Success;
+                                    _UnitOfWork.Booking.UpdateEntity(booking);
+
+                                    _UnitOfWork.BookingStateHistory.CreateEntity(new BookingStateHistory
+                                    {
+                                        Fk_Booking = booking.Id,
+                                        Fk_BookingState = booking.Fk_BookingState,
+                                        CreatedBy = !string.IsNullOrEmpty(booking.LastModifiedBy) ? booking.LastModifiedBy : booking.CreatedBy,
+                                    });
+                                }
+                            }
                         }
+                    }
+                }
+                else if (model.PaymentMethod == "Card")
+                {
+                    if (_UnitOfWork.BookingPayment.Any(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
+                                                            a.MerchantRefNumber == model.MerchantRefNumber &&
+                                                            a.CustomerProfileId == model.CustomerProfileId))
+                    {
+                        FawryManager fawryManager = new(Production);
+                        ChargeResponse paymentStatus = fawryManager.GetPaymentStatus(model.MerchantRefNumber);
 
-                        BookingPayment bookingPayment = await _UnitOfWork.BookingPayment.GetFirst(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
-                                                           a.MerchantRefNumber == model.MerchantRefNumber &&
-                                                           a.CustomerProfileId == model.CustomerProfileId);
+                        if (paymentStatus != null &&
+                            paymentStatus.OrderStatus == model.OrderStatus &&
+                            paymentStatus.PaymentAmount == model.PaymentAmount)
+                        {
+                            Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
 
-                        bookingPayment.ReferenceNumber = model.ReferenceNumber;
-                        bookingPayment.OrderAmount = model.OrderAmount;
-                        bookingPayment.PaymentAmount = model.PaymentAmount;
-                        bookingPayment.FawryFees = model.FawryFees;
-                        bookingPayment.PaymentMethod = model.PaymentMethod;
-                        bookingPayment.OrderStatus = model.OrderStatus;
-                        bookingPayment.CustomerMobile = model.CustomerMobile;
-                        bookingPayment.PaymentTime = model.PaymentTime;
-                        bookingPayment.CustomerMail = model.CustomerMail;
-                        bookingPayment.StatusCode = model.StatusCode;
-                        bookingPayment.StatusDescription = model.StatusDescription;
-                        bookingPayment.Signature = model.Signature;
-                        bookingPayment.LastModifiedAt = DateTime.UtcNow;
+                            if (booking.TotalPrice == model.PaymentAmount &&
+                                booking.Fk_BookingState != (int)BookingStateEnum.Success &&
+                                model.OrderStatus == "PAID")
+                            {
+                                booking.Fk_BookingState = (int)BookingStateEnum.Success;
+                                _UnitOfWork.Booking.UpdateEntity(booking);
 
-                        _UnitOfWork.BookingPayment.UpdateEntity(bookingPayment);
-                        await _UnitOfWork.Save();
+                                _UnitOfWork.BookingStateHistory.CreateEntity(new BookingStateHistory
+                                {
+                                    Fk_Booking = booking.Id,
+                                    Fk_BookingState = booking.Fk_BookingState,
+                                    CreatedBy = !string.IsNullOrEmpty(booking.LastModifiedBy) ? booking.LastModifiedBy : booking.CreatedBy,
+                                });
+                            }
+
+                            BookingPayment bookingPayment = await _UnitOfWork.BookingPayment.GetFirst(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
+                                                               a.MerchantRefNumber == model.MerchantRefNumber &&
+                                                               a.CustomerProfileId == model.CustomerProfileId);
+
+                            bookingPayment.ReferenceNumber = model.ReferenceNumber;
+                            bookingPayment.OrderAmount = model.OrderAmount;
+                            bookingPayment.PaymentAmount = model.PaymentAmount;
+                            bookingPayment.FawryFees = model.FawryFees;
+                            bookingPayment.PaymentMethod = model.PaymentMethod;
+                            bookingPayment.OrderStatus = model.OrderStatus;
+                            bookingPayment.CustomerMobile = model.CustomerMobile;
+                            bookingPayment.PaymentTime = model.PaymentTime;
+                            bookingPayment.CustomerMail = model.CustomerMail;
+                            bookingPayment.StatusCode = model.StatusCode;
+                            bookingPayment.StatusDescription = model.StatusDescription;
+                            bookingPayment.Signature = model.Signature;
+                            bookingPayment.LastModifiedAt = DateTime.UtcNow;
+
+                            _UnitOfWork.BookingPayment.UpdateEntity(bookingPayment);
+                            await _UnitOfWork.Save();
+                        }
                     }
                 }
             }

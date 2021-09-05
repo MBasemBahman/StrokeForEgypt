@@ -177,7 +177,7 @@ namespace StrokeForEgypt.API.Controllers
                     returnData.BookingMemberActivities = new List<EventActivityModel>();
 
                     List<EventActivity> BookingMemberActivities = await _UnitOfWork.EventActivity.GetAll(a => a.BookingMemberActivities.Any(b => b.Fk_BookingMember == bookingMember.Id));
-                    _Mapper.Map(BookingMemberActivities, returnData.BookingMemberAttachments);
+                    _Mapper.Map(BookingMemberActivities, returnData.BookingMemberActivities);
 
                     Status = new Status(true);
                 }

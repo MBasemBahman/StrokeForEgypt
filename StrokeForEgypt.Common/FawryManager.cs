@@ -46,6 +46,8 @@ namespace StrokeForEgypt.Common
 
                 StatusUrl = "https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2";
             }
+            //ReturnUrl = "https://localhost:44373/fawry/ChargeResponse";
+
         }
 
         public ChargeRequest BuildChargeRequest(PayRequest model)
@@ -59,7 +61,7 @@ namespace StrokeForEgypt.Common
                 CustomerMobile = model.CustomerMobile,
                 CustomerEmail = model.CustomerEmail,
                 CustomerName = model.CustomerName,
-                PaymentExpiry = DateTime.UtcNow.AddHours(1).Millisecond.ToString(),
+                PaymentExpiry = DateTime.UtcNow.AddDays(7).Millisecond.ToString(),
                 CustomerProfileId = model.CustomerProfileId,
                 ReturnUrl = ReturnUrl,
                 ChargeItem = new ChargeItem

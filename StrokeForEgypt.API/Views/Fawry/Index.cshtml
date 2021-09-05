@@ -15,7 +15,6 @@
 <body>
 
     <script src="@Model.ScriptUrl"></script>
-    <script src="UAT.js"></script>
 
     <button type="image" onclick="checkout()" alt="pay-using-fawry" id="fawry-payment-btn" style="display: none;"></button>
     <div id="fawry-UAT"></div>
@@ -56,7 +55,7 @@
 					}
 				],
 
-				paymentMethod: 'CARD',
+				paymentMethod: '',
 				returnUrl: '@Model.ReturnUrl',
 				signature: '@Model.Signature'
 
