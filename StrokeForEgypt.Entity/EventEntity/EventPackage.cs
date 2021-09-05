@@ -30,10 +30,10 @@ namespace StrokeForEgypt.Entity.EventEntity
         [DisplayName("Person Count")]
         public int PersonCount { get; set; } = 1;
 
-        [DisplayName("Price")]
+        [DisplayName("Registration Fees")]
         public double Price { get; set; }
 
-        [DisplayName("Extra Fees")]
+        [DisplayName("Room Rate")]
         public double ExtraFees { get; set; }
 
         [DisplayName("Bookings")]
