@@ -122,27 +122,6 @@ namespace StrokeForEgypt.API.Controllers
                             paymentStatus.OrderStatus == model.OrderStatus &&
                             paymentStatus.PaymentAmount == model.PaymentAmount)
                         {
-                            BookingPayment bookingPayment = await _UnitOfWork.BookingPayment.GetFirst(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
-                                                               a.MerchantRefNumber == model.MerchantRefNumber &&
-                                                               a.CustomerProfileId == model.CustomerProfileId);
-
-                            bookingPayment.ReferenceNumber = model.ReferenceNumber;
-                            bookingPayment.OrderAmount = model.OrderAmount;
-                            bookingPayment.PaymentAmount = model.PaymentAmount;
-                            bookingPayment.FawryFees = model.FawryFees;
-                            bookingPayment.PaymentMethod = model.PaymentMethod;
-                            bookingPayment.OrderStatus = model.OrderStatus;
-                            bookingPayment.CustomerMobile = model.CustomerMobile;
-                            bookingPayment.PaymentTime = model.PaymentTime;
-                            bookingPayment.CustomerMail = model.CustomerMail;
-                            bookingPayment.StatusCode = model.StatusCode;
-                            bookingPayment.StatusDescription = model.StatusDescription;
-                            bookingPayment.Signature = model.Signature;
-                            bookingPayment.LastModifiedAt = DateTime.UtcNow;
-
-                            _UnitOfWork.BookingPayment.UpdateEntity(bookingPayment);
-                            await _UnitOfWork.Save();
-
                             if (paymentStatus.OrderStatus == "PAID")
                             {
                                 Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
@@ -161,6 +140,30 @@ namespace StrokeForEgypt.API.Controllers
                                     });
                                 }
                             }
+
+                            BookingPayment bookingPayment = new()
+                            {
+                                Fk_Booking = int.Parse(model.MerchantRefNumber),
+                                MerchantRefNumber = model.MerchantRefNumber,
+                                CustomerProfileId = model.CustomerProfileId,
+                                ReferenceNumber = model.ReferenceNumber,
+                                OrderAmount = model.OrderAmount,
+                                PaymentAmount = model.PaymentAmount,
+                                FawryFees = model.FawryFees,
+                                PaymentMethod = model.PaymentMethod,
+                                OrderStatus = model.OrderStatus,
+                                CustomerMobile = model.CustomerMobile,
+                                PaymentTime = model.PaymentTime,
+                                CustomerMail = model.CustomerMail,
+                                StatusCode = model.StatusCode,
+                                StatusDescription = model.StatusDescription,
+                                Signature = model.Signature,
+                                Type = model.Type,
+                            };
+
+                            _UnitOfWork.BookingPayment.CreateEntity(bookingPayment);
+                            await _UnitOfWork.Save();
+                            
                         }
                     }
                 }
@@ -194,32 +197,38 @@ namespace StrokeForEgypt.API.Controllers
                                 });
                             }
 
-                            BookingPayment bookingPayment = await _UnitOfWork.BookingPayment.GetFirst(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
-                                                               a.MerchantRefNumber == model.MerchantRefNumber &&
-                                                               a.CustomerProfileId == model.CustomerProfileId);
+                            BookingPayment bookingPayment = new()
+                            {
+                                Fk_Booking = int.Parse(model.MerchantRefNumber),
+                                MerchantRefNumber = model.MerchantRefNumber,
+                                CustomerProfileId = model.CustomerProfileId,
+                                ReferenceNumber = model.ReferenceNumber,
+                                OrderAmount = model.OrderAmount,
+                                PaymentAmount = model.PaymentAmount,
+                                FawryFees = model.FawryFees,
+                                PaymentMethod = model.PaymentMethod,
+                                OrderStatus = model.OrderStatus,
+                                CustomerMobile = model.CustomerMobile,
+                                PaymentTime = model.PaymentTime,
+                                CustomerMail = model.CustomerMail,
+                                StatusCode = model.StatusCode,
+                                StatusDescription = model.StatusDescription,
+                                Signature = model.Signature,
+                                Type = model.Type,
+                            };
 
-                            bookingPayment.ReferenceNumber = model.ReferenceNumber;
-                            bookingPayment.OrderAmount = model.OrderAmount;
-                            bookingPayment.PaymentAmount = model.PaymentAmount;
-                            bookingPayment.FawryFees = model.FawryFees;
-                            bookingPayment.PaymentMethod = model.PaymentMethod;
-                            bookingPayment.OrderStatus = model.OrderStatus;
-                            bookingPayment.CustomerMobile = model.CustomerMobile;
-                            bookingPayment.PaymentTime = model.PaymentTime;
-                            bookingPayment.CustomerMail = model.CustomerMail;
-                            bookingPayment.StatusCode = model.StatusCode;
-                            bookingPayment.StatusDescription = model.StatusDescription;
-                            bookingPayment.Signature = model.Signature;
-                            bookingPayment.LastModifiedAt = DateTime.UtcNow;
-
-                            _UnitOfWork.BookingPayment.UpdateEntity(bookingPayment);
+                            _UnitOfWork.BookingPayment.CreateEntity(bookingPayment);
                             await _UnitOfWork.Save();
                         }
                     }
                 }
             }
 
-            return RedirectToAction(nameof(PaymentStatus), new { model.StatusCode, model.StatusDescription });
+            return RedirectToAction(nameof(PaymentStatus), new
+            {
+                model.StatusCode,
+                model.StatusDescription
+            });
         }
 
         [AllowAll]

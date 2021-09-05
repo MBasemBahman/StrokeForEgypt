@@ -61,7 +61,7 @@ namespace StrokeForEgypt.Common
                 CustomerMobile = model.CustomerMobile,
                 CustomerEmail = model.CustomerEmail,
                 CustomerName = model.CustomerName,
-                PaymentExpiry = DateTime.UtcNow.AddDays(7).Millisecond.ToString(),
+                PaymentExpiry = DateTimeOffset.UtcNow.AddDays(5).ToUnixTimeMilliseconds().ToString(),
                 CustomerProfileId = model.CustomerProfileId,
                 ReturnUrl = ReturnUrl,
                 ChargeItem = new ChargeItem

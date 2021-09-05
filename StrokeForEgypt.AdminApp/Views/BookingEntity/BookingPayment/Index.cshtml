@@ -38,15 +38,17 @@
                         <tr>
                             <th>@Html.DisplayNameFor(model => BookingPayment.Id)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.Type)</th>
+                            <th>@Html.DisplayNameFor(model => BookingPayment.ReferenceNumber)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.OrderAmount)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.PaymentAmount)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.FawryFees)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.PaymentMethod)</th>
+                            <th>@Html.DisplayNameFor(model => BookingPayment.OrderStatus)</th>
+                            <th>@Html.DisplayNameFor(model => BookingPayment.PaymentTime)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.CustomerMobile)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.CustomerMail)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.StatusCode)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.StatusDescription)</th>
-                            <th>@Html.DisplayNameFor(model => BookingPayment.CreatedBy)</th>
                             <th>@Html.DisplayNameFor(model => BookingPayment.CreatedAt)</th>
                             <th>
 
@@ -104,15 +106,17 @@
                 columns: [
                     { data: "id" },
                     { data: "type" },
+                    { data: "referenceNumber" },
                     { data: "orderAmount" },
                     { data: "paymentAmount" },
                     { data: "fawryFees" },
                     { data: "paymentMethod" },
+                    { data: "orderStatus" },
+                    { data: "paymentTime" },
                     { data: "customerMobile" },
                     { data: "customerMail" },
                     { data: "statusCode" },
                     { data: "statusDescription" },
-                    { data: "createdBy" },
                     {
                         data: "createdAt",
                         render: function (data, type, row) {
