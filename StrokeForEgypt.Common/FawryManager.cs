@@ -32,7 +32,7 @@ namespace StrokeForEgypt.Common
 
                 ReturnUrl = "https://strokeforegyptapi.azurewebsites.net/fawry/ChargeResponse";
 
-                StatusUrl = "https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2";
+                StatusUrl = "https://www.atfawry.com/ECommerceWeb/Fawry/payments/status/v2";
             }
             else
             {

@@ -183,7 +183,11 @@ namespace StrokeForEgypt.API.Controllers
                     _Mapper.Map(Country, countryModel);
 
                     countryModel.Cities = new List<CityModel>();
-                    _Mapper.Map(Country.Cities.OrderBy(a => a.Order).ToList(), countryModel.Cities);
+                    var Cities = Country.Cities
+                                        .OrderBy(a => a.Order)
+                                        .ThenBy(a => a.Name)
+                                        .ToList();
+                    _Mapper.Map(Cities, countryModel.Cities);
 
                     returnData.Add(countryModel);
                 }
