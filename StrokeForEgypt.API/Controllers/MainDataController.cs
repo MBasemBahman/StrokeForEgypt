@@ -10,6 +10,7 @@ using StrokeForEgypt.Service;
 using StrokeForEgypt.Service.MainDataEntity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace StrokeForEgypt.API.Controllers
@@ -170,13 +171,22 @@ namespace StrokeForEgypt.API.Controllers
             try
             {
                 List<Country> Data = await _UnitOfWork.Country.GetAll(a => a.IsActive &&
-                                                                           (string.IsNullOrEmpty(Name) || a.Name.ToLower().Trim() == Name.ToLower().Trim()));
+                                                                           (string.IsNullOrEmpty(Name) || a.Name.ToLower().Trim() == Name.ToLower().Trim()), new List<string> { "Cities" });
 
                 Data = OrderBy<Country>.OrderData(Data, paging.OrderBy);
 
                 PagedList<Country> PagedData = PagedList<Country>.Create(Data, paging.PageNumber, paging.PageSize);
 
-                _Mapper.Map(PagedData, returnData);
+                foreach (Country Country in PagedData)
+                {
+                    CountryModel countryModel = new();
+                    _Mapper.Map(Country, countryModel);
+
+                    countryModel.Cities = new List<CityModel>();
+                    _Mapper.Map(Country.Cities.OrderBy(a => a.Order).ToList(), countryModel.Cities);
+
+                    returnData.Add(countryModel);
+                }
 
                 PaginationMetaData<Country> PaginationMetaData = new(PagedData)
                 {

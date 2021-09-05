@@ -52,7 +52,8 @@ namespace StrokeForEgypt.AdminApp.Controllers.EventEntity
             if (!string.IsNullOrEmpty(searchBy))
             {
                 result = result.Where(a => a.Title.ToLower().Contains(searchBy.ToLower())
-                                        || a.OriginalPrice.ToString().ToLower().Contains(searchBy.ToLower())
+                                        || a.PersonCount.ToString().ToLower().Contains(searchBy.ToLower())
+                                        || a.StayHotel.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.Price.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.ExtraFees.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.IsActive.ToString().ToLower().Contains(searchBy.ToLower())

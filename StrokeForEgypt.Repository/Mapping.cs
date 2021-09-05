@@ -78,7 +78,8 @@ namespace StrokeForEgypt.Repository
 
             CreateMap<EventGallery, EventGalleryModel>();
 
-            CreateMap<EventPackage, EventPackageModel>();
+            CreateMap<EventPackage, EventPackageModel>()
+                .ForMember(dest => dest.Event, opt => opt.Ignore());
 
             CreateMap<Event, Event>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
@@ -129,12 +130,12 @@ namespace StrokeForEgypt.Repository
 
             CreateMap<City, CityModel>();
 
-            CreateMap<Country, CountryModel>();
+            CreateMap<Country, CountryModel>()
+                .ForMember(dest => dest.Cities, opt => opt.Ignore());
 
             CreateMap<Gallery, GalleryModel>();
 
             CreateMap<Gender, GenderModel>();
-
 
             CreateMap<AppAbout, AppAbout>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())

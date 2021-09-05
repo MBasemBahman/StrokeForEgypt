@@ -24,6 +24,7 @@ namespace StrokeForEgypt.API.Controllers
         private readonly IMapper _Mapper;
         private readonly EntityLocalizationService _Localizer;
         private readonly IAccountService _AccountService;
+        private readonly bool Production = true;
 
         public FawryController(
             BaseDBContext dataContext,
@@ -60,7 +61,7 @@ namespace StrokeForEgypt.API.Controllers
 
                 string TotalPrice = string.Format("{0:N2}", Convert.ToDecimal(booking.TotalPrice));
 
-                FawryManager fawryManager = new(true);
+                FawryManager fawryManager = new(Production);
                 returnData = fawryManager.BuildChargeRequest(new PayRequest
                 {
                     CustomerProfileId = account.Id.ToString(),
@@ -112,7 +113,7 @@ namespace StrokeForEgypt.API.Controllers
                                                         a.MerchantRefNumber == model.MerchantRefNumber &&
                                                         a.CustomerProfileId == model.CustomerProfileId))
                 {
-                    FawryManager fawryManager = new(true);
+                    FawryManager fawryManager = new(Production);
                     ChargeResponse paymentStatus = fawryManager.GetPaymentStatus(model.MerchantRefNumber);
 
                     if (paymentStatus != null &&

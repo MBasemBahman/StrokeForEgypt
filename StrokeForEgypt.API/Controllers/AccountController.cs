@@ -633,6 +633,7 @@ namespace StrokeForEgypt.API.Controllers
             {
                 string token = model.Token ?? Request.Cookies["refreshToken"];
                 token = WebUtility.UrlDecode(token);
+                token = token.Replace(" ", "+");
                 if (!string.IsNullOrEmpty(token))
                 {
                     AuthenticateResponse response = _AccountService.RefreshToken(token, IpAddress());

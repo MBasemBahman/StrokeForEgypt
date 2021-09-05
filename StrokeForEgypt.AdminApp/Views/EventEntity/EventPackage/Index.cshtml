@@ -29,7 +29,7 @@
 
                 @if (Model.Fk_Event > 0 && (Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess))
                 {
-                    <a asp-action="CreateOrEdit" asp-route-Fk_Event="@Model.Fk_Event"  class="btn btn-outline-primary a-btn-slide-text mb-4">
+                    <a asp-action="CreateOrEdit" asp-route-Fk_Event="@Model.Fk_Event" class="btn btn-outline-primary a-btn-slide-text mb-4">
                         <i class="fas fa-plus-circle"></i>
                         <span><strong>@CommonLocalizer.Get("Create")</strong></span>
                     </a>
@@ -39,8 +39,9 @@
                         <tr>
                             <th>@Html.DisplayNameFor(model => EventPackage.Id)</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.Title)</th>
-                            <th>@Html.DisplayNameFor(model => EventPackage.OriginalPrice)</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.Price)</th>
+                            <th>@Html.DisplayNameFor(model => EventPackage.StayHotel)</th>
+                            <th>@Html.DisplayNameFor(model => EventPackage.PersonCount)</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.ExtraFees)</th>
                             <th>@EntityLocalizer.Get("Image")</th>
                             <th>@Html.DisplayNameFor(model => EventPackage.Order)</th>
@@ -78,7 +79,7 @@
     @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
     @{await Html.RenderPartialAsync("PartialView/_TableScriptsPartial");}
 
-<script>
+    <script>
         $(document).ready(function () {
             var $table = $('#custom-tabletools').DataTable({
                 // Ajax Filter
@@ -97,8 +98,9 @@
                 columns: [
                     { data: "id" },
                     { data: "title" },
-                    { data:"originalPrice"},
                     { data: "price" },
+                    { data: "stayHotel" },
+                    { data: "personCount" },
                     { data: "extraFees" },
                      {
                           data: "imageURL",
@@ -144,5 +146,5 @@
                 $table.draw();
             });
     });
-</script>
+    </script>
 }

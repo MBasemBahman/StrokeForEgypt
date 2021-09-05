@@ -104,7 +104,7 @@
             Get: Get Event
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventPackages(StrokeForEgypt.Service.Paging,System.Int32)">
+        <member name="M:StrokeForEgypt.API.Controllers.EventController.GetEventPackages(StrokeForEgypt.Service.Paging,System.Int32,System.Nullable{System.Boolean})">
             <summary>
             Get: Get Event Packages
             </summary>

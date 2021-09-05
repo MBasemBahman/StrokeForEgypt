@@ -106,38 +106,46 @@ namespace StrokeForEgypt.API.Controllers
                 if (_UnitOfWork.Event.Any(a => a.IsActive && a.Id == Id))
                 {
                     Event Data = _DBContext.Event
-                                           .Include(a => a.EventAgendas.Where(a => a.IsActive))
-                                           .ThenInclude(a => a.EventAgendaGalleries.Where(a => a.IsActive))
-                                           .Include(a => a.EventPackages.Where(a => a.IsActive))
-                                           .Include(a => a.EventGalleries.Where(a => a.IsActive))
-                                           .Include(a => a.EventActivities.Where(a => a.IsActive))
+                                           //.Include(a => a.EventAgendas.Where(a => a.IsActive))
+                                           //.ThenInclude(a => a.EventAgendaGalleries.Where(a => a.IsActive))
+                                           //.Include(a => a.EventPackages.Where(a => a.IsActive))
+                                           //.Include(a => a.EventGalleries.Where(a => a.IsActive))
+                                           //.Include(a => a.EventActivities.Where(a => a.IsActive))
                                            .Single(a => a.Id == Id);
 
                     _Mapper.Map(Data, returnData);
 
-                    returnData.EventAgendas = new List<EventAgendaModel>();
-                    if (Data.EventAgendas.Any())
+                    if (_UnitOfWork.EventPackage.Any(a => a.Fk_Event == Id && a.StayHotel))
                     {
-                        foreach (EventAgenda EventAgenda in Data.EventAgendas)
-                        {
-                            EventAgendaModel eventAgendaModel = new();
-                            _Mapper.Map(EventAgenda, eventAgendaModel);
+                        returnData.MinDays = 3;
+                        returnData.MaxDays = 5;
 
-                            eventAgendaModel.EventAgendaGalleries = new List<EventAgendaGalleryModel>();
-                            _Mapper.Map(EventAgenda.EventAgendaGalleries, eventAgendaModel.EventAgendaGalleries);
-
-                            returnData.EventAgendas.Add(eventAgendaModel);
-                        }
+                        returnData.HaveStayHotel = true;
                     }
 
-                    returnData.EventPackages = new List<EventPackageModel>();
-                    _Mapper.Map(Data.EventPackages, returnData.EventPackages);
+                    //returnData.EventAgendas = new List<EventAgendaModel>();
+                    //if (Data.EventAgendas.Any())
+                    //{
+                    //    foreach (EventAgenda EventAgenda in Data.EventAgendas)
+                    //    {
+                    //        EventAgendaModel eventAgendaModel = new();
+                    //        _Mapper.Map(EventAgenda, eventAgendaModel);
 
-                    returnData.EventGalleries = new List<EventGalleryModel>();
-                    _Mapper.Map(Data.EventGalleries, returnData.EventGalleries);
+                    //        eventAgendaModel.EventAgendaGalleries = new List<EventAgendaGalleryModel>();
+                    //        _Mapper.Map(EventAgenda.EventAgendaGalleries, eventAgendaModel.EventAgendaGalleries);
 
-                    returnData.EventActivities = new List<EventActivityModel>();
-                    _Mapper.Map(Data.EventActivities, returnData.EventActivities);
+                    //        returnData.EventAgendas.Add(eventAgendaModel);
+                    //    }
+                    //}
+
+                    //returnData.EventPackages = new List<EventPackageModel>();
+                    //_Mapper.Map(Data.EventPackages, returnData.EventPackages);
+
+                    //returnData.EventGalleries = new List<EventGalleryModel>();
+                    //_Mapper.Map(Data.EventGalleries, returnData.EventGalleries);
+
+                    //returnData.EventActivities = new List<EventActivityModel>();
+                    //_Mapper.Map(Data.EventActivities, returnData.EventActivities);
 
                     Status = new Status(true);
                 }
@@ -160,7 +168,8 @@ namespace StrokeForEgypt.API.Controllers
         [Route(nameof(GetEventPackages))]
         public async Task<List<EventPackageModel>> GetEventPackages(
             [FromQuery] Paging paging,
-            [FromQuery] int Id)
+            [FromQuery] int Id,
+            [FromQuery] bool? StayHotel)
         {
             string ActionName = nameof(GetEventPackages);
             List<EventPackageModel> returnData = new();
@@ -169,7 +178,8 @@ namespace StrokeForEgypt.API.Controllers
             try
             {
                 List<EventPackage> Data = await _UnitOfWork.EventPackage.GetAll(a => a.IsActive &&
-                                                                                    a.Fk_Event == Id);
+                                                                                    a.Fk_Event == Id &&
+                                                                                    (StayHotel == null || a.StayHotel == StayHotel));
 
                 Data = OrderBy<EventPackage>.OrderData(Data, paging.OrderBy);
 
@@ -198,8 +208,6 @@ namespace StrokeForEgypt.API.Controllers
             return returnData;
         }
 
-
-
         /// <summary>
         /// Get: Get Event Activities
         /// </summary>
@@ -217,8 +225,8 @@ namespace StrokeForEgypt.API.Controllers
             try
             {
                 List<EventActivity> Data = await _UnitOfWork.EventActivity.GetAll(a => a.IsActive &&
-                                                                                       (Id == 0 && a.Fk_Event == Id) &&
-                                                                                       (Fk_Booking == 0 || a.BookingMemberActivities.Any(a => a.BookingMember.Fk_Booking == Fk_Booking)));
+                                                                                       (Id == 0 || a.Fk_Event == Id) &&
+                                                                                       (Fk_Booking == 0 || a.Event.EventPackages.Any(b => b.Bookings.Any(c => c.Id == Fk_Booking))));
 
                 Data = OrderBy<EventActivity>.OrderData(Data, paging.OrderBy);
 

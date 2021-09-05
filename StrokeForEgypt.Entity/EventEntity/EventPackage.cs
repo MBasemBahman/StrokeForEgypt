@@ -24,8 +24,11 @@ namespace StrokeForEgypt.Entity.EventEntity
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
-        [DisplayName("OriginalPrice")]
-        public double OriginalPrice { get; set; }
+        [DisplayName("Stay in Hotel")]
+        public bool StayHotel { get; set; } = true;
+
+        [DisplayName("Person Count")]
+        public int PersonCount { get; set; } = 1;
 
         [DisplayName("Price")]
         public double Price { get; set; }

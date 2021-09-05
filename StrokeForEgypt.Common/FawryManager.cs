@@ -10,30 +10,42 @@ namespace StrokeForEgypt.Common
 {
     public class FawryManager
     {
-        private readonly string MerchantCode = "1tSa6uxz2nRo3lV+rfO2qg==";
-        private readonly string SecureKey = "6b1684246a2f44f682f24f039fc0d8e6";
+        private readonly string MerchantCode;
+        private readonly string SecureKey;
 
-        private readonly string ScriptUrl = "https://www.atfawry.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
-        private readonly string StylesheetUrl = "https://atfawry.fawrystaging.com/atfawry/plugin/assets/payments/css/fawrypay-payments.css";
+        private readonly string ScriptUrl;
+        private readonly string StylesheetUrl;
 
-        private readonly string ReturnUrl = "https://strokeforegyptapi.azurewebsites.net/fawry/ChargeResponse";
+        private readonly string ReturnUrl;
 
-        private readonly string StatusUrl = "https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2";
-
-        private readonly bool Production;
+        private readonly string StatusUrl;
 
         public FawryManager(bool Production = true)
         {
-            this.Production = Production;
-            if (!Production)
+            if (Production)
+            {
+                MerchantCode = "/PEnYvx9uDal787RKK+LMw==";
+                SecureKey = "e6155f46e5ae4f4c8eb0c9423224c526";
+
+                ScriptUrl = "https://www.atfawry.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
+                StylesheetUrl = "https://www.atfawry.com/atfawry/plugin/assets/payments/css/fawrypay-payments.css";
+
+                ReturnUrl = "https://strokeforegyptapi.azurewebsites.net/fawry/ChargeResponse";
+
+                StatusUrl = "https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2";
+            }
+            else
             {
                 MerchantCode = "1tSa6uxz2nRo3lV+rfO2qg==";
                 SecureKey = "6b1684246a2f44f682f24f039fc0d8e6";
+
                 ScriptUrl = "https://atfawry.fawrystaging.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
+                StylesheetUrl = "https://www.atfawry.com/atfawry/plugin/assets/payments/css/fawrypay-payments.css";
+
                 ReturnUrl = "https://localhost:44373/fawry/ChargeResponse";
+
                 StatusUrl = "https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2";
             }
-            ScriptUrl = "https://atfawry.fawrystaging.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
         }
 
         public ChargeRequest BuildChargeRequest(PayRequest model)

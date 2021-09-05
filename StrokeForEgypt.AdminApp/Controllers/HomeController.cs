@@ -2,13 +2,11 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using StrokeForEgypt.AdminApp.Models;
-using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Repository;
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Threading.Tasks;
 
 namespace StrokeForEgypt.AdminApp.Controllers
 {

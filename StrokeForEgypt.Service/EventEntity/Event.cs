@@ -55,6 +55,12 @@ namespace StrokeForEgypt.Service.EventEntity
         [DataType(DataType.MultilineText)]
         public string TermsConditions { get; set; }
 
+        public bool HaveStayHotel { get; set; } = false;
+
+        public int MinDays { get; set; } = 0;
+
+        public int MaxDays { get; set; } = 0;
+
         [DisplayName("Event Agendas")]
         public ICollection<EventAgendaModel> EventAgendas { get; set; }
 

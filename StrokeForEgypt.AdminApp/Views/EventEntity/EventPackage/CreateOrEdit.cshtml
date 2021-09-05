@@ -32,21 +32,29 @@
                     <div class="form-group row">
                         <label asp-for="Notes" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-10">
-                            <textarea rows="5" asp-for="Notes" class="form-control summernote" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'></textarea>
+                            <textarea rows="2" asp-for="Notes" class="form-control"></textarea>
                             <span asp-validation-for="Notes" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label asp-for="OriginalPrice" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <input asp-for="OriginalPrice" class="form-control" />
-                            <span asp-validation-for="OriginalPrice" class="text-danger"></span>
-                        </div>
                         <label asp-for="Price" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
                             <input asp-for="Price" class="form-control" />
                             <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="PersonCount" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="PersonCount" class="form-control" />
+                            <span asp-validation-for="PersonCount" class="text-danger"></span>
+                        </div>
+                        <label asp-for="StayHotel" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="StayHotel" class="form-control" />
+                            <span asp-validation-for="StayHotel" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -59,18 +67,18 @@
                     </div>
                     @{await Html.RenderPartialAsync("PartialComponent/ImageUpload", new ImageViewModel { LabelName = EntityLocalizer.Get("Image"), OldImageURL = Model.ImageURL });}
 
-                <div class="form-group row">
-                    <label asp-for="Order" class="col-sm-2 control-label  pt-2"></label>
-                    <div class="col-sm-4">
-                        <input asp-for="Order" class="form-control">
-                        <span asp-validation-for="Order" class="text-danger"></span>
+                    <div class="form-group row">
+                        <label asp-for="Order" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="Order" class="form-control">
+                            <span asp-validation-for="Order" class="text-danger"></span>
+                        </div>
+                        <label asp-for="IsActive" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="IsActive" class="form-control">
+                            <span asp-validation-for="IsActive" class="text-danger"></span>
+                        </div>
                     </div>
-                    <label asp-for="IsActive" class="col-sm-2 control-label  pt-2"></label>
-                    <div class="col-sm-4">
-                        <input asp-for="IsActive" class="form-control">
-                        <span asp-validation-for="IsActive" class="text-danger"></span>
-                    </div>
-                </div>
 
                 </div>
                 <footer class="card-footer text-left">

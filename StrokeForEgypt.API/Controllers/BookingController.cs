@@ -215,10 +215,12 @@ namespace StrokeForEgypt.API.Controllers
                 List<Booking> Data = await _UnitOfWork.Booking.GetAll(a => a.IsActive && a.Fk_Account == account.Id, new List<string>
                 {
                     "BookingState",
-                    "EventPackage"
+                    "EventPackage",
                 });
 
                 Data = OrderBy<Booking>.OrderData(Data, paging.OrderBy);
+
+                Data = Data.OrderByDescending(a => a.LastModifiedAt).ToList();
 
                 PagedList<Booking> PagedData = PagedList<Booking>.Create(Data, paging.PageNumber, paging.PageSize);
 
@@ -232,6 +234,10 @@ namespace StrokeForEgypt.API.Controllers
 
                     bookingModel.EventPackage = new EventPackageModel();
                     _Mapper.Map(booking.EventPackage, bookingModel.EventPackage);
+
+                    bookingModel.EventPackage.Event = new EventModel();
+                    booking.EventPackage.Event = await _UnitOfWork.Event.GetByID(booking.EventPackage.Fk_Event);
+                    _Mapper.Map(booking.EventPackage.Event, bookingModel.EventPackage.Event);
 
                     returnData.Add(bookingModel);
                 }
