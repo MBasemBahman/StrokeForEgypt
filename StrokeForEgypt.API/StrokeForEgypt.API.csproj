@@ -28,11 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Uploud\Account\" />
-    <Folder Include="wwwroot\Uploud\BookingMemberAttachment\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\StrokeForEgypt.Common\StrokeForEgypt.Common.csproj" />
     <ProjectReference Include="..\StrokeForEgypt.Repository\StrokeForEgypt.Repository.csproj" />
     <ProjectReference Include="..\StrokeForEgypt.Service\StrokeForEgypt.Service.csproj" />
