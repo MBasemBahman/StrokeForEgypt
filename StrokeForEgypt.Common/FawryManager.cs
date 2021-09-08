@@ -216,9 +216,6 @@ namespace StrokeForEgypt.Common
         [DisplayName("Payment Method")]
         public string PaymentMethod { get; set; }
 
-        [DisplayName("Order Status")]
-        public string OrderStatus { get; set; }
-
         [DisplayName("Payment Time")]
         public string PaymentTime { get; set; }
 
@@ -239,5 +236,41 @@ namespace StrokeForEgypt.Common
 
         [DisplayName("Status Description")]
         public string StatusDescription { get; set; }
+
+        [DisplayName("Order Status")]
+        public string OrderStatus { get; set; }
+    }
+
+    public class ChargeResponseCallbak
+    {
+        public string FawryRefNumber { get; set; }
+
+        public string MerchantRefNumber { get; set; }
+
+        public string CustomerName { get; set; }
+
+        public string CustomerMobile { get; set; }
+
+        public string CustomerMail { get; set; }
+
+        public string CustomerMerchantId { get; set; }
+
+        public double PaymentAmount { get; set; }
+
+        public double OrderAmount { get; set; }
+
+        public double FawryFees { get; set; }
+
+        public string OrderStatus { get; set; }
+
+        public string PaymentMethod { get; set; }
+
+        public string PaymentTime { get; set; }
+
+        public int FailureErrorCode { get; set; }
+
+        public string FailureReason { get; set; }
+
+        public string MessageSignature { get; set; }
     }
 }

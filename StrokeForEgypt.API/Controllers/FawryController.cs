@@ -109,7 +109,62 @@ namespace StrokeForEgypt.API.Controllers
         {
             if (model.StatusCode == 200)
             {
-                if (model.PaymentMethod.ToLower().Contains("fawry"))
+                if (model.PaymentMethod.ToLower() == "PayUsingCC".ToLower())
+                {
+                    if (_UnitOfWork.BookingPayment.Any(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
+                                                            a.MerchantRefNumber == model.MerchantRefNumber &&
+                                                            a.CustomerProfileId == model.CustomerProfileId))
+                    {
+                        FawryManager fawryManager = new(Production);
+                        ChargeResponse paymentStatus = fawryManager.GetPaymentStatus(model.MerchantRefNumber);
+
+                        if (paymentStatus != null &&
+                            paymentStatus.OrderStatus == model.OrderStatus &&
+                            paymentStatus.PaymentAmount == model.PaymentAmount)
+                        {
+                            Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
+
+                            if (booking.TotalPrice == model.OrderAmount &&
+                                booking.Fk_BookingState != (int)BookingStateEnum.Success &&
+                                model.OrderStatus == "PAID")
+                            {
+                                booking.Fk_BookingState = (int)BookingStateEnum.Success;
+                                _UnitOfWork.Booking.UpdateEntity(booking);
+
+                                _UnitOfWork.BookingStateHistory.CreateEntity(new BookingStateHistory
+                                {
+                                    Fk_Booking = booking.Id,
+                                    Fk_BookingState = booking.Fk_BookingState,
+                                    CreatedBy = !string.IsNullOrEmpty(booking.LastModifiedBy) ? booking.LastModifiedBy : booking.CreatedBy,
+                                });
+                            }
+
+                            BookingPayment bookingPayment = new()
+                            {
+                                Fk_Booking = int.Parse(model.MerchantRefNumber),
+                                MerchantRefNumber = model.MerchantRefNumber,
+                                CustomerProfileId = model.CustomerProfileId,
+                                ReferenceNumber = model.ReferenceNumber,
+                                OrderAmount = model.OrderAmount,
+                                PaymentAmount = model.PaymentAmount,
+                                FawryFees = model.FawryFees,
+                                PaymentMethod = model.PaymentMethod,
+                                OrderStatus = model.OrderStatus,
+                                CustomerMobile = model.CustomerMobile,
+                                PaymentTime = model.PaymentTime,
+                                CustomerMail = model.CustomerMail,
+                                StatusCode = model.StatusCode,
+                                StatusDescription = model.StatusDescription,
+                                Signature = model.Signature,
+                                Type = model.Type,
+                            };
+
+                            _UnitOfWork.BookingPayment.CreateEntity(bookingPayment);
+                            await _UnitOfWork.Save();
+                        }
+                    }
+                }
+                else if (model.PaymentMethod.ToLower().Contains("fawry"))
                 {
                     if (_UnitOfWork.BookingPayment.Any(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
                                                             a.MerchantRefNumber == model.MerchantRefNumber &&
@@ -167,61 +222,6 @@ namespace StrokeForEgypt.API.Controllers
                         }
                     }
                 }
-                else if (model.PaymentMethod.ToLower() == "PayUsingCC".ToLower())
-                {
-                    if (_UnitOfWork.BookingPayment.Any(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
-                                                            a.MerchantRefNumber == model.MerchantRefNumber &&
-                                                            a.CustomerProfileId == model.CustomerProfileId))
-                    {
-                        FawryManager fawryManager = new(Production);
-                        ChargeResponse paymentStatus = fawryManager.GetPaymentStatus(model.MerchantRefNumber);
-
-                        if (paymentStatus != null &&
-                            paymentStatus.OrderStatus == model.OrderStatus &&
-                            paymentStatus.PaymentAmount == model.PaymentAmount)
-                        {
-                            Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
-
-                            if (booking.TotalPrice == model.OrderAmount &&
-                                booking.Fk_BookingState != (int)BookingStateEnum.Success &&
-                                model.OrderStatus == "PAID")
-                            {
-                                booking.Fk_BookingState = (int)BookingStateEnum.Success;
-                                _UnitOfWork.Booking.UpdateEntity(booking);
-
-                                _UnitOfWork.BookingStateHistory.CreateEntity(new BookingStateHistory
-                                {
-                                    Fk_Booking = booking.Id,
-                                    Fk_BookingState = booking.Fk_BookingState,
-                                    CreatedBy = !string.IsNullOrEmpty(booking.LastModifiedBy) ? booking.LastModifiedBy : booking.CreatedBy,
-                                });
-                            }
-
-                            BookingPayment bookingPayment = new()
-                            {
-                                Fk_Booking = int.Parse(model.MerchantRefNumber),
-                                MerchantRefNumber = model.MerchantRefNumber,
-                                CustomerProfileId = model.CustomerProfileId,
-                                ReferenceNumber = model.ReferenceNumber,
-                                OrderAmount = model.OrderAmount,
-                                PaymentAmount = model.PaymentAmount,
-                                FawryFees = model.FawryFees,
-                                PaymentMethod = model.PaymentMethod,
-                                OrderStatus = model.OrderStatus,
-                                CustomerMobile = model.CustomerMobile,
-                                PaymentTime = model.PaymentTime,
-                                CustomerMail = model.CustomerMail,
-                                StatusCode = model.StatusCode,
-                                StatusDescription = model.StatusDescription,
-                                Signature = model.Signature,
-                                Type = model.Type,
-                            };
-
-                            _UnitOfWork.BookingPayment.CreateEntity(bookingPayment);
-                            await _UnitOfWork.Save();
-                        }
-                    }
-                }
             }
 
             return RedirectToAction(nameof(PaymentStatus), new
@@ -229,6 +229,65 @@ namespace StrokeForEgypt.API.Controllers
                 model.StatusCode,
                 model.StatusDescription
             });
+        }
+
+        [AllowAll]
+        [HttpPost]
+        public async Task<IActionResult> ChargeResponseCallbak([FromBody] ChargeResponseCallbak model)
+        {
+            if (_UnitOfWork.BookingPayment.Any(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
+                                                    a.MerchantRefNumber == model.MerchantRefNumber))
+            {
+                FawryManager fawryManager = new(Production);
+                ChargeResponse paymentStatus = fawryManager.GetPaymentStatus(model.MerchantRefNumber);
+
+                if (paymentStatus != null &&
+                    paymentStatus.OrderStatus == model.OrderStatus &&
+                    paymentStatus.PaymentAmount == model.PaymentAmount)
+                {
+                    if (model.OrderStatus == "PAID")
+                    {
+                        Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
+
+                        if (booking.TotalPrice == model.OrderAmount &&
+                            booking.Fk_BookingState != (int)BookingStateEnum.Success)
+                        {
+                            booking.Fk_BookingState = (int)BookingStateEnum.Success;
+                            _UnitOfWork.Booking.UpdateEntity(booking);
+
+                            _UnitOfWork.BookingStateHistory.CreateEntity(new BookingStateHistory
+                            {
+                                Fk_Booking = booking.Id,
+                                Fk_BookingState = booking.Fk_BookingState,
+                                CreatedBy = !string.IsNullOrEmpty(booking.LastModifiedBy) ? booking.LastModifiedBy : booking.CreatedBy,
+                            });
+                        }
+                    }
+
+                    BookingPayment bookingPayment = new()
+                    {
+                        Fk_Booking = int.Parse(model.MerchantRefNumber),
+                        MerchantRefNumber = model.MerchantRefNumber,
+                        CustomerProfileId = model.CustomerMerchantId,
+                        ReferenceNumber = model.FawryRefNumber,
+                        OrderAmount = model.OrderAmount,
+                        PaymentAmount = model.PaymentAmount,
+                        FawryFees = model.FawryFees,
+                        PaymentMethod = model.PaymentMethod,
+                        OrderStatus = model.OrderStatus,
+                        CustomerMobile = model.CustomerMobile,
+                        PaymentTime = model.PaymentTime,
+                        CustomerMail = model.CustomerMail,
+                        StatusCode = model.FailureErrorCode,
+                        StatusDescription = model.FailureReason,
+                        Signature = model.MessageSignature,
+                    };
+
+                    _UnitOfWork.BookingPayment.CreateEntity(bookingPayment);
+                    await _UnitOfWork.Save();
+                }
+            }
+            return Ok();
         }
 
         [AllowAll]

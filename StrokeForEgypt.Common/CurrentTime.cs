@@ -9,9 +9,9 @@ namespace StrokeForEgypt.Common
             return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id, timeZone);
         }
 
-        public static DateTime UTC()
+        public static DateTime Local(DateTime dateTime)
         {
-            return DateTime.UtcNow;
+            return TimeZoneInfo.ConvertTimeFromUtc(dateTime, TimeZoneInfo.Local);
         }
     }
 }
