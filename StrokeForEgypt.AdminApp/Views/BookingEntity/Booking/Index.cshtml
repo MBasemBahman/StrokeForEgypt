@@ -69,7 +69,6 @@
         </div>
     </div>
 </div>
-
 @section Scripts{
 
     @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
@@ -96,7 +95,12 @@
                 // Columns Setups
                 columns: [
                     { data: "id" },
-                    { data: "account.fullName" },
+                    {
+                        data: "account.fullName",
+                        render: function (data, type, row) {
+                            return '<a href="/Account?Id=' + row.fk_Account + '" target="_blank">' + data + "</a>";
+                        }
+                    },
                     { data: "daysCount" },
                     { data: "personCount" },
                     { data: "totalPrice" },
@@ -112,8 +116,6 @@
                             }
                         }
                     },
-
-
                     {
                         data: "id",
                         render: function (data, type, row) {

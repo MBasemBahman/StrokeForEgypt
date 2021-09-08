@@ -209,10 +209,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
             {
                 return NotFound();
             }
-            if (_UnitOfWork.BookingMember.Any(a => a.Fk_Booking == id))
-            {
-                ViewBag.CanDelete = false;
-            }
+            
             return View("~/Views/BookingEntity/Booking/Delete.cshtml", Booking);
         }
 
@@ -223,13 +220,15 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
         {
             Booking Booking = await _UnitOfWork.Booking.GetByID(id);
 
-            if (!_UnitOfWork.BookingMember.Any(a => a.Fk_Booking == id))
+            if (true)
             {
                 _UnitOfWork.Booking.DeleteEntity(Booking);
                 await _UnitOfWork.Booking.Save();
             }
 
-            return RedirectToAction("Profile", "Account", new { id = Booking.Fk_Account, returnItem = (int)AccountProfileItems.Booking });
+            return RedirectToAction(nameof(Index));
+
+            //return RedirectToAction("Profile", "Account", new { id = Booking.Fk_Account, returnItem = (int)AccountProfileItems.Booking });
         }
     }
 }

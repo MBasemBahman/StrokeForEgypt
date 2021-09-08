@@ -109,7 +109,7 @@ namespace StrokeForEgypt.API.Controllers
         {
             if (model.StatusCode == 200)
             {
-                if (model.PaymentMethod == "PayAtFawry")
+                if (model.PaymentMethod.ToLower().Contains("fawry"))
                 {
                     if (_UnitOfWork.BookingPayment.Any(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
                                                             a.MerchantRefNumber == model.MerchantRefNumber &&
@@ -163,11 +163,11 @@ namespace StrokeForEgypt.API.Controllers
 
                             _UnitOfWork.BookingPayment.CreateEntity(bookingPayment);
                             await _UnitOfWork.Save();
-                            
+
                         }
                     }
                 }
-                else if (model.PaymentMethod == "Card")
+                else if (model.PaymentMethod.ToLower() == "PayUsingCC".ToLower())
                 {
                     if (_UnitOfWork.BookingPayment.Any(a => a.Fk_Booking == int.Parse(model.MerchantRefNumber) &&
                                                             a.MerchantRefNumber == model.MerchantRefNumber &&
@@ -182,7 +182,7 @@ namespace StrokeForEgypt.API.Controllers
                         {
                             Booking booking = await _UnitOfWork.Booking.GetByID(int.Parse(model.MerchantRefNumber));
 
-                            if (booking.TotalPrice == model.PaymentAmount &&
+                            if (booking.TotalPrice == model.OrderAmount &&
                                 booking.Fk_BookingState != (int)BookingStateEnum.Success &&
                                 model.OrderStatus == "PAID")
                             {
