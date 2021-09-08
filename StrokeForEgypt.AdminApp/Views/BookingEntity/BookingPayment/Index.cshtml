@@ -117,12 +117,7 @@
                     { data: "customerMail" },
                     { data: "statusCode" },
                     { data: "statusDescription" },
-                    {
-                        data: "createdAt",
-                        render: function (data, type, row) {
-                            return moment(data).format("ddd, D/M/YYYY, h:mm a");
-                        }
-                    },
+                    { data: "createdAtstring" },
                     {
                         data: "fk_Booking",
                         render: function (data, type, row) {

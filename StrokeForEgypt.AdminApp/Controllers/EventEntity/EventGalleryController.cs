@@ -53,7 +53,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.EventEntity
             {
                 result = result.Where(a => a.Id.ToString().Contains(searchBy.ToLower())
                                         || a.FileName.ToLower().Contains(searchBy.ToLower())
-                                        || a.CreatedAt.ToString().Contains(searchBy.ToLower()))
+                                        || a.CreatedAtstring.Contains(searchBy.ToLower()))
                                .ToList();
             }
 

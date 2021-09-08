@@ -83,7 +83,7 @@
                     <div class="form-group row">
                         <label asp-for="LastModifiedAt" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            <input id="_LastModifiedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.LastModifiedAt)" class=" form-control LastModifiedAt" disabled>
+                            <input asp-for="LastModifiedAtString" class="form-control" disabled>
                         </div>
                         <label asp-for="LastModifiedBy" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
@@ -93,7 +93,7 @@
                     <div class="form-group row">
                         <label asp-for="CreatedAt" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            <input id="_CreatedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.CreatedAt)" class=" form-control CreatedAt" disabled>
+                            <input asp-for="CreatedAtstring" class="form-control" disabled>
                         </div>
                         <label asp-for="CreatedBy" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">

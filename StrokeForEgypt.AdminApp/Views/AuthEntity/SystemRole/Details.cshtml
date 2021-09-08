@@ -32,7 +32,7 @@
                     <div class="form-group row">
                         <label asp-for="SystemRole.LastModifiedAt" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            <input id="LastModifiedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.SystemRole.LastModifiedAt)" class=" form-control " disabled>
+                            <input asp-for="SystemRole.LastModifiedAtString" class="form-control" disabled>
                         </div>
                         <label asp-for="SystemRole.LastModifiedBy" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
@@ -95,7 +95,7 @@
                     <div class="form-group row">
                         <label asp-for="SystemRole.CreatedAt" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
-                            <input id="CreatedAt" value="@String.Format("{0:MM / dd / yyyy  hh:mm tt}",Model.SystemRole.CreatedAt)" class=" form-control " disabled>
+                            <input asp-for="SystemRole.CreatedAt" class="form-control" disabled>
                         </div>
                         <label asp-for="SystemRole.CreatedBy" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">

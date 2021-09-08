@@ -55,7 +55,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
                 result = result.Where(a => a.Id.ToString().Contains(searchBy.ToLower())
                                         || a.BookingState.Name.ToLower().Contains(searchBy.ToLower())
                                         || a.CreatedBy.ToLower().Contains(searchBy.ToLower())
-                                        || a.CreatedAt.ToString().Contains(searchBy.ToLower()))
+                                        || a.CreatedAtstring.Contains(searchBy.ToLower()))
                                .ToList();
             }
 

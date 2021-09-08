@@ -65,7 +65,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
                                         || a.StatusCode.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.StatusDescription.ToLower().Contains(searchBy.ToLower())
                                         || a.CreatedBy.ToLower().Contains(searchBy.ToLower())
-                                        || a.CreatedAt.ToString().Contains(searchBy.ToLower()))
+                                        || a.CreatedAtstring.Contains(searchBy.ToLower()))
                                .ToList();
             }
 

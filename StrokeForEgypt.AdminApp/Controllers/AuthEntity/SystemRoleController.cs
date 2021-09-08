@@ -48,7 +48,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.AuthEntity
             {
                 result = result.Where(a => a.Name.ToLower().Contains(searchBy.ToLower())
                                         || a.Id.ToString().ToLower().Contains(searchBy.ToLower())
-                                        || a.CreatedAt.ToString().ToLower().Contains(searchBy.ToLower()))
+                                        || a.CreatedAtstring.ToLower().Contains(searchBy.ToLower()))
                                .ToList();
             }
 

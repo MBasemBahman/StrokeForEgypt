@@ -95,13 +95,7 @@
 
                     { data: "bookingState.name" },
                     { data: "createdBy" },
-
-                    {
-                        data: "createdAt",
-                        render: function (data, type, row) {
-                            return moment(data).format("ddd, D/M/YYYY, h:mm a");
-                        }
-                    }
+                    { data: "createdAtstring" },
                 ]
             });
 

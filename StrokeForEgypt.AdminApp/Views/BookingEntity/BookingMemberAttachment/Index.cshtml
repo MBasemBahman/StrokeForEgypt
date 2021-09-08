@@ -125,12 +125,7 @@
                     { data: "id" },
                     { data: "fileName" },
                     { data: "fileType" },
-                    {
-                        data: "createdAt",
-                        render: function (data, type, row) {
-                            return moment(data).format("ddd, D/M/YYYY, h:mm a");
-                        }
-                    },
+                    { data: "createdAtstring" },
                     {
                         data: "id",
                         render: function (data, type, row) {
