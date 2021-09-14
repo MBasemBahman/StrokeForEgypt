@@ -505,7 +505,7 @@ namespace StrokeForEgypt.API.Controllers
                         returnData = _AccountService.Authenticate(new AuthenticateRequest
                         {
                             Email = account.Email,
-                            Password = account.PasswordHash,
+                            Password = model.NewPassword,
                             LoginToken = account.LoginTokenHash
                         }, IpAddress());
 
