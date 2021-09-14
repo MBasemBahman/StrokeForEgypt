@@ -560,7 +560,7 @@ namespace StrokeForEgypt.API.Controllers
                 {
                     Account data = await _UnitOfWork.Account.GetByID(account.Id);
 
-                    data.PasswordHash = BC.HashPassword(account.PasswordHash);
+                    data.PasswordHash = BC.HashPassword(model.NewPassword);
                     data.LastModifiedAt = DateTime.UtcNow;
 
                     _UnitOfWork.Account.UpdateEntity(data);
