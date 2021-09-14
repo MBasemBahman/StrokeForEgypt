@@ -58,6 +58,7 @@ namespace StrokeForEgypt.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("Account", new OpenApiInfo { Title = "Account", Version = "v1" });
+                c.SwaggerDoc("AccountV2", new OpenApiInfo { Title = "Account V2", Version = "v2" });
                 c.SwaggerDoc("MainData", new OpenApiInfo { Title = "Main Data", Version = "v1" });
                 c.SwaggerDoc("Sponsor", new OpenApiInfo { Title = "Sponsor", Version = "v1" });
                 c.SwaggerDoc("News", new OpenApiInfo { Title = "News", Version = "v1" });
@@ -148,6 +149,7 @@ namespace StrokeForEgypt.API
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/Account/swagger.json", "Account");
+                c.SwaggerEndpoint("/swagger/AccountV2/swagger.json", "Account V2");
                 c.SwaggerEndpoint("/swagger/MainData/swagger.json", "Main Data");
                 c.SwaggerEndpoint("/swagger/Sponsor/swagger.json", "Sponsor");
                 c.SwaggerEndpoint("/swagger/News/swagger.json", "News");

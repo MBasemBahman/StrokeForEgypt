@@ -475,6 +475,49 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
+        /// Post: Check Code
+        /// </summary>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route(nameof(CheckCode))]
+        public async Task CheckCode([FromBody] CheckCodeModel model)
+        {
+            Status Status = new();
+
+            try
+            {
+                if (_UnitOfWork.Account.Any(a => a.Email == model.Email))
+                {
+                    Account account = await _UnitOfWork.Account.GetFirst(a => a.Email == model.Email);
+
+                    if (!string.IsNullOrEmpty(account.VerificationCodeHash) &&
+                    BC.Verify(model.Code, account.VerificationCodeHash))
+                    {
+                        Status = new Status(true);
+                    }
+                    else
+                    {
+                        Status.ErrorMessage = _Localizer.Get("Verification code is wrong!");
+                    }
+                }
+                else
+                {
+                    Status.ErrorMessage = _Localizer.Get("Email not registered, register now!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
+        }
+
+        /// <summary>
         /// Post: Reset Password
         /// </summary>
         [HttpPost]

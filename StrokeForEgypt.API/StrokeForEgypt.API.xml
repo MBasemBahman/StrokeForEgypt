@@ -44,6 +44,11 @@
             Post: Forget Password
             </summary>
         </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountController.CheckCode(StrokeForEgypt.Service.AccountEntity.CheckCodeModel)">
+            <summary>
+            Post: Check Code
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.ResetPassword(StrokeForEgypt.Service.AccountEntity.ResetPasswordModel)">
             <summary>
             Post: Reset Password
@@ -67,6 +72,16 @@
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.RevokeToken(StrokeForEgypt.API.Models.Accounts.RevokeTokenRequest)">
             <summary>
             Post: Revoke Token
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountV2Controller.Login(StrokeForEgypt.API.Models.Accounts.AuthenticateRequest)">
+            <summary>
+            Post: Login
+            </summary>
+        </member>
+        <member name="M:StrokeForEgypt.API.Controllers.AccountV2Controller.Register(StrokeForEgypt.Service.AccountEntity.RegisterModel)">
+            <summary>
+            Post: Create Account
             </summary>
         </member>
         <member name="M:StrokeForEgypt.API.Controllers.BookingController.Create(StrokeForEgypt.Service.BookingEntity.BookingCreateModel)">

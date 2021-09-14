@@ -34,6 +34,19 @@ namespace StrokeForEgypt.Service.AccountEntity
         public string Email { get; set; }
     }
 
+    public class CheckCodeModel
+    {
+        [Required(ErrorMessage = "{0} is required")]
+        [DisplayName("Email")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [DisplayName("Code")]
+        [Required(ErrorMessage = "{0} is required")]
+        public string Code { get; set; }
+    }
+
     public class ResetPasswordModel
     {
         [Required(ErrorMessage = "{0} is required")]
