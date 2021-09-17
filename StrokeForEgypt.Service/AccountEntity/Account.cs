@@ -91,6 +91,9 @@ namespace StrokeForEgypt.Service.AccountEntity
 
         [DisplayName("Login Token")]
         public string LoginToken { get; set; }
+
+        [DisplayName("Notification Token")]
+        public string NotificationToken { get; set; }
     }
 
     public class NotificationTokenModel

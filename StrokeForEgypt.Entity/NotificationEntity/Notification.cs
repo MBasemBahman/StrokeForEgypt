@@ -25,8 +25,8 @@ namespace StrokeForEgypt.Entity.NotificationEntity
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
-        [DisplayName("TargetID")]
-        public string Target_Id { get; set; }
+        [DisplayName("Target")]
+        public string Target { get; set; }
 
         [ForeignKey("NotificationType")]
         [DisplayName(nameof(NotificationType))]
@@ -34,13 +34,6 @@ namespace StrokeForEgypt.Entity.NotificationEntity
 
         [DisplayName("Notification Type")]
         public NotificationType NotificationType { get; set; }
-
-        [ForeignKey("OpenType")]
-        [DisplayName(nameof(OpenType))]
-        public int Fk_OpenType { get; set; }
-
-        [DisplayName("Open Type")]
-        public OpenType OpenType { get; set; }
 
         [DisplayName("Notification Accounts")]
         public ICollection<NotificationAccount> NotificationAccounts { get; set; }

@@ -102,5 +102,18 @@ namespace StrokeForEgypt.Common
             BookingPayment = 3
         }
 
+        public enum NotificationTypeEnum
+        {
+            ExternalURL = 1,
+            Verification = 2,
+            EventProfile = 3,
+            EventNews = 4,
+            EventAgenda = 5,
+            EventRegistration = 6,
+            EventRegistrationMembers = 7,
+            EventRegistrationPayment = 8,
+            Other = 9
+        }
+
     }
 }

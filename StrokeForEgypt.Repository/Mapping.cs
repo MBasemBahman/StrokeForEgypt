@@ -180,12 +180,9 @@ namespace StrokeForEgypt.Repository
 
             CreateMap<Notification, NotificationModel>()
                 .ForMember(dest => dest.Event, opt => opt.Ignore())
-                .ForMember(dest => dest.OpenType, opt => opt.Ignore())
                 .ForMember(dest => dest.NotificationType, opt => opt.Ignore());
 
             CreateMap<NotificationType, NotificationTypeModel>();
-
-            CreateMap<OpenType, OpenTypeModel>();
 
             #endregion
 

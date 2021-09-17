@@ -95,8 +95,6 @@ namespace StrokeForEgypt.Repository
         public BaseRepository<Notification> Notification => new(_DBContext);
         public BaseRepository<NotificationAccount> NotificationAccount => new(_DBContext);
         public BaseRepository<NotificationType> NotificationType => new(_DBContext);
-        public BaseRepository<OpenType> OpenType => new(_DBContext);
-
         #endregion
 
         #region SponsorEntity

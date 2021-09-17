@@ -84,7 +84,6 @@ namespace StrokeForEgypt.DAL
         public DbSet<Notification> Notification { get; set; }
         public DbSet<NotificationAccount> NotificationAccount { get; set; }
         public DbSet<NotificationType> NotificationType { get; set; }
-        public DbSet<OpenType> OpenType { get; set; }
 
         #endregion
 
@@ -187,10 +186,6 @@ namespace StrokeForEgypt.DAL
             #region NotificationEntity
 
             modelBuilder.Entity<NotificationType>()
-                       .HasIndex(u => u.Name)
-                       .IsUnique();
-
-            modelBuilder.Entity<OpenType>()
                        .HasIndex(u => u.Name)
                        .IsUnique();
 

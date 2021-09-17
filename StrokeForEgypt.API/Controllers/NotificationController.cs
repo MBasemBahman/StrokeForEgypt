@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static StrokeForEgypt.Common.EnumData;
 
 namespace StrokeForEgypt.API.Controllers
 {
@@ -81,49 +82,6 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
-        /// Get: Get Open Types
-        /// </summary>
-        [HttpGet]
-        [Route(nameof(GetOpenTypes))]
-        public async Task<List<OpenTypeModel>> GetOpenTypes(
-            [FromQuery] Paging paging)
-        {
-            string ActionName = nameof(GetOpenTypes);
-            List<OpenTypeModel> returnData = new();
-            Status Status = new();
-
-            try
-            {
-                List<OpenType> Data = await _UnitOfWork.OpenType.GetAll(a => a.IsActive);
-
-                Data = OrderBy<OpenType>.OrderData(Data, paging.OrderBy);
-
-                PagedList<OpenType> PagedData = PagedList<OpenType>.Create(Data, paging.PageNumber, paging.PageSize);
-
-                _Mapper.Map(PagedData, returnData);
-
-                PaginationMetaData<OpenType> PaginationMetaData = new(PagedData)
-                {
-                    PrevoisPageLink = (PagedData.HasPrevious) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber - 1), paging.PageSize }) : null,
-                    NextPageLink = (PagedData.HasNext) ? Url.Link(ActionName, new { paging.OrderBy, pageNumber = (paging.PageNumber + 1), paging.PageSize }) : null
-                };
-
-                Response.Headers.Add("X-Pagination", StatusHandler<OpenType>.GetPagination(PaginationMetaData));
-
-                Status = new Status(true);
-            }
-            catch (Exception ex)
-            {
-                Status.ExceptionMessage = ex.Message;
-            }
-
-
-            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
-
-            return returnData;
-        }
-
-        /// <summary>
         /// Get: Get Notifications
         /// </summary>
         [HttpGet]
@@ -142,11 +100,10 @@ namespace StrokeForEgypt.API.Controllers
             {
                 Account account = (Account)Request.HttpContext.Items["Account"];
 
-                List<Notification> Data = await _UnitOfWork.Notification.GetAll(a => a.IsActive &&
+                List<Notification> Data = await _UnitOfWork.Notification.GetAll(a => a.IsActive && a.Fk_NotificationType != (int)NotificationTypeEnum.Verification &&
                                                                                      (!a.NotificationAccounts.Any() || a.NotificationAccounts.Any(b => b.Fk_Account == account.Id)) &&
                                                                                      (Fk_Event == 0 || (a.Fk_Event > 0 && a.Fk_Event == Fk_Event)) &&
-                                                                                     (Fk_NotificationType == 0 || a.Fk_NotificationType == Fk_NotificationType) &&
-                                                                                     (Fk_OpenType == 0 || a.Fk_OpenType == Fk_OpenType));
+                                                                                     (Fk_NotificationType == 0 || a.Fk_NotificationType == Fk_NotificationType));
 
                 Data = OrderBy<Notification>.OrderData(Data, paging.OrderBy);
 

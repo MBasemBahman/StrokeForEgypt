@@ -1,3 +1,5 @@
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 using StrokeForEgypt.AdminApp.Resources;
 using StrokeForEgypt.AdminApp.Services;
 using StrokeForEgypt.Common;
@@ -15,6 +18,7 @@ using StrokeForEgypt.DAL;
 using StrokeForEgypt.Repository;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 
 namespace StrokeForEgypt.AdminApp
@@ -87,6 +91,19 @@ namespace StrokeForEgypt.AdminApp
                                       builder.AllowAnyHeader();
                                   });
             });
+
+            #region Notification
+
+            // Notification Service
+            JToken jAppSettings = JToken.Parse(
+                                 File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
+            string googleCredential = jAppSettings["GoogleCredential"].ToString();
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromJson(googleCredential)
+            });
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

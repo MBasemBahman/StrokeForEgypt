@@ -1,3 +1,5 @@
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -129,10 +131,10 @@ namespace StrokeForEgypt.API
             JToken jAppSettings = JToken.Parse(
                                  File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
             string googleCredential = jAppSettings["GoogleCredential"].ToString();
-            //FirebaseApp.Create(new AppOptions()
-            //{
-            //    Credential = GoogleCredential.FromJson(googleCredential)
-            //});
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromJson(googleCredential)
+            });
 
             #endregion
         }

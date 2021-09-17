@@ -179,11 +179,6 @@
             Get: Get Notification Types
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetOpenTypes(StrokeForEgypt.Service.Paging)">
-            <summary>
-            Get: Get Open Types
-            </summary>
-        </member>
         <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetNotifications(StrokeForEgypt.Service.Paging,System.Int32,System.Int32,System.Int32)">
             <summary>
             Get: Get Notifications

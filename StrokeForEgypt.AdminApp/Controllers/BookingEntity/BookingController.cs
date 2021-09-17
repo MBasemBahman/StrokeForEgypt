@@ -209,7 +209,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
             {
                 return NotFound();
             }
-            
+
             return View("~/Views/BookingEntity/Booking/Delete.cshtml", Booking);
         }
 
