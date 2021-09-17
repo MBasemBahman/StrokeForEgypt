@@ -587,9 +587,10 @@ namespace StrokeForEgypt.API.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route(nameof(ChangePassword))]
-        public async void ChangePassword([FromBody] ChangePasswordModel model)
+        public async Task<bool> ChangePassword([FromBody] ChangePasswordModel model)
         {
             Status Status = new();
+            bool returnData = false;
 
             try
             {
@@ -609,6 +610,7 @@ namespace StrokeForEgypt.API.Controllers
                     _UnitOfWork.Account.UpdateEntity(data);
                     await _UnitOfWork.Save();
 
+                    returnData = true;
                     Status = new Status(true);
                 }
             }
@@ -622,6 +624,8 @@ namespace StrokeForEgypt.API.Controllers
             }
 
             Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
+
+            return returnData;
         }
 
         /// <summary>
@@ -629,9 +633,10 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpPost]
         [Route(nameof(AddDevice))]
-        public async void AddDevice([FromBody] AccountDeviceModel model)
+        public async Task<bool> AddDevice([FromBody] AccountDeviceModel model)
         {
             Status Status = new();
+            bool returnData = false;
 
             try
             {
@@ -646,6 +651,7 @@ namespace StrokeForEgypt.API.Controllers
                 _UnitOfWork.AccountDevice.CreateEntity(accountDevice);
                 await _UnitOfWork.Save();
 
+                returnData = true;
                 Status = new Status(true);
             }
             catch (Exception ex)
@@ -658,6 +664,8 @@ namespace StrokeForEgypt.API.Controllers
             }
 
             Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
+
+            return returnData;
         }
 
         /// <summary>
@@ -712,9 +720,10 @@ namespace StrokeForEgypt.API.Controllers
         /// </summary>
         [HttpPost]
         [Route(nameof(RevokeToken))]
-        public void RevokeToken([FromBody] RevokeTokenRequest model)
+        public bool RevokeToken([FromBody] RevokeTokenRequest model)
         {
             Status Status = new();
+            bool returnData = false;
 
             try
             {
@@ -725,6 +734,7 @@ namespace StrokeForEgypt.API.Controllers
                 {
                     _AccountService.RevokeToken(token, IpAddress());
 
+                    returnData = true;
                     Status = new Status(true);
                 }
                 else
@@ -744,6 +754,8 @@ namespace StrokeForEgypt.API.Controllers
             }
 
             Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
+
+            return returnData;
         }
 
         // helper methods
