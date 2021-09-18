@@ -1,0 +1,94 @@
+﻿@model Notification
+@inject CommonLocalizationService CommonLocalizer
+@inject EntityLocalizationService EntityLocalizer
+@{
+    ViewData["Title"] = EntityLocalizer.Get("Notification Details");
+
+    var Fk_AccessLevel = int.Parse(HttpContextAccessor.HttpContext.Request.Cookies[(this.ViewContext.RouteData.Values["controller"].ToString())]);
+
+    int returnItem = (int)ViewData["returnItem"];
+
+    var NotificationAccount = HttpContextAccessor.HttpContext.Request.Cookies["NotificationAccount"];
+ 
+
+}
+
+@section Styles{
+    @{await Html.RenderPartialAsync("PartialView/_FormStylesPartial");}
+    @{await Html.RenderPartialAsync("PartialView/_TableStylesPartial");}
+
+    <style>
+        .nav-tabs .nav-link.active {
+            background-color: #006ea6 !important;
+            border-color: #006ea6 !important;
+            color: white !important;
+        }
+
+        .nav-tabs .nav-link :hover {
+            cursor: pointer;
+            background-color: #006ea6 !important;
+            border-color: #006ea6 !important;
+            color: white !important;
+        }
+
+        .nav-tabs li .nav-link {
+            color: #000 !important;
+        }
+    </style>
+}
+@if (Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess)
+{
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <a asp-action="CreateOrEdit" asp-route-id="@Model.Id" asp-route-IsProfile="true" class="btn btn-success btn-block"><i class="far fa-edit"></i><span>&nbsp;</span>@($"{CommonLocalizer.Get("Edit")}")</a>
+        </div>
+    </div>
+
+}
+
+
+@{await Html.RenderPartialAsync("../EventEntity/Event/Details", Model, ViewData);}
+
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <section class="card">
+            <ul class="nav nav-tabs nav-fill">
+                @if (NotificationAccount != null)
+                {
+                    <li class="nav-item">
+                        <a id="NotificationAccount" class="nav-link @(returnItem == (int)NotificationProfileItem.Accounts?"active":"")">
+                            @Html.DisplayNameFor(model => model.NotificationAccounts)
+                        </a>
+                    </li>
+                }
+              
+            </ul>
+        </section>
+    </div>
+</div>
+<br />
+<br />
+
+<div id="d1"></div>
+@section Scripts {
+    <script>
+     $(document).ready(function () {
+
+         if ('@NotificationAccount' != null && @returnItem == @((int)NotificationProfileItem.Accounts)) {
+             $("#d1").load("/NotificationAccount/Index/?Fk_Notification=@Model.Id&ProfileLayOut=true");
+         }
+
+         $("#NotificationAccount").on('click', function () {
+             $(".active").each(function () {
+                 $(this).removeClass("active");
+             });
+             $(this).addClass("active");
+             $("#d1").load("/NotificationAccount/Index/?Fk_Notification=@Model.Id&ProfileLayOut=true");
+         });
+
+    
+     });
+    </script>
+}

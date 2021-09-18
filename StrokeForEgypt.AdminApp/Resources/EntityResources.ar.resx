@@ -381,6 +381,9 @@
   <data name="Notification Accounts" xml:space="preserve">
     <value>حسابات الاشعار</value>
   </data>
+  <data name="Notification Details" xml:space="preserve">
+    <value>تفاصيل الاشعار</value>
+  </data>
   <data name="Notification Token" xml:space="preserve">
     <value>رمز الاشعار</value>
   </data>

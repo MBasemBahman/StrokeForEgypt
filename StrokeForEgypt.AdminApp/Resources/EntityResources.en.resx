@@ -378,6 +378,9 @@
   <data name="Notification Accounts" xml:space="preserve">
     <value>Notification Accounts</value>
   </data>
+  <data name="Notification Details" xml:space="preserve">
+    <value>Notification Details</value>
+  </data>
   <data name="Notification Token" xml:space="preserve">
     <value>Notification Token</value>
   </data>

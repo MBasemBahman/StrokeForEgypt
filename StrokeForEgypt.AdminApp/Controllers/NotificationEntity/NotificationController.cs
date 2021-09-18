@@ -59,6 +59,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                 result = result.Where(a => a.Heading.ToLower().Contains(searchBy.ToLower())
                                         || a.NotificationType.Name.ToLower().Contains(searchBy.ToLower())
                                         || a.IsActive.ToString().ToLower().Contains(searchBy.ToLower())
+                                        || a.Order.ToString().ToLower().Contains(searchBy.ToLower())
                                         || (!string.IsNullOrEmpty(a.ImageURL) && a.ImageURL.ToLower().Contains(searchBy.ToLower()))
                                         || a.Id.ToString().ToLower().Contains(searchBy.ToLower()))
                                .ToList();
@@ -218,7 +219,6 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                 }
                 return RedirectToAction(nameof(Index));
             }
-
             return View("~/Views/NotificationEntity/Notification/CreateOrEdit.cshtml", Notification);
         }
 
