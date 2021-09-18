@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\NotificationEntity\Notification - Copy\" />
     <Folder Include="wwwroot\Uploud\Event\" />
     <Folder Include="wwwroot\Uploud\EventGallery\" />
     <Folder Include="wwwroot\Uploud\Gallery\" />
