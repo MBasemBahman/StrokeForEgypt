@@ -11,6 +11,7 @@ using StrokeForEgypt.Entity.SponsorEntity;
 using StrokeForEgypt.Repository.AccountEntityRepository;
 using StrokeForEgypt.Repository.AuthEntityRepository;
 using StrokeForEgypt.Repository.BookingEntityRepository;
+using StrokeForEgypt.Repository.NotificationEntityRepository;
 using System.Threading.Tasks;
 
 namespace StrokeForEgypt.Repository
@@ -93,7 +94,7 @@ namespace StrokeForEgypt.Repository
         #region NotificationEntity
 
         public BaseRepository<Notification> Notification => new(_DBContext);
-        public BaseRepository<NotificationAccount> NotificationAccount => new(_DBContext);
+        public NotificationAccountRepository NotificationAccount => new(_DBContext, _Mapper);
         public BaseRepository<NotificationType> NotificationType => new(_DBContext);
         #endregion
 

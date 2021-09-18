@@ -177,6 +177,9 @@
   <data name="Club" xml:space="preserve">
     <value>Club</value>
   </data>
+  <data name="Content" xml:space="preserve">
+    <value>المحتوى</value>
+  </data>
   <data name="Countries" xml:space="preserve">
     <value>الدول</value>
   </data>
@@ -294,6 +297,9 @@
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
   </data>
+  <data name="Heading" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
   <data name="Id" xml:space="preserve">
     <value>#</value>
   </data>
@@ -311,6 +317,9 @@
   </data>
   <data name="Is IOS Down?" xml:space="preserve">
     <value>وقف الايفون</value>
+  </data>
+  <data name="Is Private" xml:space="preserve">
+    <value>خاص؟</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>نشط؟</value>
@@ -366,11 +375,20 @@
   <data name="Notes" xml:space="preserve">
     <value>ملحوظات</value>
   </data>
+  <data name="Notification" xml:space="preserve">
+    <value>الاشعار</value>
+  </data>
   <data name="Notification Accounts" xml:space="preserve">
     <value>حسابات الاشعار</value>
   </data>
   <data name="Notification Token" xml:space="preserve">
     <value>رمز الاشعار</value>
+  </data>
+  <data name="Notification Type" xml:space="preserve">
+    <value>نوع الاشعار</value>
+  </data>
+  <data name="Notification Types" xml:space="preserve">
+    <value>انواع الاشعار</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>الاشعارات</value>
@@ -464,6 +482,9 @@
   </data>
   <data name="SystemViews" xml:space="preserve">
     <value>صفحات النظام</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>الهدف</value>
   </data>
   <data name="The {0} field is required" xml:space="preserve">
     <value>حقل {0} مطلوب</value>

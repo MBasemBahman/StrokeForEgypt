@@ -115,5 +115,10 @@ namespace StrokeForEgypt.Common
             Other = 9
         }
 
+        public enum NotificationProfileItem
+        {
+            Accounts = 1
+        }
+
     }
 }

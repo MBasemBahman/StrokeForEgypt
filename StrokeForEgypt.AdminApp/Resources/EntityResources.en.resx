@@ -177,6 +177,9 @@
   <data name="Club" xml:space="preserve">
     <value>Club</value>
   </data>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
+  </data>
   <data name="Countries" xml:space="preserve">
     <value>Countries</value>
   </data>
@@ -294,6 +297,9 @@
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
   </data>
+  <data name="Heading" xml:space="preserve">
+    <value>Heading</value>
+  </data>
   <data name="Id" xml:space="preserve">
     <value>#</value>
   </data>
@@ -311,6 +317,9 @@
   </data>
   <data name="Is IOS Down?" xml:space="preserve">
     <value>Is IOS Down?</value>
+  </data>
+  <data name="Is Private" xml:space="preserve">
+    <value>Is Private?</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>IsActive?</value>
@@ -363,11 +372,20 @@
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
   <data name="Notification Accounts" xml:space="preserve">
     <value>Notification Accounts</value>
   </data>
   <data name="Notification Token" xml:space="preserve">
     <value>Notification Token</value>
+  </data>
+  <data name="Notification Type" xml:space="preserve">
+    <value>Notification Type</value>
+  </data>
+  <data name="Notification Types" xml:space="preserve">
+    <value>Notification Types</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Notifications</value>
@@ -464,6 +482,9 @@
   </data>
   <data name="SystemViews" xml:space="preserve">
     <value>System Views</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>Target</value>
   </data>
   <data name="The {0} field is required" xml:space="preserve">
     <value>The {0} field is required.</value>

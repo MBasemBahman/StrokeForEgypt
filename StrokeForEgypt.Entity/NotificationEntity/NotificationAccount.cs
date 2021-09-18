@@ -11,7 +11,7 @@ namespace StrokeForEgypt.Entity.NotificationEntity
         [DisplayName(nameof(Notification))]
         public int Fk_Notification { get; set; }
 
-        [DisplayName("Notification Type")]
+        [DisplayName("Notification")]
         public Notification Notification { get; set; }
 
         [ForeignKey("Account")]

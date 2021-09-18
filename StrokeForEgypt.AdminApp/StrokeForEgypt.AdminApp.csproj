@@ -23,6 +23,7 @@
     <Folder Include="wwwroot\Uploud\EventGallery\" />
     <Folder Include="wwwroot\Uploud\Gallery\" />
     <Folder Include="wwwroot\Uploud\BookingMemberAttachment\" />
+    <Folder Include="wwwroot\Uploud\Notification\" />
     <Folder Include="wwwroot\Uploud\Sponsor\" />
     <Folder Include="wwwroot\Uploud\NewsGallery\" />
   </ItemGroup>
