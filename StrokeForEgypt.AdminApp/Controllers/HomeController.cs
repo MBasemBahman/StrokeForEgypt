@@ -7,6 +7,7 @@ using StrokeForEgypt.Repository;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 namespace StrokeForEgypt.AdminApp.Controllers
 {

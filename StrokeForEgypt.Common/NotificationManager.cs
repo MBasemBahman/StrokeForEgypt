@@ -117,11 +117,9 @@ namespace StrokeForEgypt.Common
 
             Dictionary<string, object> Extra = new()
             {
-                { "Fk_OpenType", Model.Fk_OpenType.ToString() },
                 { "ExcludeToken", Model.ExcludeToken },
-                { "Target_Id", Model.Target_Id.ToString() },
+                { "Target", Model.Target.ToString() },
                 { "Fk_NotificationType", Model.NotificationType.Key.ToString() },
-                { "URL", Model.URL }
             };
 
             Dictionary<string, string> data = new()
@@ -154,13 +152,9 @@ namespace StrokeForEgypt.Common
 
         public string Topic { get; set; } = "all";
 
-        public string URL { get; set; } = "";
-
         public string ImgUrl { get; set; } = "";
 
-        public int Target_Id { get; set; } = 0;
-
-        public int Fk_OpenType { get; set; }
+        public string Target { get; set; } = "";
 
         public string ExcludeToken { get; set; } = "";
 

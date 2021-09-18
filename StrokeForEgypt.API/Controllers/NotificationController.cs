@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StrokeForEgypt.API.Authorization;
 using StrokeForEgypt.API.Helpers;
 using StrokeForEgypt.API.Services;
+using StrokeForEgypt.Common;
 using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.AccountEntity;
 using StrokeForEgypt.Entity.NotificationEntity;
@@ -131,5 +132,62 @@ namespace StrokeForEgypt.API.Controllers
 
             return returnData;
         }
+
+        /// <summary>
+        /// Post: Send Notification
+        /// </summary>
+        [HttpPost]
+        [Route(nameof(SendNotificationAsync))]
+        public async Task SendNotificationAsync([FromBody] SendNotificationModel model)
+        {
+            Status Status = new();
+
+            try
+            {
+                Account account = (Account)Request.HttpContext.Items["Account"];
+
+                if (model.RegistrationTokens == null || !model.RegistrationTokens.Any())
+                {
+                    model.RegistrationTokens = new List<string>
+                    {
+                        account.NotificationToken
+                    };
+                }
+
+                NotificationManager.Notification = new FirebaseNotificationModel
+                {
+                    NotificationType = new KeyValuePair<int, string>((int)model.NotificationType, ((NotificationTypeEnum)model.NotificationType).ToString()),
+                    MessageHeading = model.MessageHeading,
+                    MessageContent = model.MessageContent,
+                    Target = model.Target,
+                    RegistrationTokens = model.RegistrationTokens
+                };
+                await NotificationManager.SendMulticast(NotificationManager.CreateMulticastMessage(NotificationManager.Notification));
+
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
+        }
+    }
+
+    public class SendNotificationModel
+    {
+        public int NotificationType { get; set; }
+
+        public string MessageHeading { get; set; }
+
+        public string MessageContent { get; set; }
+
+        public List<string> RegistrationTokens { get; set; }
+
+        public string Target { get; set; }
     }
 }

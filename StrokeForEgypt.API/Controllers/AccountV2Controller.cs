@@ -63,7 +63,7 @@ namespace StrokeForEgypt.API.Controllers
 
                 if (returnData.IsActive)
                 {
-                    if (returnData.IsVerified)
+                    if (true || returnData.IsVerified)
                     {
                         SetJwtTokenHeader(returnData.JwtToken);
                         SetTokenCookie(returnData.RefreshToken);
@@ -135,7 +135,7 @@ namespace StrokeForEgypt.API.Controllers
                     }
 
                     account = _UnitOfWork.Account.Register(account);
-
+                    account.IsVerified = true;
                     _UnitOfWork.Account.CreateEntity(account);
 
                     await _UnitOfWork.Save();
@@ -147,7 +147,7 @@ namespace StrokeForEgypt.API.Controllers
                         LoginToken = model.LoginToken
                     }, IpAddress());
 
-                    if (returnData.IsVerified)
+                    if (true || returnData.IsVerified)
                     {
                         SetJwtTokenHeader(returnData.JwtToken);
                         SetTokenCookie(returnData.RefreshToken);

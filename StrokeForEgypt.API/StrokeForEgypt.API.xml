@@ -184,6 +184,11 @@
             Get: Get Notifications
             </summary>
         </member>
+        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.SendNotificationAsync(StrokeForEgypt.API.Controllers.SendNotificationModel)">
+            <summary>
+            Post: Send Notification
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsorTypes(StrokeForEgypt.Service.Paging,System.Int32,System.Boolean,System.Int32)">
             <summary>
             Get: Get Sponsor Types
