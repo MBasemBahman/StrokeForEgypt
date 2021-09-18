@@ -45,5 +45,16 @@ namespace StrokeForEgypt.AdminApp.Controllers
 
             return Json(result);
         }
+
+
+        [HttpGet]
+        public JsonResult GetAccountsByName(string Name)
+        {
+            Name = Name.ToLower();
+
+            var result = _UnitOfWork.Account.GetAll(a => !string.IsNullOrEmpty(Name)&&a.FullName.ToLower().Contains(Name)).Result.Select(a => new { Id = a.Id, Name = a.FullName });
+
+            return Json(result);
+        }
     }
 }
