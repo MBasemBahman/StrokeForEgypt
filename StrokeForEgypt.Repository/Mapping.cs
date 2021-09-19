@@ -60,6 +60,9 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.ToDate, opt => opt.ConvertUsing(new DateValueConverter()))
                 .ForMember(dest => dest.RegistrationFrom, opt => opt.ConvertUsing(new DateValueConverter()))
                 .ForMember(dest => dest.RegistrationTo, opt => opt.ConvertUsing(new DateValueConverter()))
+                .ForMember(dest => dest.LongDescription, opt => opt.ConvertUsing(new StringConverter()))
+                .ForMember(dest => dest.PackageNotes, opt => opt.ConvertUsing(new StringConverter()))
+                .ForMember(dest => dest.TermsConditions, opt => opt.ConvertUsing(new StringConverter()))
                 .ForMember(dest => dest.EventAgendas, opt => opt.Ignore())
                 .ForMember(dest => dest.EventPackages, opt => opt.Ignore())
                 .ForMember(dest => dest.EventActivities, opt => opt.Ignore())
@@ -72,6 +75,8 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.FromTime, opt => opt.ConvertUsing(new TimeValueConverter()))
                 .ForMember(dest => dest.ToDate, opt => opt.ConvertUsing(new DateValueConverter()))
                 .ForMember(dest => dest.ToTime, opt => opt.ConvertUsing(new TimeValueConverter()))
+                .ForMember(dest => dest.LongDescription, opt => opt.ConvertUsing(new StringConverter()))
+
                 .ForMember(dest => dest.EventAgendaGalleries, opt => opt.Ignore());
 
             CreateMap<EventAgendaGallery, EventAgendaGalleryModel>();
@@ -126,7 +131,9 @@ namespace StrokeForEgypt.Repository
 
             #region MainDataEntity
 
-            CreateMap<AppAbout, AppAboutModel>();
+            CreateMap<AppAbout, AppAboutModel>()
+                .ForMember(dest => dest.DownMessage, opt => opt.ConvertUsing(new StringConverter()))
+                .ForMember(dest => dest.Description, opt => opt.ConvertUsing(new StringConverter()));
 
             CreateMap<City, CityModel>();
 
@@ -327,6 +334,10 @@ namespace StrokeForEgypt.Repository
     {
         public string Convert(string sourceMember, ResolutionContext context)
         {
+            if (!string.IsNullOrEmpty(sourceMember))
+            {
+                sourceMember = sourceMember.Replace("font-family", "font-f");
+            }
             return string.IsNullOrEmpty(sourceMember) ? "" : sourceMember;
         }
     }

@@ -240,5 +240,26 @@
         });
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                placeholder: 'Enter text...',
+                tabsize: 2,
+                height: 250,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'hr']],
+                    ['view', ['codeview']],
+                ]
+            });
+        });
+    </script>
+
 </body>
 </html>

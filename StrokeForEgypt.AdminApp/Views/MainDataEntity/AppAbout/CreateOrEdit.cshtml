@@ -98,7 +98,7 @@
                     <div class="form-group row">
                         <label asp-for="Description" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-10">
-                            <textarea rows="5" asp-for="Description" class="form-control summernote" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'></textarea>
+                            <textarea rows="5" asp-for="Description" class="form-control summernote"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                 <footer class="card-footer text-left">
                     <button class="btn btn-primary"> @CommonLocalizer.Get("Submit") </button>
                     <button type="reset" class="btn btn-default"> @CommonLocalizer.Get("Reset") </button>
-                    <a  asp-action="Details" asp-controller="AppAbout"  class="btn btn-success"> @CommonLocalizer.Get("Back") </a>
+                    <a asp-action="Details" asp-controller="AppAbout" class="btn btn-success"> @CommonLocalizer.Get("Back") </a>
 
                 </footer>
             </section>
@@ -119,5 +119,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
-
+   
 }

@@ -40,6 +40,7 @@ namespace StrokeForEgypt.API.Controllers
         /// Get: Get App About
         /// </summary>
         [HttpGet]
+        [AllowAll]
         [Route(nameof(GetAppAbout))]
         public async Task<AppAboutModel> GetAppAbout()
         {
