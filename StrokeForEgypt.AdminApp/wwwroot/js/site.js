@@ -62,3 +62,23 @@ function getCities(Fk_Country) {
 
 
 
+function getAccountsByName(Name) {
+    var serviceUrl = '/DataFilter/GetAccountsByName/?Name=' + Name;
+
+    $.ajax({
+        type: 'GET',
+        url: serviceUrl,
+        success: function (result) {
+            $("#Fk_Accounts").empty();
+
+            var options = ' ';
+            if (result.length > 0) {
+                for (var i = 0; i < result.length; i++) {
+                    options += '<option value="' + result[i].id + '">' + result[i].name + '</option>'
+                }
+            }
+            $("#Fk_Accounts").append(options);
+           
+        }
+    });
+}

@@ -11,6 +11,19 @@
     {
         IsProfile = (bool)ViewData["IsProfile"];
     }
+    bool IsPrivate = false;
+
+    List<Account> Accounts = new List<Account>();
+    List<int> Fk_Accounts = new List<int>();
+
+    if (_UnitOfWork.NotificationAccount.Any(a => a.Fk_Notification == Model.Id))
+    {
+        IsPrivate = true;
+        Accounts = _UnitOfWork.Account.GetAll(a => a.NotificationAccounts.Any(b => b.Fk_Notification == Model.Id)).Result.ToList();
+        Fk_Accounts = Accounts.Select(a => a.Id).ToList();
+    }
+
+
 }
 
 @section Styles{
@@ -72,6 +85,29 @@
                     @{await Html.RenderPartialAsync("PartialComponent/ImageUpload", new ImageViewModel { LabelName = EntityLocalizer.Get("Image"), OldImageURL = Model.ImageURL });}
 
                     <div class="form-group row">
+                        <label class="col-sm-2 control-label  pt-2">@EntityLocalizer.Get("IsPrivate")</label>
+                        <div class="col-sm-4">
+                            <input id="IsPrivate" asp-for="@IsPrivate" class="form-control">
+                            <span asp-validation-for="@IsPrivate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div id="Accounts" class="form-group row" style="display:@(IsPrivate?"":"none")">
+                        <label asp-for="NotificationAccounts" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-10">
+                            <select asp-for="@Fk_Accounts" data-plugin-selectTwo class="form-control populate" asp-items="@(new MultiSelectList(Accounts,"Id","FullName"))">
+                            </select>
+                        </div>
+                        @*<div class="col-sm-19">
+            <select class="form-control" multiple="multiple" data-plugin-multiselect="" data-plugin-options="{ &quot;maxHeight&quot;: 200, &quot;enableCaseInsensitiveFiltering&quot;: true }" id="ms_example6" style="display: none;">
+            </select>
+            <div class="btn-group show"><button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="None selected" aria-expanded="true"><span class="multiselect-selected-text">None selected</span> <b class="caret"></b></button><ul class="multiselect-container dropdown-menu show" x-placement="bottom-start" style="max-height: 200px; overflow: hidden auto; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);"><div class="input-group"><span class="input-group-prepend"><span class="input-group-text"><i class="fas fa-search"></i></span></span><input class="form-control multiselect-search" type="text" placeholder="Search"></div></ul></div>
+        </div>*@
+
+                    
+
+                    </div>
+
+                    <div class="form-group row">
                         <label asp-for="Order" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
                             <input asp-for="Order" class="form-control">
@@ -83,6 +119,7 @@
                             <span asp-validation-for="IsActive" class="text-danger"></span>
                         </div>
                     </div>
+
                 </div>
                 <footer class="card-footer text-left">
                     <button class="btn btn-primary"> @CommonLocalizer.Get("Submit") </button>
@@ -102,4 +139,45 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
+    <script>
+        function getAccountsByName(Name) {
+            var serviceUrl = '/DataFilter/GetAccountsByName/?Name=' + Name;
+
+            $.ajax({
+                type: 'GET',
+                url: serviceUrl,
+                success: function (result) {
+                    console.log($('#Fk_Accounts option:not(:selected)'));
+                    $('#Fk_Accountsoption:not(:selected)').remove();
+
+                    var options = ' ';
+                    if (result.length > 0) {
+                        for (var i = 0; i < result.length; i++) {
+                            options += '<option value="' + result[i].id + '">' + result[i].name + '</option>'
+                        }
+                    }
+                    $("#Fk_Accounts").append(options);
+
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $("#IsPrivate").on("change", function () {
+                if ($(this).is(':checked')) {
+                    $("#Accounts").css("display", "");
+                }
+                else {
+                    $("#Accounts").css("display", "none");
+
+                }
+            });
+            $(document).on('click', '#Accounts > div > span >span >span >ul > li >input', function () {
+                $('#Fk_Accounts option:not(:selected)').remove();
+            });
+            $(document).on('keyup', '#Accounts > div > span >span >span >ul > li >input', function () {
+                getAccountsByName(this.value)
+            });
+        });
+    </script>
 }

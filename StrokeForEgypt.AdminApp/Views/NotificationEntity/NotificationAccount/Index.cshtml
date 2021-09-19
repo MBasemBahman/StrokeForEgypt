@@ -1,12 +1,18 @@
-﻿@model EventFilter
+﻿@model NotificationAccountFilter
 @inject CommonLocalizationService CommonLocalizer
 @inject EntityLocalizationService EntityLocalizer
 @{
-    ViewData["Title"] = EntityLocalizer.Get("Events");
+    ViewData["Title"] = EntityLocalizer.Get("Notification Accounts");
 
-    var Event = new Event();
+    var NotificationAccount = new NotificationAccount();
 
     var Fk_AccessLevel = int.Parse(HttpContextAccessor.HttpContext.Request.Cookies[(this.ViewContext.RouteData.Values["controller"].ToString())]);
+
+    if (ViewData["ProfileLayOut"] != null && (bool)ViewData["ProfileLayOut"] == true)
+    {
+        Layout = "_AssetsLayout";
+    }
+
 }
 
 @section Styles{
@@ -21,23 +27,16 @@
             </header>
             <div class="card-body">
 
-                @if (Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess)
-                {
-                    <a asp-action="CreateOrEdit" class="btn btn-outline-primary a-btn-slide-text mb-4">
-                        <i class="fas fa-plus-circle"></i>
-                        <span><strong>@CommonLocalizer.Get("Create")</strong></span>
-                    </a>
-                }
+              
                 <table class="table table-bordered table-striped mb-0" id="custom-tabletools">
                     <thead>
                         <tr>
-                            <th>@Html.DisplayNameFor(model => Event.Id)</th>
-                            <th>@Html.DisplayNameFor(model => Event.Title)</th>
-                            <th>@Html.DisplayNameFor(model => Event.FromDate)</th>
-                            <th>@Html.DisplayNameFor(model => Event.ToDate)</th>
+                            <th>@Html.DisplayNameFor(model => NotificationAccount.Id)</th>
+                            <th>@Html.DisplayNameFor(model => NotificationAccount.Account.FullName)</th>
+                            <th>@Html.DisplayNameFor(model => NotificationAccount.Account.Email)</th>
+                            <th>@Html.DisplayNameFor(model => NotificationAccount.Account.Phone)</th>
                             <th>@EntityLocalizer.Get("Image")</th>
-                            <th>@Html.DisplayNameFor(model => Event.Order)</th>
-                            <th>@Html.DisplayNameFor(model => Event.IsActive)</th>
+
                             <th>
 
                             </th>
@@ -71,7 +70,7 @@
     @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
     @{await Html.RenderPartialAsync("PartialView/_TableScriptsPartial");}
 
-    <script>
+<script>
         $(document).ready(function () {
             var $table = $('#custom-tabletools').DataTable({
                 // Ajax Filter
@@ -82,27 +81,18 @@
                     dataType: "json",
                     data: function (data) {
                         data.Id = @Model.Id;
+                        data.Fk_Notification = @Model.Fk_Notification;
                         return JSON.stringify(data);
                     }
                 },
                 // Columns Setups
                 columns: [
                     { data: "id" },
-                    { data: "title" },
-                    {
-                        data: "fromDate",
-                        render: function (data, type, row) {
-                            return moment(data).format("ddd, D/M/YYYY");
-                        }
-                    },
-                    {
-                        data: "toDate",
-                        render: function (data, type, row) {
-                            return moment(data).format("ddd, D/M/YYYY");
-                        }
-                    },
-                      {
-                          data: "imageURL",
+                    { data: "account.fullName" },
+                    { data: "account.email" },
+                    { data: "account.phone" },
+                   {
+                          data: "account.imageURL",
                         render: function (data) {
                             if (data != null) {
                                 return '<a class="image-popup-no-margins" href="' + data + '"><img class="img-thumbnail img-fluid" src="' + data + '" width="75" alt="No Image Selected"></a>'
@@ -112,28 +102,8 @@
                             }
                         }
                     },
-                    { data: "order" },
-                    {
-                        data: "isActive",
-                        render: function (data, type, row) {
-                            if (data == true) {
-                                return '<input type="checkbox" class="form-control" checked disabled>';
-                            }
-                            else {
-                                return '<input type="checkbox" class="form-control" disabled >';
-                            }
-                        }
-                    },
 
 
-                    {
-                        data: "id",
-                        render: function (data, type, row) {
-                            return '<a href="/Event/Profile/' + data + '" class="btn btn-outline-success a-btn-slide-text  mr-1"><i class="fas fa-id-card"></i></a>'
-                                + '<a href="/Event/CreateOrEdit/' + data +'" class="btn btn-outline-primary a-btn-slide-text mr-1" style="display:@(Fk_AccessLevel == (int)AccessLevelEnum.FullAccess || Fk_AccessLevel == (int)AccessLevelEnum.CreateOrUpdateAccess? "":"none")"><i class="fas fa-edit"></i></a>'
-                                + '<a href="/Event/Delete/' + data + '"class="btn btn-outline-danger a-btn-slide-text Displaybtn " style="display:@(Fk_AccessLevel == (int)AccessLevelEnum.FullAccess?"":"none")"><i class="fas fa-trash-alt"></i></a>';
-                        }
-                    }
                 ]
             });
 
@@ -146,5 +116,5 @@
                 $table.draw();
             });
     });
-    </script>
+</script>
 }
