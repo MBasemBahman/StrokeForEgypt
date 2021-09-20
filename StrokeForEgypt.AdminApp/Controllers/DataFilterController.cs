@@ -48,11 +48,10 @@ namespace StrokeForEgypt.AdminApp.Controllers
 
 
         [HttpGet]
-        public JsonResult GetAccountsByName(string Name)
+        public JsonResult GetAccounts()
         {
-            Name = !string.IsNullOrEmpty(Name) ? Name.ToLower() : Name;
 
-            var result = _UnitOfWork.Account.GetAll(a => !string.IsNullOrEmpty(Name)&&a.FullName.ToLower().Contains(Name)).Result.Select(a => new { Id = a.Id, Name = a.FullName });
+            var result = _UnitOfWork.Account.GetAll().Result.Select(a => new { Id = a.Id, Name = a.FullName });
 
             return Json(result);
         }

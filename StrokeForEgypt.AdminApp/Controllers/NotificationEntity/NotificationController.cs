@@ -110,7 +110,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
 
 
         [Authorize((int)AccessLevelEnum.CreateOrUpdateAccess)]
-        public async Task<IActionResult> CreateOrEdit(int id = 0, bool IsProfile = false)
+        public async Task<IActionResult> CreateOrEdit(int id = 0, int Fk_Account = 0,bool IsProfile = false)
         {
             Notification Notification = new();
 
@@ -124,6 +124,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
             }
 
             ViewData["IsProfile"] = IsProfile;
+            ViewData["Fk_Account"] = Fk_Account;
             return View("~/Views/NotificationEntity/Notification/CreateOrEdit.cshtml", Notification);
         }
 
@@ -145,6 +146,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                         Notification.CreatedBy = Request.Cookies["FullName"];
                         if (IsPrivate)
                         {
+                            Notification.NotificationAccounts = new List<NotificationAccount>();
                             Notification = _UnitOfWork.NotificationAccount.CreateEntity(Notification, Fk_Accounts);
                         }
                         _UnitOfWork.Notification.CreateEntity(Notification);

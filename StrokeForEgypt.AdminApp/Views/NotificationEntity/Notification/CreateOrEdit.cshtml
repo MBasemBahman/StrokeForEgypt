@@ -12,14 +12,25 @@
         IsProfile = (bool)ViewData["IsProfile"];
     }
     bool IsPrivate = false;
-
+    int Fk_Account = 0;
+    if(ViewData["Fk_Account"]!= null)
+    {
+        Fk_Account = (int)ViewData["Fk_Account"];
+    }
     List<Account> Accounts = new List<Account>();
     List<int> Fk_Accounts = new List<int>();
 
-    if (_UnitOfWork.NotificationAccount.Any(a => a.Fk_Notification == Model.Id))
+    if(Fk_Account > 0)
+    {
+        IsPrivate = true;
+        Accounts = _UnitOfWork.Account.GetAll(a => a.Id == Fk_Account).Result.ToList();
+        Fk_Accounts = Accounts.Select(a => a.Id).ToList();
+    }
+    else if (_UnitOfWork.NotificationAccount.Any(a => a.Fk_Notification == Model.Id))
     {
         IsPrivate = true;
         Accounts = _UnitOfWork.Account.GetAll(a => a.NotificationAccounts.Any(b => b.Fk_Notification == Model.Id)).Result.ToList();
+
         Fk_Accounts = Accounts.Select(a => a.Id).ToList();
     }
 
@@ -140,29 +151,28 @@
     @{await Html.RenderPartialAsync("PartialView/_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("PartialView/_FormScriptsPartial");}
     <script>
-        function getAccountsByName(Name) {
-            var serviceUrl = '/DataFilter/GetAccountsByName/?Name=' + Name;
-
-            $.ajax({
-                type: 'GET',
-                url: serviceUrl,
-                success: function (result) {
-                    console.log($('#Fk_Accounts option:not(:selected)'));
-                    $('#Fk_Accountsoption:not(:selected)').remove();
-
-                    var options = ' ';
-                    if (result.length > 0) {
-                        for (var i = 0; i < result.length; i++) {
-                            options += '<option value="' + result[i].id + '">' + result[i].name + '</option>'
-                        }
-                    }
-                    $("#Fk_Accounts").append(options);
-
-                }
-            });
-        }
 
         $(document).ready(function () {
+            if (@Fk_Account == 0) {
+                var serviceUrl = '/DataFilter/GetAccounts/';
+                $.ajax({
+                    type: 'GET',
+                    url: serviceUrl,
+                    success: function (result) {
+                        $('#Fk_Accounts option:not(:selected)').remove();
+
+                        var options = ' ';
+                        if (result.length > 0) {
+                            for (var i = 0; i < result.length; i++) {
+                                if ($("#Fk_Accounts option[value='" + result[i].id + "']").length == 0) {
+                                    options += '<option value="' + result[i].id + '">' + result[i].name + '</option>'
+                                }                            }
+                        }
+                        $("#Fk_Accounts").append(options);
+
+                    }
+                });
+            }
             $("#IsPrivate").on("change", function () {
                 if ($(this).is(':checked')) {
                     $("#Accounts").css("display", "");
@@ -172,12 +182,7 @@
 
                 }
             });
-            $(document).on('click', '#Accounts > div > span >span >span >ul > li >input', function () {
-                $('#Fk_Accounts option:not(:selected)').remove();
-            });
-            $(document).on('keyup', '#Accounts > div > span >span >span >ul > li >input', function () {
-                getAccountsByName(this.value)
-            });
+          
         });
     </script>
 }
