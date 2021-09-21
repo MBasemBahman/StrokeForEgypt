@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using StrokeForEgypt.AdminApp.Filters;
 using StrokeForEgypt.AdminApp.ViewModel;
 using StrokeForEgypt.Common;
@@ -47,7 +46,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
 
             List<NotificationAccount> result = await _UnitOfWork.NotificationAccount.GetAll(a => (dtParameters.Id == 0 || a.Id == dtParameters.Id)
                                                                                          && (dtParameters.Fk_Notification == 0 || a.Fk_Notification == dtParameters.Fk_Notification)
-                                                                                         , new List<string> {"Account" });
+                                                                                         , new List<string> { "Account" });
 
 
             if (!string.IsNullOrEmpty(searchBy))
@@ -60,7 +59,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                                .ToList();
             }
 
-            result.ForEach(a => { a.Account.NotificationAccounts = null;  });
+            result.ForEach(a => { a.Account.NotificationAccounts = null; });
 
             DataTableManager<NotificationAccount> DataTableManager = new DataTableManager<NotificationAccount>();
 

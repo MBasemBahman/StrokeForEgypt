@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace StrokeForEgypt.Repository.NotificationEntityRepository
 {
-   public class NotificationAccountRepository : AppBaseRepository<NotificationAccount>
+    public class NotificationAccountRepository : AppBaseRepository<NotificationAccount>
     {
         private readonly BaseDBContext DBContext;
         private readonly IMapper _Mapper;

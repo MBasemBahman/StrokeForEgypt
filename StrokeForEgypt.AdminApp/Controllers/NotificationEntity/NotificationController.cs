@@ -6,6 +6,7 @@ using StrokeForEgypt.AdminApp.Filters;
 using StrokeForEgypt.AdminApp.Services;
 using StrokeForEgypt.AdminApp.ViewModel;
 using StrokeForEgypt.Common;
+using StrokeForEgypt.DAL;
 using StrokeForEgypt.Entity.NotificationEntity;
 using StrokeForEgypt.Repository;
 using System.Collections.Generic;
@@ -17,13 +18,15 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
 {
     public class NotificationController : Controller
     {
+        private readonly BaseDBContext _DBContext;
         private readonly UnitOfWork _UnitOfWork;
         private readonly IMapper _Mapper;
         private readonly ISession _Session;
         private readonly CommonLocalizationService _CommonLocalizationService;
 
-        public NotificationController(UnitOfWork UnitOfWork, IMapper Mapper, IHttpContextAccessor HttpContextAccessor, CommonLocalizationService CommonLocalizationService)
+        public NotificationController(BaseDBContext BaseDBContext, UnitOfWork UnitOfWork, IMapper Mapper, IHttpContextAccessor HttpContextAccessor, CommonLocalizationService CommonLocalizationService)
         {
+            _DBContext = BaseDBContext;
             _UnitOfWork = UnitOfWork;
             _Mapper = Mapper;
             _Session = HttpContextAccessor.HttpContext.Session;
@@ -60,7 +63,6 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                                         || a.NotificationType.Name.ToLower().Contains(searchBy.ToLower())
                                         || a.IsActive.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.Order.ToString().ToLower().Contains(searchBy.ToLower())
-                                        || (!string.IsNullOrEmpty(a.ImageURL) && a.ImageURL.ToLower().Contains(searchBy.ToLower()))
                                         || a.Id.ToString().ToLower().Contains(searchBy.ToLower()))
                                .ToList();
             }
@@ -110,7 +112,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
 
 
         [Authorize((int)AccessLevelEnum.CreateOrUpdateAccess)]
-        public async Task<IActionResult> CreateOrEdit(int id = 0, int Fk_Account = 0,bool IsProfile = false)
+        public async Task<IActionResult> CreateOrEdit(int id = 0, int Fk_Account = 0, bool IsProfile = false)
         {
             Notification Notification = new();
 
@@ -131,7 +133,13 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize((int)AccessLevelEnum.CreateOrUpdateAccess)]
-        public async Task<IActionResult> CreateOrEdit(int id, Notification Notification, bool IsProfile, bool IsPrivate = false, List<int> Fk_Accounts=null)
+        public async Task<IActionResult> CreateOrEdit(
+            int id,
+            Notification Notification,
+            bool IsProfile,
+            bool IsPrivate = false,
+            bool SendNotification = false,
+            List<int> Fk_Accounts = null)
         {
             if (id != Notification.Id)
             {
@@ -141,6 +149,44 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
             {
                 try
                 {
+                    if (Notification.Fk_NotificationType == (int)NotificationTypeEnum.ExternalURL &&
+                        string.IsNullOrEmpty(Notification.Target))
+                    {
+                        ViewData["Error"] = "Please add Url in target value";
+                        return View("~/Views/NotificationEntity/Notification/CreateOrEdit.cshtml", Notification);
+                    }
+                    else if ((Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventAgenda ||
+                              Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventNews ||
+                              Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventProfile ||
+                              Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventRegistration) &&
+                              Notification.Fk_Event == null)
+                    {
+                        ViewData["Error"] = "Please select event";
+                        return View("~/Views/NotificationEntity/Notification/CreateOrEdit.cshtml", Notification);
+                    }
+                    else if ((Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventRegistrationMembers ||
+                              Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventRegistrationPayment) &&
+                              string.IsNullOrEmpty(Notification.Target))
+                    {
+                        ViewData["Error"] = "Please add booking value in target value";
+                        return View("~/Views/NotificationEntity/Notification/CreateOrEdit.cshtml", Notification);
+                    }
+                    else if ((Notification.Fk_NotificationType == (int)NotificationTypeEnum.Verification ||
+                              IsPrivate) &&
+                             (Fk_Accounts == null || !Fk_Accounts.Any()))
+                    {
+                        ViewData["Error"] = "Please activate private option and select account";
+                        return View("~/Views/NotificationEntity/Notification/CreateOrEdit.cshtml", Notification);
+                    }
+
+                    if ((Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventAgenda ||
+                         Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventNews ||
+                         Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventProfile ||
+                         Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventRegistration))
+                    {
+                        Notification.Target = Notification.Fk_Event.ToString();
+                    }
+
                     if (id == 0)
                     {
                         Notification.CreatedBy = Request.Cookies["FullName"];
@@ -151,7 +197,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                         }
                         _UnitOfWork.Notification.CreateEntity(Notification);
                         await _UnitOfWork.Notification.Save();
-                       
+
                     }
                     else
                     {
@@ -166,11 +212,10 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                         if (IsPrivate)
                         {
                             Data = _UnitOfWork.NotificationAccount.UpdateEntity(Notification, Data.NotificationAccounts.Select(a => a.Fk_Account).ToList(), Fk_Accounts);
-
                         }
                         else
                         {
-                            Data = _UnitOfWork.NotificationAccount.DeleteEntity(Notification,Fk_Accounts);
+                            Data = _UnitOfWork.NotificationAccount.DeleteEntity(Notification, Fk_Accounts);
                         }
 
                         _UnitOfWork.Notification.UpdateEntity(Data);
@@ -180,27 +225,65 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                         Notification = Data;
                     }
 
-
-                    IFormFile ImageFile = HttpContext.Request.Form.Files["ImageFile"];
-
-                    if (ImageFile != null)
+                    if (SendNotification)
                     {
-                        ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
-
-                        string FileURL = await ImgManager.UploudImage(AppMainData.DomainName, Notification.Id.ToString(), ImageFile, "Uploud/Notification");
-
-                        if (!string.IsNullOrEmpty(FileURL))
+                        if (IsPrivate)
                         {
-                            if (!string.IsNullOrEmpty(Notification.ImageURL))
+                            var NotificationData = _DBContext.Notification
+                                                             .Where(a => a.Id == Notification.Id)
+                                                             .Select(a => new
+                                                             {
+                                                                 a.Heading,
+                                                                 a.Content,
+                                                                 a.Target,
+                                                                 NotificationType = new
+                                                                 {
+                                                                     a.NotificationType.Id,
+                                                                     a.NotificationType.Name
+                                                                 },
+                                                                 Accounts = a.NotificationAccounts
+                                                                             .Where(b => !string.IsNullOrEmpty(b.Account.NotificationToken))
+                                                                             .Select(b => b.Account.NotificationToken),
+                                                             })
+                                                             .First();
+
+                            NotificationManager.Notification = new FirebaseNotificationModel
                             {
-                                ImgManager.DeleteImage(Notification.ImageURL, AppMainData.DomainName);
-                            }
-                            Notification.ImageURL = FileURL;
-                            _UnitOfWork.Notification.UpdateEntity(Notification);
-                            await _UnitOfWork.Notification.Save();
+                                NotificationType = new KeyValuePair<int, string>(NotificationData.NotificationType.Id, NotificationData.NotificationType.Name),
+                                MessageHeading = NotificationData.Heading,
+                                MessageContent = NotificationData.Content,
+                                Target = NotificationData.Target,
+                                RegistrationTokens = NotificationData.Accounts.ToList(),
+                            };
+                            await NotificationManager.SendMulticast(NotificationManager.CreateMulticastMessage(NotificationManager.Notification));
+                        }
+                        else
+                        {
+                            var NotificationData = _DBContext.Notification
+                                                             .Where(a => a.Id == Notification.Id)
+                                                             .Select(a => new
+                                                             {
+                                                                 a.Heading,
+                                                                 a.Content,
+                                                                 a.Target,
+                                                                 NotificationType = new
+                                                                 {
+                                                                     a.NotificationType.Id,
+                                                                     a.NotificationType.Name
+                                                                 }
+                                                             })
+                                                             .First();
+
+                            NotificationManager.Notification = new FirebaseNotificationModel
+                            {
+                                NotificationType = new KeyValuePair<int, string>(NotificationData.NotificationType.Id, NotificationData.NotificationType.Name),
+                                MessageHeading = NotificationData.Heading,
+                                MessageContent = NotificationData.Content,
+                                Target = NotificationData.Target,
+                            };
+                            await NotificationManager.SendMulticast(NotificationManager.CreateMulticastMessage(NotificationManager.Notification));
                         }
                     }
-
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -244,11 +327,6 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             Notification Notification = await _UnitOfWork.Notification.GetByID(id);
-            if (!string.IsNullOrEmpty(Notification.ImageURL))
-            {
-                ImgManager ImgManager = new ImgManager(AppMainData.WebRootPath);
-                ImgManager.DeleteImage(Notification.ImageURL, AppMainData.DomainName);
-            }
             _UnitOfWork.Notification.DeleteEntity(Notification);
             await _UnitOfWork.Notification.Save();
 

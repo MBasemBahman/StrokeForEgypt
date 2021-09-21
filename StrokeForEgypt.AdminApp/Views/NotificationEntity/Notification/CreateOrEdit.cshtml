@@ -12,15 +12,17 @@
         IsProfile = (bool)ViewData["IsProfile"];
     }
     bool IsPrivate = false;
+    bool SendNotification = false;
+
     int Fk_Account = 0;
-    if(ViewData["Fk_Account"]!= null)
+    if (ViewData["Fk_Account"] != null)
     {
         Fk_Account = (int)ViewData["Fk_Account"];
     }
     List<Account> Accounts = new List<Account>();
     List<int> Fk_Accounts = new List<int>();
 
-    if(Fk_Account > 0)
+    if (Fk_Account > 0)
     {
         IsPrivate = true;
         Accounts = _UnitOfWork.Account.GetAll(a => a.Id == Fk_Account).Result.ToList();
@@ -48,7 +50,7 @@
                     <h2 class="card-title">@ViewData["Title"]</h2>
                 </header>
                 <div class="card-body">
-                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="@IsProfile" />
 
@@ -70,19 +72,6 @@
                     </div>
 
                     <div class="form-group row">
-                        <label asp-for="Target" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <input asp-for="Target" class="form-control">
-                            <span asp-validation-for="Target" class="text-danger"></span>
-                        </div>
-
-                        <label asp-for="NotificationType" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <select asp-for="Fk_NotificationType" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.NotificationType.GetLookUp(a=>true,"Id","Name"),"Key","Value"))"></select>
-                            <span asp-validation-for="Fk_NotificationType" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label asp-for="Event" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-4">
                             <select asp-for="Fk_Event" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.Event.GetLookUp(a=>true,"Id","Title"),"Key","Value"))">
@@ -90,10 +79,22 @@
                             </select>
                             <span asp-validation-for="Fk_Event" class="text-danger"></span>
                         </div>
-
                     </div>
 
-                    @{await Html.RenderPartialAsync("PartialComponent/ImageUpload", new ImageViewModel { LabelName = EntityLocalizer.Get("Image"), OldImageURL = Model.ImageURL });}
+                    <div class="form-group row">
+
+                        <label asp-for="NotificationType" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <select asp-for="Fk_NotificationType" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.NotificationType.GetLookUp(a=>true,"Id","Name"),"Key","Value"))">
+                            </select>
+                            <span asp-validation-for="Fk_NotificationType" class="text-danger"></span>
+                        </div>
+                        <label asp-for="Target" class="col-sm-2 control-label  pt-2"></label>
+                        <div class="col-sm-4">
+                            <input asp-for="Target" class="form-control">
+                            <span asp-validation-for="Target" class="text-danger"></span>
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <label class="col-sm-2 control-label  pt-2">@EntityLocalizer.Get("IsPrivate")</label>
@@ -108,14 +109,6 @@
                             <select asp-for="@Fk_Accounts" data-plugin-selectTwo class="form-control populate" asp-items="@(new MultiSelectList(Accounts,"Id","FullName"))">
                             </select>
                         </div>
-                        @*<div class="col-sm-19">
-            <select class="form-control" multiple="multiple" data-plugin-multiselect="" data-plugin-options="{ &quot;maxHeight&quot;: 200, &quot;enableCaseInsensitiveFiltering&quot;: true }" id="ms_example6" style="display: none;">
-            </select>
-            <div class="btn-group show"><button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="None selected" aria-expanded="true"><span class="multiselect-selected-text">None selected</span> <b class="caret"></b></button><ul class="multiselect-container dropdown-menu show" x-placement="bottom-start" style="max-height: 200px; overflow: hidden auto; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);"><div class="input-group"><span class="input-group-prepend"><span class="input-group-text"><i class="fas fa-search"></i></span></span><input class="form-control multiselect-search" type="text" placeholder="Search"></div></ul></div>
-        </div>*@
-
-                    
-
                     </div>
 
                     <div class="form-group row">
@@ -130,7 +123,13 @@
                             <span asp-validation-for="IsActive" class="text-danger"></span>
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label  pt-2">@EntityLocalizer.Get("Send Notification")</label>
+                        <div class="col-sm-4">
+                            <input id="SendNotification" asp-for="@SendNotification" class="form-control">
+                            <span asp-validation-for="@SendNotification" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
                 <footer class="card-footer text-left">
                     <button class="btn btn-primary"> @CommonLocalizer.Get("Submit") </button>
@@ -182,7 +181,7 @@
 
                 }
             });
-          
+
         });
     </script>
 }

@@ -34,7 +34,6 @@
                             <th>@Html.DisplayNameFor(model => Notification.Id)</th>
                             <th>@Html.DisplayNameFor(model => Notification.Heading)</th>
                             <th>@Html.DisplayNameFor(model => Notification.NotificationType)</th>
-                            <th>@EntityLocalizer.Get("Image")</th>
                             <th>@Html.DisplayNameFor(model => Notification.Order)</th>
                             <th>@Html.DisplayNameFor(model => Notification.IsActive)</th>
                             <th>
@@ -91,18 +90,6 @@
                     { data: "id" },
                     { data: "heading" },
                     { data:"notificationType.name"},
-            
-                      {
-                          data: "imageURL",
-                        render: function (data) {
-                            if (data != null) {
-                                return '<a class="image-popup-no-margins" href="' + data + '"><img class="img-thumbnail img-fluid" src="' + data + '" width="75" alt="No Image Selected"></a>'
-                            }
-                            else {
-                                return '@CommonLocalizer.Get("Not Found")';
-                            }
-                        }
-                    },
                     { data: "order" },
                     {
                         data: "isActive",

@@ -156,7 +156,7 @@ namespace StrokeForEgypt.API.Controllers
 
                 NotificationManager.Notification = new FirebaseNotificationModel
                 {
-                    NotificationType = new KeyValuePair<int, string>((int)model.NotificationType, ((NotificationTypeEnum)model.NotificationType).ToString()),
+                    NotificationType = new KeyValuePair<int, string>(model.NotificationType, ((NotificationTypeEnum)model.NotificationType).ToString()),
                     MessageHeading = model.MessageHeading,
                     MessageContent = model.MessageContent,
                     Target = model.Target,

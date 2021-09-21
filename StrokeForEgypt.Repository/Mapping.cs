@@ -196,7 +196,6 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.NotificationAccounts, opt => opt.Ignore())
                 .ForMember(dest => dest.NotificationType, opt => opt.Ignore())
-                .ForMember(dest => dest.ImageURL, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
 
