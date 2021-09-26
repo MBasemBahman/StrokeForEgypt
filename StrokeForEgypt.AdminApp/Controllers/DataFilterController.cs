@@ -48,10 +48,12 @@ namespace StrokeForEgypt.AdminApp.Controllers
 
 
         [HttpGet]
-        public JsonResult GetAccounts()
+        public JsonResult GetAccounts(bool haveNotificationToken = false)
         {
 
-            var result = _UnitOfWork.Account.GetAll().Result.Select(a => new { Id = a.Id, Name = a.FullName });
+            var result = _UnitOfWork.Account.GetAll(a => haveNotificationToken == false ||
+                                                         a.AccountDevices.Any(b => !string.IsNullOrEmpty(b.NotificationToken)))
+                                            .Result.Select(a => new { a.Id, Name = a.FullName });
 
             return Json(result);
         }

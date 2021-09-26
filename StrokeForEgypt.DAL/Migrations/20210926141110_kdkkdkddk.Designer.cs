@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StrokeForEgypt.DAL;
 
 namespace StrokeForEgypt.DAL.Migrations
 {
     [DbContext(typeof(BaseDBContext))]
-    partial class BaseDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210926141110_kdkkdkddk")]
+    partial class kdkkdkddk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,6 +65,9 @@ namespace StrokeForEgypt.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LoginTokenHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NotificationToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
@@ -506,7 +511,7 @@ namespace StrokeForEgypt.DAL.Migrations
                             JobTitle = "Developer",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0,
-                            Password = "pvgl9547nx",
+                            Password = "kalc5134ws",
                             Phone = "01000000000"
                         });
                 });

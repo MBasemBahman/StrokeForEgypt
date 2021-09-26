@@ -34,11 +34,6 @@
             Post: Change Profile Image
             </summary>
         </member>
-        <member name="M:StrokeForEgypt.API.Controllers.AccountController.ChangeNotificationToken(StrokeForEgypt.Service.AccountEntity.NotificationTokenModel)">
-            <summary>
-            Post: Change Notification Token
-            </summary>
-        </member>
         <member name="M:StrokeForEgypt.API.Controllers.AccountController.ForgetPassword(StrokeForEgypt.Service.AccountEntity.ForgetPasswordModel)">
             <summary>
             Post: Forget Password
@@ -182,11 +177,6 @@
         <member name="M:StrokeForEgypt.API.Controllers.NotificationController.GetNotifications(StrokeForEgypt.Service.Paging,System.Int32,System.Int32,System.Int32)">
             <summary>
             Get: Get Notifications
-            </summary>
-        </member>
-        <member name="M:StrokeForEgypt.API.Controllers.NotificationController.SendNotificationAsync(StrokeForEgypt.API.Controllers.SendNotificationModel)">
-            <summary>
-            Post: Send Notification
             </summary>
         </member>
         <member name="M:StrokeForEgypt.API.Controllers.SponsorController.GetSponsorTypes(StrokeForEgypt.Service.Paging,System.Int32,System.Boolean,System.Int32)">

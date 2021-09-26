@@ -35,9 +35,6 @@ namespace StrokeForEgypt.Entity.AccountEntity
         [DisplayName("Verification Code")]
         public string VerificationCodeHash { get; set; }
 
-        [DisplayName("Notification Token")]
-        public string NotificationToken { get; set; }
-
         [DisplayName("IsVerified")]
         public bool IsVerified { get; set; } = false;
 

@@ -11,6 +11,9 @@ namespace StrokeForEgypt.Entity.MainDataEntity
         [Required(ErrorMessage = "{0} is required")]
         public string Name { get; set; }
 
+        [DisplayName("Phone Code")]
+        public string PhoneCode { get; set; }
+
         [DisplayName("Cities")]
         public ICollection<City> Cities { get; set; }
     }

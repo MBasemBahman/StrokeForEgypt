@@ -378,47 +378,6 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
-        /// Post: Change Notification Token
-        /// </summary>
-        [HttpPost]
-        [Route(nameof(ChangeNotificationToken))]
-        public async Task<string> ChangeNotificationToken([FromBody] NotificationTokenModel model)
-        {
-            string returnData = "";
-
-            Status Status = new();
-
-            try
-            {
-                Account account = (Account)Request.HttpContext.Items["Account"];
-
-                Account data = await _UnitOfWork.Account.GetByID(account.Id);
-
-                data.NotificationToken = model.NotificationToken;
-                data.LastModifiedAt = DateTime.UtcNow;
-
-                _UnitOfWork.Account.UpdateEntity(data);
-                await _UnitOfWork.Save();
-
-                returnData = data.ImageURL;
-
-                Status = new Status(true);
-            }
-            catch (Exception ex)
-            {
-                Status.ExceptionMessage = ex.Message;
-                if (ex.InnerException != null)
-                {
-                    Status.ExceptionMessage = ex.InnerException.Message;
-                }
-            }
-
-            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
-
-            return returnData;
-        }
-
-        /// <summary>
         /// Post: Forget Password
         /// </summary>
         [HttpPost]

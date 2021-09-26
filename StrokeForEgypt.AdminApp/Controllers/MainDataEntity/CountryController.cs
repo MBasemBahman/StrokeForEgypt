@@ -51,6 +51,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.MainDataEntity
             {
                 result = result.Where(a => a.Name.ToLower().Contains(searchBy.ToLower())
                                         || a.IsActive.ToString().ToLower().Contains(searchBy.ToLower())
+                                        || a.PhoneCode.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.Order.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.Id.ToString().ToLower().Contains(searchBy.ToLower()))
                                .ToList();

@@ -32,6 +32,7 @@
                         <tr>
                             <th>@Html.DisplayNameFor(model => Country.Id)</th>
                             <th>@Html.DisplayNameFor(model => Country.Name)</th>
+                            <th>@Html.DisplayNameFor(model => Country.PhoneCode)</th>
                             <th>@Html.DisplayNameFor(model => Country.ImageURL)</th>
                             <th>@Html.DisplayNameFor(model => Country.Order)</th>
                             <th>@Html.DisplayNameFor(model => Country.IsActive)</th>
@@ -86,6 +87,7 @@
                 columns: [
                     { data: "id" },
                     { data: "name" },
+                    { data: "phoneCode" },
                     {
                         data: "imageURL",
                         render: function (data, type, row) {

@@ -240,12 +240,16 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                                                                  {
                                                                      a.NotificationType.Id,
                                                                      a.NotificationType.Name
-                                                                 },
-                                                                 Accounts = a.NotificationAccounts
-                                                                             .Where(b => !string.IsNullOrEmpty(b.Account.NotificationToken))
-                                                                             .Select(b => b.Account.NotificationToken),
+                                                                 }
                                                              })
                                                              .First();
+
+                            var Accounts = _DBContext.AccountDevice
+                                                     .Where(a => a.Account.NotificationAccounts.Any(b => b.Fk_Notification == Notification.Id) &&
+                                                                 !string.IsNullOrEmpty(a.NotificationToken))
+                                                     .Select(a => a.NotificationToken)
+                                                     .Distinct()
+                                                     .ToList();
 
                             NotificationManager.Notification = new FirebaseNotificationModel
                             {
@@ -253,7 +257,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                                 MessageHeading = NotificationData.Heading,
                                 MessageContent = NotificationData.Content,
                                 Target = NotificationData.Target,
-                                RegistrationTokens = NotificationData.Accounts.ToList(),
+                                RegistrationTokens = Accounts,
                             };
                             await NotificationManager.SendMulticast(NotificationManager.CreateMulticastMessage(NotificationManager.Notification));
                         }
@@ -279,9 +283,9 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                                 NotificationType = new KeyValuePair<int, string>(NotificationData.NotificationType.Id, NotificationData.NotificationType.Name),
                                 MessageHeading = NotificationData.Heading,
                                 MessageContent = NotificationData.Content,
-                                Target = NotificationData.Target,
+                                Target = NotificationData.Target
                             };
-                            await NotificationManager.SendMulticast(NotificationManager.CreateMulticastMessage(NotificationManager.Notification));
+                            await NotificationManager.SendToTopic(NotificationManager.CreateMessage(NotificationManager.Notification));
                         }
                     }
                 }
