@@ -27,6 +27,9 @@ namespace StrokeForEgypt.Entity.BookingEntity
         [DisplayName("Person Count")]
         public int PersonCount { get; set; }
 
+        [DisplayName("Guest Count")]
+        public int GuestCount { get; set; }
+
         [DisplayName("Days Count")]
         public int DaysCount { get; set; }
 

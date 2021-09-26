@@ -60,6 +60,7 @@ namespace StrokeForEgypt.AdminApp.Controllers.BookingEntity
                                         || a.Account.FullName.ToLower().Contains(searchBy.ToLower())
                                         || a.DaysCount.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.PersonCount.ToString().ToLower().Contains(searchBy.ToLower())
+                                        || a.GuestCount.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.TotalPrice.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.IsActive.ToString().ToLower().Contains(searchBy.ToLower())
                                         || a.Id.ToString().ToLower().Contains(searchBy.ToLower()))
