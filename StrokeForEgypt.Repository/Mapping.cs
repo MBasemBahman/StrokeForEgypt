@@ -62,6 +62,7 @@ namespace StrokeForEgypt.Repository
                 .ForMember(dest => dest.RegistrationTo, opt => opt.ConvertUsing(new DateValueConverter()))
                 .ForMember(dest => dest.LongDescription, opt => opt.ConvertUsing(new StringConverter()))
                 .ForMember(dest => dest.PackageNotes, opt => opt.ConvertUsing(new StringConverter()))
+                .ForMember(dest => dest.HotelName, opt => opt.ConvertUsing(new StringConverter()))
                 .ForMember(dest => dest.TermsConditions, opt => opt.ConvertUsing(new StringConverter()))
                 .ForMember(dest => dest.EventAgendas, opt => opt.Ignore())
                 .ForMember(dest => dest.EventPackages, opt => opt.Ignore())

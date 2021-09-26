@@ -55,6 +55,10 @@ namespace StrokeForEgypt.Entity.EventEntity
         [DataType(DataType.MultilineText)]
         public string PackageNotes { get; set; }
 
+        [DisplayName("Hotel Name")]
+        [DataType(DataType.MultilineText)]
+        public string HotelName { get; set; }
+
         [DisplayName("Terms & Conditions")]
         [DataType(DataType.MultilineText)]
         public string TermsConditions { get; set; }
