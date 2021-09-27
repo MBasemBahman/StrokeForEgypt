@@ -190,6 +190,13 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                     {
                         Notification.Target = Fk_Accounts.First().ToString();
                     }
+                    else if (Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventRegistrationMembers ||
+                             Notification.Fk_NotificationType == (int)NotificationTypeEnum.EventRegistrationPayment)
+                    {
+                        Fk_Accounts = _DBContext.Booking.Where(a => a.Id.ToString() == Notification.Target)
+                                                .Select(a => a.Fk_Account)
+                                                .ToList();
+                    }
 
                     if (id == 0)
                     {
@@ -207,19 +214,15 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                     {
                         Notification Data = await _UnitOfWork.Notification.GetByID(id);
 
-                        Notification.LastModifiedBy = Request.Cookies["FullName"];
+                        Data.LastModifiedBy = Request.Cookies["FullName"];
+                        Data.Heading = Notification.Heading;
+                        Data.Content = Notification.Content;
+                        Data.Order = Notification.Order;
+                        Data.IsActive = Notification.IsActive;
 
-                        _Mapper.Map(Notification, Data);
-
-                        Data.NotificationAccounts = await _UnitOfWork.NotificationAccount.GetAll(a => a.Fk_Notification == id);
-
-                        if (IsPrivate)
+                        if (_UnitOfWork.NotificationAccount.Any(a => a.Fk_Notification == Data.Id))
                         {
-                            Data = _UnitOfWork.NotificationAccount.UpdateEntity(Notification, Data.NotificationAccounts.Select(a => a.Fk_Account).ToList(), Fk_Accounts);
-                        }
-                        else
-                        {
-                            Data = _UnitOfWork.NotificationAccount.DeleteEntity(Notification, Fk_Accounts);
+                            IsPrivate = true;
                         }
 
                         _UnitOfWork.Notification.UpdateEntity(Data);

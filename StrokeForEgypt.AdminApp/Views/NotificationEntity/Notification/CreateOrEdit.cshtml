@@ -35,8 +35,6 @@
 
         Fk_Accounts = Accounts.Select(a => a.Id).ToList();
     }
-
-
 }
 
 @section Styles{
@@ -54,7 +52,6 @@
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="@IsProfile" />
 
-
                     <div class="form-group row">
                         <label asp-for="Heading" class="col-sm-2 control-label  pt-2"></label>
                         <div class="col-sm-10">
@@ -71,45 +68,54 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label asp-for="Event" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <select asp-for="Fk_Event" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.Event.GetLookUp(a=>true,"Id","Title"),"Key","Value"))">
-                                <option value="">@CommonLocalizer.Get("Not Specific")</option>
-                            </select>
-                            <span asp-validation-for="Fk_Event" class="text-danger"></span>
+                    @if (Model.Id == 0)
+                    {
+                        <div class="form-group row">
+                            <label asp-for="NotificationType" class="col-sm-2 control-label  pt-2"></label>
+                            <div class="col-sm-4">
+                                <select asp-for="Fk_NotificationType" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.NotificationType.GetLookUp(a=> a.Id != (int)NotificationTypeEnum.Other,"Id","Name"),"Key","Value"))">
+                                    <option value="">@CommonLocalizer.Get("Not Specific")</option>
+                                </select>
+                                <span asp-validation-for="Fk_NotificationType" class="text-danger"></span>
+                            </div>
+                            <label asp-for="Event" class="col-sm-2 control-label  pt-2"></label>
+                            <div class="col-sm-4">
+                                <select asp-for="Fk_Event" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.Event.GetLookUp(a=>true,"Id","Title"),"Key","Value"))">
+                                    <option value="">@CommonLocalizer.Get("Not Specific")</option>
+                                </select>
+                                <span asp-validation-for="Fk_Event" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
+                        <div id="Targetdiv" class="form-group row" style="display:none">
+                            <label asp-for="Target" class="col-sm-2 control-label  pt-2"></label>
+                            <div class="col-sm-10">
+                                <input asp-for="Target" class="form-control">
+                                <span asp-validation-for="Target" class="text-danger"></span>
+                            </div>
+                        </div>
 
-                        <label asp-for="NotificationType" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <select asp-for="Fk_NotificationType" data-plugin-selectTwo class="form-control populate" asp-items="@(new SelectList(_UnitOfWork.NotificationType.GetLookUp(a=>true,"Id","Name"),"Key","Value"))">
-                            </select>
-                            <span asp-validation-for="Fk_NotificationType" class="text-danger"></span>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label  pt-2">@EntityLocalizer.Get("IsPrivate")</label>
+                            <div class="col-sm-4">
+                                <input id="IsPrivate" asp-for="@IsPrivate" class="form-control">
+                                <span asp-validation-for="@IsPrivate" class="text-danger"></span>
+                            </div>
                         </div>
-                        <label asp-for="Target" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-4">
-                            <input asp-for="Target" class="form-control">
-                            <span asp-validation-for="Target" class="text-danger"></span>
+                        <div id="Accounts" class="form-group row" style="display:@(IsPrivate?"":"none")">
+                            <label asp-for="NotificationAccounts" class="col-sm-2 control-label  pt-2"></label>
+                            <div class="col-sm-10">
+                                <select asp-for="@Fk_Accounts" data-plugin-selectTwo class="form-control populate" asp-items="@(new MultiSelectList(Accounts,"Id","FullName"))">
+                                </select>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-2 control-label  pt-2">@EntityLocalizer.Get("IsPrivate")</label>
-                        <div class="col-sm-4">
-                            <input id="IsPrivate" asp-for="@IsPrivate" class="form-control">
-                            <span asp-validation-for="@IsPrivate" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div id="Accounts" class="form-group row" style="display:@(IsPrivate?"":"none")">
-                        <label asp-for="NotificationAccounts" class="col-sm-2 control-label  pt-2"></label>
-                        <div class="col-sm-10">
-                            <select asp-for="@Fk_Accounts" data-plugin-selectTwo class="form-control populate" asp-items="@(new MultiSelectList(Accounts,"Id","FullName"))">
-                            </select>
-                        </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="Fk_NotificationType" />
+                        <input type="hidden" asp-for="Fk_Event" />
+                        <input type="hidden" asp-for="Target" />
+                    }
 
                     <div class="form-group row">
                         <label asp-for="Order" class="col-sm-2 control-label  pt-2"></label>
@@ -179,6 +185,44 @@
                 else {
                     $("#Accounts").css("display", "none");
 
+                }
+            });
+
+            $("#Fk_NotificationType").on("change", function () {
+                var selected = $(this).children("option:selected").val();
+
+                $("#Targetdiv").hide();
+                $("#Target").prop('required', false);
+                $("#Fk_Event").prop('required', false);
+                $("#IsPrivate").prop('checked', false);
+                $("#Accounts").hide();
+                $("#Fk_Accounts").prop('required', false);
+                $("#Target").attr("placeholder", "");
+                $("#Target").attr("type", "text");
+
+                if (selected == @((int)NotificationTypeEnum.ExternalURL)) {
+                    $("#Targetdiv").show();
+                    $("#Target").prop('required', true);
+                    $("#Target").attr("placeholder", "Type here the url");
+                    $('#Target').attr('type', 'url');
+                }
+                else if (selected == @((int)NotificationTypeEnum.EventProfile) ||
+                         selected == @((int)NotificationTypeEnum.EventNews) ||
+                         selected == @((int)NotificationTypeEnum.EventAgenda) ||
+                         selected == @((int)NotificationTypeEnum.EventRegistration)) {
+                    $("#Fk_Event").prop('required', true);
+                }
+                else if (selected == @((int)NotificationTypeEnum.EventRegistrationMembers) ||
+                         selected == @((int)NotificationTypeEnum.EventRegistrationPayment)) {
+                    $("#Targetdiv").show();
+                    $("#Target").prop('required', true);
+                    $("#Target").attr("placeholder", "Type here booking id");
+                    $('#Target').attr('type', 'number');
+                }
+                else if (selected == @((int)NotificationTypeEnum.Verification)) {
+                    $("#IsPrivate").prop('checked', true);
+                    $("#Accounts").css("display", "");
+                    $("#Fk_Accounts").prop('required', true);
                 }
             });
 
