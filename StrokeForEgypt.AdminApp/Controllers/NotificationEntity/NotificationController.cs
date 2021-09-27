@@ -186,6 +186,10 @@ namespace StrokeForEgypt.AdminApp.Controllers.NotificationEntity
                     {
                         Notification.Target = Notification.Fk_Event.ToString();
                     }
+                    else if (Notification.Fk_NotificationType == (int)NotificationTypeEnum.Verification)
+                    {
+                        Notification.Target = Fk_Accounts.First().ToString();
+                    }
 
                     if (id == 0)
                     {
