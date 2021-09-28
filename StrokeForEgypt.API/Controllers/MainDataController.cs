@@ -183,6 +183,9 @@ namespace StrokeForEgypt.API.Controllers
                     CountryModel countryModel = new();
                     _Mapper.Map(Country, countryModel);
 
+                    countryModel.Name = $"({Country.PhoneCode}){Country.Name}";
+                    countryModel.Name = countryModel.Name.Replace("+", "");
+
                     countryModel.Cities = new List<CityModel>();
                     List<City> Cities = Country.Cities
                                         .OrderBy(a => a.Order)
