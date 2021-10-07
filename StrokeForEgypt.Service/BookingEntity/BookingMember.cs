@@ -114,4 +114,12 @@ namespace StrokeForEgypt.Service.BookingEntity
         [DisplayName("Activities")]
         public ICollection<int> Activities { get; set; }
     }
+
+    public class BookingMemberAttachmentsModel
+    {
+        public int Fk_BookingMember { get; set; }
+
+        [DisplayName("Attachments")]
+        public ICollection<IFormFile> Attachments { get; set; }
+    }
 }

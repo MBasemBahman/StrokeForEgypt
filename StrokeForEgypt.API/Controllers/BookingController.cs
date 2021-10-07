@@ -197,6 +197,49 @@ namespace StrokeForEgypt.API.Controllers
         }
 
         /// <summary>
+        /// Post: Add Member Attachments
+        /// </summary>
+        [HttpPost]
+        [Route(nameof(AddMemberAttachments))]
+        public async Task<bool> AddMemberAttachments([FromForm] BookingMemberAttachmentsModel model)
+        {
+            bool returnData = false;
+
+            Status Status = new();
+
+            try
+            {
+                Account account = (Account)Request.HttpContext.Items["Account"];
+
+                if (_UnitOfWork.BookingMember.Any(a => a.Id == model.Fk_BookingMember && a.Booking.Fk_Account == account.Id))
+                {
+                    if (model.Attachments != null && model.Attachments.Any())
+                    {
+                        foreach (IFormFile File in model.Attachments)
+                        {
+                            await _UnitOfWork.BookingMemberAttachment.UploudFile(model.Fk_BookingMember, File, "wwwroot/Uploud/BookingMemberAttachment");
+                        }
+                    }
+
+                    returnData = true;
+                    Status = new Status(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Status.ExceptionMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    Status.ExceptionMessage = ex.InnerException.Message;
+                }
+            }
+
+            Response.Headers.Add("X-Status", StatusHandler.GetStatus(Status));
+
+            return returnData;
+        }
+
+        /// <summary>
         /// Get: Get Bookings
         /// </summary>
         [HttpGet]

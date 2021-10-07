@@ -89,6 +89,11 @@
             Post: Add Member
             </summary>
         </member>
+        <member name="M:StrokeForEgypt.API.Controllers.BookingController.AddMemberAttachments(StrokeForEgypt.Service.BookingEntity.BookingMemberAttachmentsModel)">
+            <summary>
+            Post: Add Member Attachments
+            </summary>
+        </member>
         <member name="M:StrokeForEgypt.API.Controllers.BookingController.GetBookings(StrokeForEgypt.Service.Paging)">
             <summary>
             Get: Get Bookings
