@@ -22,32 +22,6 @@ namespace StrokeForEgypt.Common
 
         public FawryManager(bool Production = true)
         {
-            if (Production)
-            {
-                MerchantCode = "/PEnYvx9uDal787RKK+LMw==";
-                SecureKey = "e6155f46e5ae4f4c8eb0c9423224c526";
-
-                ScriptUrl = "https://www.atfawry.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
-                StylesheetUrl = "https://www.atfawry.com/atfawry/plugin/assets/payments/css/fawrypay-payments.css";
-
-                ReturnUrl = "https://strokeforegyptapi.azurewebsites.net/fawry/ChargeResponse";
-
-                StatusUrl = "https://www.atfawry.com/ECommerceWeb/Fawry/payments/status/v2";
-            }
-            else
-            {
-                MerchantCode = "1tSa6uxz2nRo3lV+rfO2qg==";
-                SecureKey = "6b1684246a2f44f682f24f039fc0d8e6";
-
-                ScriptUrl = "https://atfawry.fawrystaging.com/atfawry/plugin/assets/payments/js/fawrypay-payments.js";
-                StylesheetUrl = "https://www.atfawry.com/atfawry/plugin/assets/payments/css/fawrypay-payments.css";
-
-                ReturnUrl = "https://localhost:44373/fawry/ChargeResponse";
-
-                StatusUrl = "https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/status/v2";
-            }
-            //ReturnUrl = "https://localhost:44373/fawry/ChargeResponse";
-
         }
 
         public ChargeRequest BuildChargeRequest(PayRequest model)
